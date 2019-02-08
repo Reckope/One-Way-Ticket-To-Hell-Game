@@ -55,8 +55,8 @@
      <Compile Include="Assets\CoreCode\Enemies\EnemyBasic.cs" />
      <Compile Include="Assets\CoreCode\HealthItem.cs" />
      <Compile Include="Assets\CoreCode\HoleNextLevel.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacter.cs" />
      <Compile Include="Assets\CoreCode\MainCharacterHealth.cs" />
+     <Compile Include="Assets\CoreCode\MainCharacterInputControl.cs" />
      <Compile Include="Assets\Scripts\ChooseScene.cs" />
      <Compile Include="Assets\Scripts\GameControl.cs" />
  <Reference Include="UnityEngine.UI">
