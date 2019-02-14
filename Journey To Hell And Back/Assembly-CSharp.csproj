@@ -55,10 +55,12 @@
      <Compile Include="Assets\CoreCode\Enemies\EnemyBasic.cs" />
      <Compile Include="Assets\CoreCode\HealthItem.cs" />
      <Compile Include="Assets\CoreCode\HoleNextLevel.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacterHealth.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacterInputControl.cs" />
+     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterHealth.cs" />
+     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterInputControl.cs" />
+     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterSword.cs" />
      <Compile Include="Assets\Scripts\ChooseScene.cs" />
      <Compile Include="Assets\Scripts\GameControl.cs" />
+     <Compile Include="Assets\Scripts\TotalTime.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

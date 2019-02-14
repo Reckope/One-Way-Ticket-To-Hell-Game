@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game_Control_Script : MonoBehaviour {
+public class GameControl : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		Application.targetFrameRate = 600;
 	}
 	
 	// Update is called once per frame
