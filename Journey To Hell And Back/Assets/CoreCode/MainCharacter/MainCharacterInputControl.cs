@@ -16,10 +16,11 @@ public class MainCharacterInputControl : MonoBehaviour {
 	private float moveLeftAndRight;
 
 	public bool grounded;
-	public LayerMask whatIsGround;
 	public bool stoppedJumping;
 	public bool goingRight;
 	public bool goingLeft;
+
+	public LayerMask whatIsGround;
 
 	public Transform groundCheck;
 	public float groundCheckRadius;
@@ -49,7 +50,7 @@ public class MainCharacterInputControl : MonoBehaviour {
 	{
 		// This is designed for keyboard input at the moment.
 		jump = Input.GetKeyDown (KeyCode.W);
-		swingSword = Input.GetKeyDown (KeyCode.Space);
+		swingSword = Input.GetKey (KeyCode.Space);
 		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 
