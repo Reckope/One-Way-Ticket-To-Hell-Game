@@ -18,7 +18,7 @@ public class MainCharacterSword : MonoBehaviour {
 			
 	}
 
-	public IEnumerator SwingSword(){
+	/*public IEnumerator SwingSword(){
 
 		if (mainCharacter.goingLeft && mainCharacter.swingSword) {
 			swordRight.SetActive (false);
@@ -32,5 +32,5 @@ public class MainCharacterSword : MonoBehaviour {
 			swordRight.SetActive (false);
 		}
 
-	}
+	}*/
 }

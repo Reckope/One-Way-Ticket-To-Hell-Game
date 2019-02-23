@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainCharacterInputControl : MonoBehaviour {
 
+	public AreaForceAttack forceAttack;
+
 	public GameObject swordLeft;
 	public GameObject swordRight;
 
@@ -11,9 +13,6 @@ public class MainCharacterInputControl : MonoBehaviour {
 	public float jumpForce;
 	public float groundDist;
 	public int initialExtraJumps;
-
-	private int extraJumps;
-	private float moveLeftAndRight;
 
 	public bool grounded;
 	public bool stoppedJumping;
@@ -24,15 +23,20 @@ public class MainCharacterInputControl : MonoBehaviour {
 
 	public Transform groundCheck;
 	public float groundCheckRadius;
-	private SpriteRenderer mySpriteRenderer;
-	private BoxCollider2D myBoxCollider;
 
 	public static bool jump;
 	public static bool left;
 	public static bool right;
-	public bool swingSword;
+	public static bool _areaForceAttack = false;
+	public static bool areaForceAttack = false;
 
 	private Rigidbody2D rb2d;
+
+	private int extraJumps;
+	private float moveLeftAndRight;
+
+	private SpriteRenderer mySpriteRenderer;
+	private BoxCollider2D myBoxCollider;
 
 	void Start ()
 	{
@@ -44,14 +48,19 @@ public class MainCharacterInputControl : MonoBehaviour {
 
 	void Update(){
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
+
+		if (areaForceAttack) {
+			forceAttack.ExpandCircle ();
+		}
 	}
 
 	void FixedUpdate ()
 	{
 		// This is designed for keyboard input at the moment.
 		jump = Input.GetKeyDown (KeyCode.W);
-		swingSword = Input.GetKey (KeyCode.Space);
+		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
 		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 
 		FaceDirection ();
@@ -65,13 +74,12 @@ public class MainCharacterInputControl : MonoBehaviour {
 			}
 		}
 
-		if (swingSword) {
-			StartCoroutine (SwingSword ());
+		if(_areaForceAttack){
+			areaForceAttack = true;
 		}
-			
 	}
 
-	public void FaceDirection(){
+	void FaceDirection(){
 		if (moveLeftAndRight < 0) {
 			goingLeft = true;
 			mySpriteRenderer.flipX = false;
@@ -86,7 +94,6 @@ public class MainCharacterInputControl : MonoBehaviour {
 	}
 
 	void DoubleJump(){
-
 		if (grounded) {
 			extraJumps = initialExtraJumps;
 		}
@@ -97,21 +104,5 @@ public class MainCharacterInputControl : MonoBehaviour {
 		}else if (jump && extraJumps == 0 && grounded){
 			rb2d.velocity = Vector2.up * jumpForce;
 		}
-	}
-
-	public IEnumerator SwingSword(){
-
-		if (goingLeft && swingSword) {
-			swordRight.SetActive (false);
-			swordLeft.SetActive (true);
-			yield return new WaitForSeconds (0.25f);
-			swordLeft.SetActive (false);
-		} else if (goingRight && swingSword) {
-			swordLeft.SetActive (false);
-			swordRight.SetActive (true);
-			yield return new WaitForSeconds (0.25f);
-			swordRight.SetActive (false);
-		}
-
 	}
 }
