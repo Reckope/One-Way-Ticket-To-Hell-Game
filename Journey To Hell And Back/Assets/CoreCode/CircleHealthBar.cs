@@ -16,7 +16,7 @@ public class CircleHealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_healthValue = MainCharcaterHealth.currentHealth;
+		_healthValue = MainCharacterHealth.currentHealth;
 		HealthChange (_healthValue);
 	}
 

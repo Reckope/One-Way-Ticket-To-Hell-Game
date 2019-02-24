@@ -38,28 +38,24 @@ public class MainCharacterInputControl : MonoBehaviour {
 	private SpriteRenderer mySpriteRenderer;
 	private BoxCollider2D myBoxCollider;
 
-	void Start ()
-	{
+	void Start (){
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
-
 	}
 
 	void Update(){
+
+		// This is designed for keyboard input at the moment.
+		jump = Input.GetKeyDown (KeyCode.W);
+		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
+		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
 
 		if (areaForceAttack) {
 			forceAttack.ExpandCircle ();
 		}
-	}
-
-	void FixedUpdate ()
-	{
-		// This is designed for keyboard input at the moment.
-		jump = Input.GetKeyDown (KeyCode.W);
-		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
-		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
 
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 

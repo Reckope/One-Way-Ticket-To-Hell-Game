@@ -5,7 +5,7 @@ using UnityEngine;
 public class AreaForceAttack : MonoBehaviour {
 
 	Vector2 initialSize = new Vector2 (0.4f, 0.4f);
-	private float maxSize = 7f;
+	private float maxSize = 9f;
 	private float increaseSize = 1f;
 
 	public float circleOpacity;
@@ -13,7 +13,7 @@ public class AreaForceAttack : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		transform.localScale = initialSize;
-		circleOpacity = .5f;
+		circleOpacity = .7f;
 		GetComponent <SpriteRenderer> ().color = new Color (1f, 1f, 1f, circleOpacity);
 	}
 	
@@ -24,7 +24,7 @@ public class AreaForceAttack : MonoBehaviour {
 
 	public void ExpandCircle(){
 		if (transform.localScale.x <= maxSize) {
-			circleOpacity -= Time.deltaTime * 0.8f;
+			circleOpacity -= Time.deltaTime * 0.9f;
 			increaseSize += Time.deltaTime * 50;
 			transform.localScale = initialSize * increaseSize;
 		} else {
@@ -34,7 +34,7 @@ public class AreaForceAttack : MonoBehaviour {
 	}
 
 	public void ResetForceAttack(){
-		circleOpacity = .5f;
+		circleOpacity = .7f;
 		increaseSize = 1f;
 		transform.localScale = initialSize;
 	}
