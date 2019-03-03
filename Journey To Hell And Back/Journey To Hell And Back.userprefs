@@ -1,11 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CoreCode/TotalTime.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CoreCode/Player/PlayerSystems.cs">
     <Files>
-      <File FileName="Assets/CoreCode/HealthItem.cs" Line="14" Column="2" />
-      <File FileName="Assets/CoreCode/MainCharacter/MainCharacterHealth.cs" Line="1" Column="1" />
-      <File FileName="Assets/CoreCode/CircleHealthBar.cs" Line="1" Column="1" />
-      <File FileName="Assets/CoreCode/TotalTime.cs" Line="4" Column="22" />
+      <File FileName="Assets/CoreCode/TotalTime.cs" Line="1" Column="1" />
+      <File FileName="Assets/CoreCode/HealthItem.cs" Line="6" Column="1" />
+      <File FileName="Assets/CoreCode/Player/PlayerHealth.cs" Line="11" Column="39" />
+      <File FileName="Assets/CoreCode/CircleHealthBar.cs" Line="11" Column="2" />
+      <File FileName="Assets/CoreCode/Player/PlayerSystems.cs" Line="18" Column="3" />
+      <File FileName="Assets/CoreCode/Player/PlayerInputControl.cs" Line="5" Column="20" />
+      <File FileName="Assets/CoreCode/AreaForceAttack.cs" Line="28" Column="39" />
+      <File FileName="Assets/CoreCode/Enemies/EnemyBasicFollow.cs" Line="8" Column="28" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

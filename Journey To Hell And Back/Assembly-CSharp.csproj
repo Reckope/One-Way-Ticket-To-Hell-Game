@@ -51,18 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\CoreCode\AreaForceAttack.cs" />
-     <Compile Include="Assets\CoreCode\Camera.cs" />
-     <Compile Include="Assets\CoreCode\CircleHealthBar.cs" />
-     <Compile Include="Assets\CoreCode\Enemies\EnemyBasicFollow.cs" />
-     <Compile Include="Assets\CoreCode\HealthItem.cs" />
-     <Compile Include="Assets\CoreCode\HoleNextLevel.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterHealth.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterInputControl.cs" />
-     <Compile Include="Assets\CoreCode\MainCharacter\MainCharacterSword.cs" />
-     <Compile Include="Assets\CoreCode\TotalTime.cs" />
-     <Compile Include="Assets\Scripts\ChooseScene.cs" />
-     <Compile Include="Assets\Scripts\GameControl.cs" />
+     <Compile Include="Assets\Scripts\AreaForceAttack.cs" />
+     <Compile Include="Assets\Scripts\CircleHealthBar.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemyBasicFollow.cs" />
+     <Compile Include="Assets\Scripts\Game Control\ChooseScene.cs" />
+     <Compile Include="Assets\Scripts\Game Control\GameControl.cs" />
+     <Compile Include="Assets\Scripts\HealthItem.cs" />
+     <Compile Include="Assets\Scripts\HoleNextLevel.cs" />
+     <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerInputControl.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerSword.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerSystems.cs" />
+     <Compile Include="Assets\Scripts\TotalTime.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
