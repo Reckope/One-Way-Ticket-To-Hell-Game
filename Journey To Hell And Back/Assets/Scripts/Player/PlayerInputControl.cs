@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: Hell and Back
+ * Date modified: 08/03/19
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +17,6 @@ public class PlayerInputControl : MonoBehaviour {
 	public float speed;
 	public float jumpForce;
 	public float groundDist;
-	public int initialExtraJumps;
 
 	public bool grounded;
 	public bool stoppedJumping;
@@ -32,7 +36,7 @@ public class PlayerInputControl : MonoBehaviour {
 
 	private Rigidbody2D rb2d;
 
-	private int extraJumps;
+	private int initialExtraJumps;
 	private float moveLeftAndRight;
 
 	private SpriteRenderer mySpriteRenderer;
@@ -50,17 +54,10 @@ public class PlayerInputControl : MonoBehaviour {
 		jump = Input.GetKeyDown (KeyCode.W);
 		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
 		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
-
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
-
-		if (areaForceAttack) {
-			forceAttack.ExpandCircle ();
-		}
-
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 
-		FaceDirection ();
-		DoubleJump ();
+		// Check if the player is grounded.
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
 
 		// If I press down the key...
 		if (jump) {
@@ -70,9 +67,17 @@ public class PlayerInputControl : MonoBehaviour {
 			}
 		}
 
+		// 2 bools allow the circle to continue expending without holding down space bar.
 		if(_areaForceAttack){
 			areaForceAttack = true;
 		}
+		if (areaForceAttack) {
+			forceAttack.ExpandCircle ();
+		}
+
+		// Necessary Methods.
+		FaceDirection ();
+		DoubleJump ();
 	}
 
 	void FaceDirection(){
@@ -90,14 +95,17 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	void DoubleJump(){
+		int extraJumps = 1;
+
 		if (grounded) {
-			extraJumps = initialExtraJumps;
+			initialExtraJumps = extraJumps;
 		}
 
-		if (jump && extraJumps > 0) {
+		if (jump && initialExtraJumps > 0) {
 			rb2d.velocity = Vector2.up * jumpForce;
-			extraJumps--;
-		}else if (jump && extraJumps == 0 && grounded){
+			initialExtraJumps--;
+		}
+		else if (jump && initialExtraJumps == 0 && grounded){
 			rb2d.velocity = Vector2.up * jumpForce;
 		}
 	}

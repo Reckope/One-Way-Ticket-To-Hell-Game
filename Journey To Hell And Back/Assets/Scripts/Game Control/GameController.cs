@@ -7,19 +7,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSystems : MonoBehaviour {
+public class GameController : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		Application.targetFrameRate = 600;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(GameOver()){
+			Debug.Log ("GAMEOVERTEST");
+		}
 	}
 
-	void Invulnerable(){
-		
+	bool GameOver(){
+		if (PlayerHealth.currentHealth <= 0) {
+			return true;
+		} 
+		else {
+			return false;
+		}
 	}
 }

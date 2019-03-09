@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: Hell and Back
+ * Date modified: 08/03/19
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour {
 
 	public static float currentHealth;
-	public float decreaseHealth = 4f;
-	public static float increaseHealth = 25f;
 
 	private const float maxHealth = 100f;
 	private const float minHealth = 0f;
@@ -18,7 +21,10 @@ public class PlayerHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		currentHealth -= decreaseHealth * Time.deltaTime;
+		AddHealthBoundaries ();
+	}
+
+	void AddHealthBoundaries(){
 		if (currentHealth <= minHealth) {
 			currentHealth = minHealth;
 		}
