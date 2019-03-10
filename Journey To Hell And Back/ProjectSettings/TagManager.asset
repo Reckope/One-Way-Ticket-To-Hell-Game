@@ -18,8 +18,8 @@ TagManager:
   - enemy
   - player
   - healthPickup
-  - 
-  - 
+  - playerAttack
+  - respawn
   - 
   - 
   - 

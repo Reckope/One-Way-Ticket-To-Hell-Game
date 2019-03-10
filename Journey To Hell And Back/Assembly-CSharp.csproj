@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Game Control\ChooseScene.cs" />
      <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
      <Compile Include="Assets\Scripts\Game Control\HoleNextLevel.cs" />
+     <Compile Include="Assets\Scripts\Game Control\SpawnEnemiesLevelOne.cs" />
      <Compile Include="Assets\Scripts\HealthItem.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />

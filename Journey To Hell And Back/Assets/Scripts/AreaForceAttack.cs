@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 09/03/19
+ * Date modified: 10/03/19
  */
 
 using System.Collections;
@@ -11,17 +11,20 @@ using UnityEngine.UI;
 public class AreaForceAttack : MonoBehaviour {
 
 	Vector2 initialSize = new Vector2 (0.2f, 0.2f);
+	Collider2D _collider;
+
 	public Slider cooldownBar;
 
 	public static float cooldownValue = 100f;
 	float maxSize = 20f;
-	float areaSize = 4f;
+	float areaSize = 5f;
 	float circleOpacity = 0.3f;
 
 	bool fadeOut = false;
 
 	// Use this for initialization
 	void Start () {
+		_collider = GetComponent<Collider2D>();
 		transform.localScale = initialSize;
 		cooldownBar.value = 100f;
 	}
@@ -34,6 +37,7 @@ public class AreaForceAttack : MonoBehaviour {
 		// if the force attack has been executed, fade the cirlce out.
 		if (fadeOut) {
 			circleOpacity -= Time.deltaTime * 1.4f;
+			_collider.enabled = false;
 		}
 
 		CalculateCoodownValue ();
@@ -50,26 +54,16 @@ public class AreaForceAttack : MonoBehaviour {
 		}
 	}
 
-	void HurtEnemy(){
-		Enemy.EnemyDie ();
-	}
-
 	// Resets the force attack circle
 	public IEnumerator ResetForceAttack(){
 		circleOpacity = 1f;
 		fadeOut = true;
 		yield return new WaitForSeconds (0.6f);
+		_collider.enabled = true;
 		fadeOut = false;
 		circleOpacity = .4f;
-		areaSize = 4f;
+		areaSize = 5f;
 		transform.localScale = initialSize;
-	}
-
-	// If the force attack area hits an enemy...
-	void OnTriggerEnter2D (Collider2D collide){
-		if (collide.gameObject.layer == LayerMask.NameToLayer ("enemy")) {
-			HurtEnemy ();
-		}
 	}
 
 	// Is the cooldown active or not...
