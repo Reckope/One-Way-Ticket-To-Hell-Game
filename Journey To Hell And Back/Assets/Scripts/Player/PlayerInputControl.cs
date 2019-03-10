@@ -52,8 +52,8 @@ public class PlayerInputControl : MonoBehaviour {
 
 		// This is designed for keyboard input at the moment.
 		jump = Input.GetKeyDown (KeyCode.W);
-		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
 		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 
 		// Check if the player is grounded.
@@ -68,7 +68,7 @@ public class PlayerInputControl : MonoBehaviour {
 		}
 
 		// 2 bools allow the circle to continue expending without holding down space bar.
-		if(_areaForceAttack){
+		if(_areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
 			areaForceAttack = true;
 		}
 		if (areaForceAttack) {
