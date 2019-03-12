@@ -14,8 +14,9 @@ using UnityEngine;
 public class SpawnEnemiesLevelOne : MonoBehaviour {
 
 	public GameObject enemyPrefab;
+
 	private GameObject enemySpawn;
-	public Vector2[] spawnPositionsLevelOne = new Vector2[3];
+	private readonly Vector2[] spawnPositionsLevelOne = new Vector2[5];
 
 	/*
 	Vector2 enemyTopSpawnPosition = new Vector2(0, 10f);
@@ -29,8 +30,10 @@ public class SpawnEnemiesLevelOne : MonoBehaviour {
 		spawnPositionsLevelOne [0] = new Vector2 (0, 10f);
 		spawnPositionsLevelOne [1] = new Vector2 (-12f, 2f);
 		spawnPositionsLevelOne [2] = new Vector2 (12f, 2f);
+        spawnPositionsLevelOne [3] = new Vector2(-12f, 6f);
+        spawnPositionsLevelOne [4] = new Vector2(12f, 6f);
 
-		for (int x = 0; x < 3; x++) {
+        for (int x = 0; x < 3; x++) {
 			enemySpawn = (GameObject)Instantiate (enemyPrefab, spawnPositionsLevelOne [x], Quaternion.identity);
 		}
 		//enemySpawn = (GameObject)Instantiate (enemyPrefab, spawnPositionsLevelOne [1], Quaternion.identity);
@@ -43,7 +46,7 @@ public class SpawnEnemiesLevelOne : MonoBehaviour {
 
 	public void RespawnEnemy(){
 		spawnPoint = 0;
-		spawnPoint = Random.Range (0, 2);
+		spawnPoint = Random.Range (0, 4);
 		Instantiate (enemyPrefab, spawnPositionsLevelOne[spawnPoint], Quaternion.identity);
 	}
 }

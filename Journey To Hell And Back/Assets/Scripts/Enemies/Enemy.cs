@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// Using other scripts:
-		spawnEnemy = GameObject.FindObjectOfType (typeof(SpawnEnemiesLevelOne)) as SpawnEnemiesLevelOne;
+		spawnEnemy = FindObjectOfType(typeof(SpawnEnemiesLevelOne)) as SpawnEnemiesLevelOne;
 
 		player = GameObject.FindWithTag ("Player");
 		rb2d = GetComponent<Rigidbody2D>();
@@ -78,6 +78,7 @@ public class Enemy : MonoBehaviour {
 		yield return new WaitForSeconds (1.7f);
 		_collider.enabled = true;
 		enemyIsDead = false;
+        Destroy(gameObject);
 		spawnEnemy.RespawnEnemy();
 	}
 }
