@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 08/03/19
+ * Date modified: 13/03/19
  */
 
 using System.Collections;
@@ -13,17 +13,21 @@ public class GameController : MonoBehaviour {
     //Static instance of GameController which allows it to be accessed by any other script.
     public static GameController instance;
 
+    // Using Other Scripts:
+	CameraController cameraControl;
+
     public GameObject hole;         
 
     public Text scoreText;
 
     public static int score;
-    private int currentLevel;
     public int previousLevel;
+    private int currentLevel;
 
 	// Use this for initialization
-	void Awake () {
+    void Awake () {
 		Application.targetFrameRate = 600;
+        cameraControl = FindObjectOfType(typeof(CameraController)) as CameraController;
 
         // Singleton Pattern: There can only ever be one instance of a GameController.
         if (instance == null){
@@ -68,14 +72,14 @@ public class GameController : MonoBehaviour {
 
     // This is temporary. Planning to have a much more complex way of determining when to progress onto the next level.
     void DetectLevel(){
-        if(score >= 0 && score < 11) {
+        if(score >= 0 && score < 2) {
             currentLevel = 1;
         }
-        if (score >= 11 && score <= 25) {
+        if (score >= 2 && score <= 25) {
             currentLevel = 2;
         }
     }
-
+    // Moves the hole to allow the player to jump to the next level. 
     public IEnumerator MoveHole() {
         float direction = -1f;
         float speed = 4f;
@@ -100,6 +104,9 @@ public class GameController : MonoBehaviour {
     public void TriggerNextLevel() {
         // Start Transitioning underground by moving the camera, playing cool music, slowly passing the player.
         // Decrease Player Gravity.
-        Debug.Log("NEXT_LEVEL");
+        if(NextLevelTrigger.nextLevelTriggered){
+            //Debug.Log("NEXT_LEVEL");
+            //cameraControl.MoveCamera();
+        }
     }
 }
