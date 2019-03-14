@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 13/03/19
+ * Date modified: 14/03/19
  */
 
 using System.Collections;
@@ -17,9 +17,11 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		// This is designed for the transition between Level 1 and 2.
-		if (NextLevelTrigger.nextLevelTriggered && transform.position.y > -110){
-			MoveCamera();
+		if (NextLevelTrigger.nextLevelTriggered){
+			// Level 1...(temp code)
+			if(transform.position.y > -110){
+				MoveCamera();
+			}
 		}
 	}
 

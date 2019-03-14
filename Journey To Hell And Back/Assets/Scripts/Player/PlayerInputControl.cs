@@ -54,7 +54,9 @@ public class PlayerInputControl : MonoBehaviour {
 		jump = Input.GetKeyDown (KeyCode.W);
 		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
 		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
-		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
+		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
+			rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
+		}
 
 		// Check if the player is grounded.
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);

@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 13/03/19
+ * Date modified: 14/03/19
  */
 
 using System.Collections;
@@ -23,10 +23,12 @@ public class PlayerSystems : MonoBehaviour {
 
 		// When the player has triggered the next level...
 		if (NextLevelTrigger.nextLevelTriggered){
-			Debug.Log("NEXT_LEVEL_PLAYER");
 			rb2d.bodyType = RigidbodyType2D.Static;
 			transform.Translate(0, transitionDirection * transitionSpeed * Time.deltaTime * 1, 0);
-		}else{
+		}
+		// This is me cheating, since I'm having problems getting OnTriggerExit2D to trigger while
+		// the player gameObject has a static RigidBody2D type.
+		if (transform.position.y < -100 && transform.position.y > -110){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 		}
 	}

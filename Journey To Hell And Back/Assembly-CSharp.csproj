@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />
      <Compile Include="Assets\Scripts\Game Control\ChooseScene.cs" />
      <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
+     <Compile Include="Assets\Scripts\Game Control\LevelController.cs" />
      <Compile Include="Assets\Scripts\Game Control\NextLevelTrigger.cs" />
      <Compile Include="Assets\Scripts\Game Control\SpawnEnemiesLevelOne.cs" />
      <Compile Include="Assets\Scripts\Items\HealthItem.cs" />

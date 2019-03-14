@@ -33,7 +33,7 @@ public class SpawnEnemiesLevelOne : MonoBehaviour {
         spawnPositionsLevelOne [3] = new Vector2(-12f, 6f);
         spawnPositionsLevelOne [4] = new Vector2(12f, 6f);
 
-        for (int x = 0; x < 3; x++) {
+        for (int x = 0; x < 1; x++) {
 			enemySpawn = (GameObject)Instantiate (enemyPrefab, spawnPositionsLevelOne [x], Quaternion.identity);
 		}
 		//enemySpawn = (GameObject)Instantiate (enemyPrefab, spawnPositionsLevelOne [1], Quaternion.identity);
