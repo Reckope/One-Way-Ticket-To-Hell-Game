@@ -13,19 +13,17 @@ public class NextLevelTrigger : MonoBehaviour {
     private bool inTrigger;
 
     void Update(){
+        // This needs updating...
         Debug.Log("inTrgger = " + inTrigger);
         Debug.Log("next trigger = " + nextLevelTriggered);
         if(inTrigger){
             if(gameObject.name == "NextLevelTriggered"){
                 nextLevelTriggered = true;
             }
-            
-            else if(gameObject.name == "NextLevelUnTriggered"){
-                nextLevelTriggered = false;
-            }
         }
     }
 
+    // If the player hits the trigger...
     void OnTriggerEnter2D(Collider2D collide)
     {
         if (collide.gameObject.layer == LayerMask.NameToLayer("player")){
@@ -33,6 +31,7 @@ public class NextLevelTrigger : MonoBehaviour {
         }
     }
 
+    // If the player exits the trigger...
 	void OnTriggerExit2D(Collider2D collide)
      {
          if (collide.gameObject.layer == LayerMask.NameToLayer("player")){

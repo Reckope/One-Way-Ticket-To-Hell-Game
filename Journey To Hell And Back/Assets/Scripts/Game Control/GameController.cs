@@ -16,7 +16,8 @@ public class GameController : MonoBehaviour {
     // Using Other Scripts:
     CameraController cameraControl;
     
-    public GameObject hole;         
+    public GameObject holeLvl1;
+    public GameObject holeLvl2;         
 
     public Text scoreText;
 
@@ -59,33 +60,43 @@ public class GameController : MonoBehaviour {
         } 
         else {
             return false;
-        }       }
+        }       
+    }
 
     // This is temporary. Planning to have a much more complex way of determining when to progress onto the next level.
     void UnlockNextLevel(){
-        if(score == 2) {
+        if(score == 2 && LevelController.currentLevel == 1) {
             MoveToNextLevel();
         }
-        if (score == 5) {
+        else if (score == 5 && LevelController.currentLevel == 2) {
             MoveToNextLevel();
         }
     }
 
+    // Disable UI and do other stuff while moving to next level...
     public void MoveToNextLevel(){
         StartCoroutine(MoveHole());
     }
 
     // Moves the hole to allow the player to jump to the next level. 
     public IEnumerator MoveHole() {
+        // Local Variables
         float direction = -1f;
         float speed = 4f;
         float moveYPosition = direction * speed * Time.deltaTime * 1;
 
-        hole = GameObject.Find("Hole");
-        if (hole.transform != null){
-            hole.transform.Translate(0, moveYPosition, 0);
+        // Control the holes in each level
+        holeLvl1 = GameObject.Find("HoleLevel1");
+        holeLvl2 = GameObject.Find("HoleLevel2");
+        if (holeLvl1.transform != null && LevelController.currentLevel == 1){
+            holeLvl1.transform.Translate(0, moveYPosition, 0);
         }
+        else if(holeLvl2.transform != null && LevelController.currentLevel == 2){
+            holeLvl2.transform.Translate(0, moveYPosition, 0);
+        }
+
+        // Move the hole
         yield return new WaitForSeconds(1);
-        hole.transform.position = new Vector2(-15f, 5f);
+        holeLvl1.transform.position = new Vector2(-15f, 5f);
     }
 }

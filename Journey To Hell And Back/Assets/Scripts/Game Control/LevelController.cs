@@ -15,7 +15,7 @@ public class LevelController : MonoBehaviour {
 	private bool inTrigger;
 
 	void Update(){
-		Debug.Log(currentLevel);
+		Debug.Log("InTrigger:" + inTrigger);
 		// If the player has triggered the levels...
 		if(inTrigger){
 			if(gameObject.name == "Level1"){

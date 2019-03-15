@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour {
 		AddHealthBoundaries ();
 	}
 
+	// Min health is 0. Max health is 100.
 	void AddHealthBoundaries(){
 		if (currentHealth <= minHealth) {
 			currentHealth = minHealth;

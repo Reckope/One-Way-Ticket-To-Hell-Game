@@ -30,6 +30,7 @@ public class PlayerSystems : MonoBehaviour {
 		// the player gameObject has a static RigidBody2D type.
 		if (transform.position.y < -100 && transform.position.y > -110){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
+			NextLevelTrigger.nextLevelTriggered = false;
 		}
 	}
 

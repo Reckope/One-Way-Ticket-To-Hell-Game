@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 13/03/19
+ * Date modified: 15/03/19
  */
 
 using System.Collections;
@@ -11,6 +11,7 @@ public class PlayerInputControl : MonoBehaviour {
 
 	public AreaForceAttack forceAttack;
 
+	// Gameobjects
 	public GameObject swordLeft;
 	public GameObject swordRight;
 
@@ -82,6 +83,7 @@ public class PlayerInputControl : MonoBehaviour {
 		DoubleJump ();
 	}
 
+	// Player faces the direction they're moving.
 	void FaceDirection(){
 		if (moveLeftAndRight < 0) {
 			goingLeft = true;
@@ -96,6 +98,7 @@ public class PlayerInputControl : MonoBehaviour {
 		}
 	}
 
+	// Enables Double Jump for the player
 	void DoubleJump(){
 		int extraJumps = 1;
 
