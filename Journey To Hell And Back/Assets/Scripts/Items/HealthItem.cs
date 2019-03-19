@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 08/03/19
+ * Date modified: 19/03/19
  */
 
 using System.Collections;
@@ -13,8 +13,10 @@ public class HealthItem : MonoBehaviour {
 
 	// If the player collides with the health item...
 	void OnTriggerEnter2D (Collider2D collide){
-		if (collide.gameObject.layer == LayerMask.NameToLayer ("player")) {
+		if (collide.gameObject.tag == ("Player")) {
 			PlayerHealth.currentHealth += increaseHealth;
+			// Score +1 is temporary for testing...
+			GameController.score += 1;
 		}
 	}
 

@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 13/03/19
+ * Date modified: 19/03/19
  */
 
 using System.Collections;
@@ -9,12 +9,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 	// Using Other Scripts:
-	SpawnEnemiesLevelOne spawnEnemy;
+	SpawnEnemiesController spawnEnemy;
 
 	private Vector2 enemy;
 	GameObject player;
 
-	private bool enemyIsDead;
+	public static bool enemyIsDead;
 	Collider2D _collider;
 
 	Rigidbody2D rb2d;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// Using other scripts:
-		spawnEnemy = FindObjectOfType(typeof(SpawnEnemiesLevelOne)) as SpawnEnemiesLevelOne;
+		spawnEnemy = FindObjectOfType(typeof(SpawnEnemiesController)) as SpawnEnemiesController;
 
 		player = GameObject.FindWithTag ("Player");
 		rb2d = GetComponent<Rigidbody2D>();
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour {
 		PlayerSystems.TakeDamage ();
 	}
 
-	private void EnemyDie(){
+	public void EnemyDie(){
 		enemyIsDead = true;
 		_collider.enabled = false;
 		rb2d.velocity = (new Vector2 (0, 4f));
@@ -79,6 +79,6 @@ public class Enemy : MonoBehaviour {
 		_collider.enabled = true;
 		enemyIsDead = false;
         Destroy(gameObject);
-		spawnEnemy.RespawnEnemy();
+		spawnEnemy.RespawnEnemyWhichLevel();
 	}
 }

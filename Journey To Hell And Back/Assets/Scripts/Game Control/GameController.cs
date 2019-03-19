@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 14/03/19
+ * Date modified: 19/03/19
  */
 
 using System.Collections;
@@ -12,22 +12,17 @@ public class GameController : MonoBehaviour {
 
     //Static instance of GameController which allows it to be accessed by any other script.
     public static GameController instance;
-
-    // Using Other Scripts:
-    CameraController cameraControl;
     
-    public GameObject holeLvl1;
-    public GameObject holeLvl2;         
+    GameObject holeLvl1;
+    GameObject holeLvl2;
 
     public Text scoreText;
 
     public static int score;
 
-	// Use this for initialization
+    // Use this for initialization
     void Awake () {
-	    Application.targetFrameRate = 600;
-
-        cameraControl = FindObjectOfType(typeof(CameraController)) as CameraController;
+        Application.targetFrameRate = 600;
 
         // Singleton Pattern: There can only ever be one instance of a GameController.
         if (instance == null){
@@ -68,7 +63,7 @@ public class GameController : MonoBehaviour {
         if(score == 2 && LevelController.currentLevel == 1) {
             MoveToNextLevel();
         }
-        else if (score == 5 && LevelController.currentLevel == 2) {
+        else if (score == 9 && LevelController.currentLevel == 2) {
             MoveToNextLevel();
         }
     }
@@ -79,7 +74,7 @@ public class GameController : MonoBehaviour {
     }
 
     // Moves the hole to allow the player to jump to the next level. 
-    public IEnumerator MoveHole() {
+    private IEnumerator MoveHole() {
         // Local Variables
         float direction = -1f;
         float speed = 4f;
@@ -88,15 +83,16 @@ public class GameController : MonoBehaviour {
         // Control the holes in each level
         holeLvl1 = GameObject.Find("HoleLevel1");
         holeLvl2 = GameObject.Find("HoleLevel2");
-        if (holeLvl1.transform != null && LevelController.currentLevel == 1){
-            holeLvl1.transform.Translate(0, moveYPosition, 0);
-        }
-        else if(holeLvl2.transform != null && LevelController.currentLevel == 2){
-            holeLvl2.transform.Translate(0, moveYPosition, 0);
-        }
 
-        // Move the hole
-        yield return new WaitForSeconds(1);
-        holeLvl1.transform.position = new Vector2(-15f, 5f);
+        if (LevelController.currentLevel == 1){
+            holeLvl1.transform.Translate(0, moveYPosition, 0);
+            yield return new WaitForSeconds(1);
+            holeLvl1.transform.position = new Vector2(-15f, 5f);
+        }
+        else if(LevelController.currentLevel == 2){
+            holeLvl2.transform.Translate(0, moveYPosition, 0);
+            yield return new WaitForSeconds(1);
+            holeLvl2.transform.position = new Vector2(-15f, -105f);
+        }
     }
 }
