@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour {
     
     GameObject holeLvl1;
     GameObject holeLvl2;
+    GameObject holeLvl3;
+    GameObject holeLvl4;
 
     public Text scoreText;
 
@@ -63,8 +65,17 @@ public class GameController : MonoBehaviour {
         if(score == 2 && LevelController.currentLevel == 1) {
             MoveToNextLevel();
         }
-        else if (score == 9 && LevelController.currentLevel == 2) {
+        else if (score == 5 && LevelController.currentLevel == 2) {
             MoveToNextLevel();
+        }
+        else if (score == 8 && LevelController.currentLevel == 3) {
+            MoveToNextLevel();
+        }
+        else if (score == 12 && LevelController.currentLevel == 4) {
+            MoveToNextLevel();
+        }
+        else if (score == 16 && LevelController.currentLevel == 5) {
+            // FLY UP AND END THE GAME
         }
     }
 
@@ -83,6 +94,8 @@ public class GameController : MonoBehaviour {
         // Control the holes in each level
         holeLvl1 = GameObject.Find("HoleLevel1");
         holeLvl2 = GameObject.Find("HoleLevel2");
+        holeLvl3 = GameObject.Find("HoleLevel3");
+        holeLvl4 = GameObject.Find("HoleLevel4");
 
         if (LevelController.currentLevel == 1){
             holeLvl1.transform.Translate(0, moveYPosition, 0);
@@ -93,6 +106,19 @@ public class GameController : MonoBehaviour {
             holeLvl2.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
             holeLvl2.transform.position = new Vector2(-15f, -105f);
+        }
+        else if(LevelController.currentLevel == 3){
+            holeLvl3.transform.Translate(0, moveYPosition, 0);
+            yield return new WaitForSeconds(1);
+            holeLvl3.transform.position = new Vector2(-15f, -205f);
+        }
+        else if(LevelController.currentLevel == 4){
+            holeLvl4.transform.Translate(0, moveYPosition, 0);
+            yield return new WaitForSeconds(1);
+            holeLvl4.transform.position = new Vector2(-15f, -305f);
+        }
+        else{
+            Debug.Log("ERROR: Couldn't determine current level to move hole.");
         }
     }
 }

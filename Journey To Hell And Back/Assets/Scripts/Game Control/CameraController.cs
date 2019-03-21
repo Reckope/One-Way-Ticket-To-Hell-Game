@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour {
 		transform.Translate (0, moveYPosition, 0);
 	}
 
-	// Transition the camera between each level
+	// Transition the camera between each level (convert to switch statement??)
 	private void CameraTransitionBetweenLevels(){
 		if(LevelController.currentLevel == 1){
 			if(transform.position.y > -110){
@@ -49,6 +49,25 @@ public class CameraController : MonoBehaviour {
 					mainCamera.transform.position = new Vector3(0, -220f, -10);
 				}
 			}
+		}
+		else if(LevelController.currentLevel == 3){
+			if(transform.position.y > -330){
+				MoveCamera();
+				if(transform.position.y <= -330){
+					mainCamera.transform.position = new Vector3(0, -330f, -10);
+				}
+			}
+		}
+		else if(LevelController.currentLevel == 4){
+			if(transform.position.y > -440){
+				MoveCamera();
+				if(transform.position.y <= -440){
+					mainCamera.transform.position = new Vector3(0, -440f, -10);
+				}
+			}
+		}
+		else if(LevelController.currentLevel == 5){
+			// FLY UP AND END GAME
 		}
 	}
 }

@@ -8,13 +8,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NextLevelTrigger : MonoBehaviour {
+
     public static bool nextLevelTriggered = false;
 
     private bool inTrigger;
 
     void Update(){
-        Debug.Log("inTrgger = " + inTrigger);
-        Debug.Log("next trigger = " + nextLevelTriggered);
+        //Debug.Log("inTrgger = " + inTrigger);
+        //Debug.Log("next trigger = " + nextLevelTriggered);
         if(inTrigger){
             if(gameObject.name == "NextLevelTriggered"){
                 nextLevelTriggered = true;

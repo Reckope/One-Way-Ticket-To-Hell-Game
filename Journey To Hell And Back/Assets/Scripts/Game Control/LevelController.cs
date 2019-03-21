@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 19/03/19
+ * Date modified: 20/03/19
  * THIS IS WORKING
  */
 
@@ -20,7 +20,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	void Update(){
-		//Debug.Log("In Level " + levelStaying);
+		Debug.Log("In Level " + levelStaying);
 		Debug.Log("Current" + currentLevel);
 	}
 
@@ -40,6 +40,7 @@ public class LevelController : MonoBehaviour {
         }
 	}
 
+	// If the player exits the level...
 	private void OnTriggerExit2D(Collider2D collide)
      {
          if (collide.gameObject.tag == ("Player")){
@@ -47,25 +48,47 @@ public class LevelController : MonoBehaviour {
          }
      }
 
+	// Find which level is currently active.
 	 private void DetectWhichLevel(){
 		 	if(gameObject.name == "Level1"){
             	currentLevel = 1;
-				//previousLevel = 0;
 			}
 			else if(gameObject.name == "Level2"){
             	currentLevel = 2;
-				//previousLevel = 1;
 			}
 			else if(gameObject.name == "Level3"){
             	currentLevel = 3;
-				//previousLevel = 2;
 			}
 			else if(gameObject.name == "Level4"){
             	currentLevel = 4;
-				//previousLevel = 3;
+			}
+			else if(gameObject.name == "Level5"){
+            	currentLevel = 5;
 			}
 			else{
-				// Error Management. Respawn player to level 1 (future improvements)
+				Debug.Log("ERROR: Couldn't find Level GameObject.");
 			}
 	 }
+
+	// Level functions. Create conditions of when the player has completed a level.
+	public bool CompletedLevel1(){
+		 return true;
+	}
+
+	public bool CompletedLevel2(){
+		 return true;
+	}
+
+	public bool CompletedLevel3(){
+		 return true;
+	}
+
+	public bool CompletedLevel4(){
+		 return true;
+	}
+
+	public bool CompletedLevel5(){
+		 return true;
+	}
+
 }

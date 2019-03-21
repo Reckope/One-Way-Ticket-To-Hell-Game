@@ -39,13 +39,28 @@ public class PlayerSystems : MonoBehaviour {
 
 		// This is me cheating, since I'm having problems getting OnTriggerExit2D to trigger while
 		// the player gameObject has a static RigidBody2D type.
+		// Level 1 - 2...
 		if (transform.position.y > -110 && transform.position.y < -100){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
 		}
+		// Level 2 - 3...
 		else if (transform.position.y > -220 && transform.position.y < -210){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
+		}
+		// Level 3 - 4...
+		else if (transform.position.y > -330 && transform.position.y < -320){
+			rb2d.bodyType = RigidbodyType2D.Dynamic;
+			NextLevelTrigger.nextLevelTriggered = false;
+		}
+		// Level 4 - 5...
+		else if (transform.position.y > -440 && transform.position.y < -430){
+			rb2d.bodyType = RigidbodyType2D.Dynamic;
+			NextLevelTrigger.nextLevelTriggered = false;
+		}
+		else{
+			Debug.Log("TRANSITIONING");
 		}
 	}
 		

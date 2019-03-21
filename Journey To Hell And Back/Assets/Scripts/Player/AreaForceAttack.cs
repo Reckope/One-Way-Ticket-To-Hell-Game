@@ -93,11 +93,11 @@ public class AreaForceAttack : MonoBehaviour
     {
         float cooldownRate = 60f;
 
-        if (PlayerInputControl._areaForceAttack == true && !AreaForceAttack.ForceAttackCooldownActive())
+        if (PlayerInputControl._areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive())
         {
             cooldownValue = 0f;
         }
-        else if (PlayerInputControl._areaForceAttack == false && cooldownValue < 100f)
+        else if (!PlayerInputControl._areaForceAttack && cooldownValue < 100f)
         {
             cooldownValue += Time.deltaTime * cooldownRate;
         }

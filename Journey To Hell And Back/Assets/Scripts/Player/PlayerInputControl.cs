@@ -1,6 +1,7 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
  * Date modified: 15/03/19
+ * "[x]" = Reference
  */
 
 using System.Collections;
@@ -10,10 +11,6 @@ using UnityEngine;
 public class PlayerInputControl : MonoBehaviour {
 
 	public AreaForceAttack forceAttack;
-
-	// Gameobjects
-	public GameObject swordLeft;
-	public GameObject swordRight;
 
 	public float speed;
 	public float jumpForce;
@@ -29,9 +26,9 @@ public class PlayerInputControl : MonoBehaviour {
 	public Transform groundCheck;
 	public float groundCheckRadius;
 
-	public static bool jump;
-	public static bool left;
-	public static bool right;
+	public bool jump;
+	public bool left;
+	public bool right;
 	public static bool _areaForceAttack = false;
 	public static bool areaForceAttack = false;
 
@@ -50,17 +47,14 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	void Update(){
-
-		// This is designed for keyboard input at the moment.
-		jump = Input.GetKeyDown (KeyCode.W);
-		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
-		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
+		// This is currently designed for keyboard controls.
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
+			KeyboardControls();
 			rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 		}
 
 		// Check if the player is grounded.
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround); // [1]
 
 		// If I press down the key...
 		if (jump) {
@@ -81,6 +75,12 @@ public class PlayerInputControl : MonoBehaviour {
 		// Necessary Methods.
 		FaceDirection ();
 		DoubleJump ();
+	}
+
+	void KeyboardControls(){
+		jump = Input.GetKeyDown (KeyCode.W);
+		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
 	}
 
 	// Player faces the direction they're moving.
