@@ -1,6 +1,7 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 19/03/19
+ * Date modified: 22/03/19
+ * [x] = Reference
  */
 
 using System.Collections;
@@ -12,11 +13,17 @@ public class GameController : MonoBehaviour {
 
     //Static instance of GameController which allows it to be accessed by any other script.
     public static GameController instance;
-    
+
+    public LevelController levelController;
+    public CameraController cameraController;
+
+    GameObject player;
     GameObject holeLvl1;
     GameObject holeLvl2;
     GameObject holeLvl3;
     GameObject holeLvl4;
+    GameObject mainCamera;
+    GameObject centerLvl1;
 
     public Text scoreText;
 
@@ -47,7 +54,7 @@ public class GameController : MonoBehaviour {
         }
 
         // Flow...
-        UnlockNextLevel();
+        levelController.UnlockNextLevel();
     }
 
     // Check if the game is over!
@@ -60,32 +67,8 @@ public class GameController : MonoBehaviour {
         }       
     }
 
-    // This is temporary. Planning to have a much more complex way of determining when to progress onto the next level.
-    void UnlockNextLevel(){
-        if(score == 2 && LevelController.currentLevel == 1) {
-            MoveToNextLevel();
-        }
-        else if (score == 5 && LevelController.currentLevel == 2) {
-            MoveToNextLevel();
-        }
-        else if (score == 8 && LevelController.currentLevel == 3) {
-            MoveToNextLevel();
-        }
-        else if (score == 12 && LevelController.currentLevel == 4) {
-            MoveToNextLevel();
-        }
-        else if (score == 16 && LevelController.currentLevel == 5) {
-            // FLY UP AND END THE GAME
-        }
-    }
-
-    // Disable UI and do other stuff while moving to next level...
-    public void MoveToNextLevel(){
-        StartCoroutine(MoveHole());
-    }
-
     // Moves the hole to allow the player to jump to the next level. 
-    private IEnumerator MoveHole() {
+    public IEnumerator MoveHole() {
         // Local Variables
         float direction = -1f;
         float speed = 4f;
@@ -100,25 +83,60 @@ public class GameController : MonoBehaviour {
         if (LevelController.currentLevel == 1){
             holeLvl1.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl1.transform.position = new Vector2(-15f, 5f);
+            holeLvl1.transform.position = new Vector2(-35f, 5f);
         }
         else if(LevelController.currentLevel == 2){
             holeLvl2.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl2.transform.position = new Vector2(-15f, -105f);
+            holeLvl2.transform.position = new Vector2(-35f, -105f);
         }
         else if(LevelController.currentLevel == 3){
             holeLvl3.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl3.transform.position = new Vector2(-15f, -205f);
+            holeLvl3.transform.position = new Vector2(-35f, -205f);
         }
         else if(LevelController.currentLevel == 4){
             holeLvl4.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl4.transform.position = new Vector2(-15f, -305f);
+            holeLvl4.transform.position = new Vector2(-35f, -305f);
         }
         else{
             Debug.Log("ERROR: Couldn't determine current level to move hole.");
         }
     }
+
+    // Calculate the distance between the player, and the center of the current level.
+    public float CalculateDistanceBetweenPlayerAndCenter(){ // [2]
+        player = GameObject.Find("Player");
+        centerLvl1 = GameObject.Find("Level 1 Center");
+        holeLvl2 = GameObject.Find("HoleLevel2");
+        holeLvl3 = GameObject.Find("HoleLevel3");
+        holeLvl4 = GameObject.Find("HoleLevel4");
+
+        float distance;
+
+        switch(LevelController.currentLevel){
+			case 5:
+			    //distance = Vector2.Distance(player.transform.position, holeLvl1.transform.position);
+                distance = 0f;
+			break;
+			case 4:
+				distance = Vector2.Distance(player.transform.position, holeLvl4.transform.position);
+			break;
+			case 3:
+				distance = Vector2.Distance(player.transform.position, holeLvl3.transform.position);
+			break;
+			case 2:
+				distance = Vector2.Distance(player.transform.position, holeLvl2.transform.position);
+			break;
+			case 1:
+				distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
+			break;
+			default:
+				distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
+			break;
+		}
+        return distance;
+    }
+
 }

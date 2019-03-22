@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 19/03/19
+ * Date modified: 22/03/19
  */
 
 using System.Collections;
@@ -9,9 +9,13 @@ using UnityEngine;
 
 public class NextLevelTrigger : MonoBehaviour {
 
-    public static bool nextLevelTriggered = false;
+    public static bool nextLevelTriggered;
 
     private bool inTrigger;
+
+    void Start(){
+        nextLevelTriggered = false;
+    }
 
     void Update(){
         //Debug.Log("inTrgger = " + inTrigger);
@@ -19,21 +23,20 @@ public class NextLevelTrigger : MonoBehaviour {
         if(inTrigger){
             if(gameObject.name == "NextLevelTriggered"){
                 nextLevelTriggered = true;
+                LevelController.moveToNextLevel = false;
             }
         }
     }
 
     // If the player hits the trigger...
-    void OnTriggerEnter2D(Collider2D collide)
-    {
+    void OnTriggerEnter2D(Collider2D collide){
         if (collide.gameObject.tag == ("Player")){
 			inTrigger = true;
         }
     }
 
     // If the player exits the trigger...
-	void OnTriggerExit2D(Collider2D collide)
-     {
+	void OnTriggerExit2D(Collider2D collide){
          if (collide.gameObject.tag == ("Player")){
              inTrigger = false;
          }
