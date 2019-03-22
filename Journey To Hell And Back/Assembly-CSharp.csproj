@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerSystems.cs" />
      <Compile Include="Assets\Scripts\UI\CircleHealthBar.cs" />
      <Compile Include="Assets\Scripts\UI\TotalTime.cs" />
+     <Compile Include="Assets\Scripts\UI\UIController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

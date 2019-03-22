@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class PlayerSystems : MonoBehaviour {
 
+	public LevelController levelController;
+
 	static Rigidbody2D rb2d;
 	private float transitionDirection = -1f;
     private float transitionSpeed = 8f;
@@ -60,7 +62,7 @@ public class PlayerSystems : MonoBehaviour {
 			NextLevelTrigger.nextLevelTriggered = false;
 		}
 		else{
-			Debug.Log("TRANSITIONING");
+			//Debug.Log("TRANSITIONING");
 		}
 	}
 		

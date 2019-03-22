@@ -48,8 +48,9 @@ public class CameraController : MonoBehaviour {
 				MoveCameraRight();
 			}
 		}
-		if(LevelController.moveToNextLevel && GameController.instance.CalculateDistanceBetweenPlayerAndCenter() < 10f){
+		if(levelControl.moveToNextLevel && GameController.instance.CalculateDistanceBetweenPlayerAndCenter() < 10f){
 			MoveCameraToCenter();
+			GameController.instance.ActivateSmallerBounds();
 		}
 	}
 
@@ -153,7 +154,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	// Moves the camera to the center before transitioning to next level.
-	void MoveCameraToCenter(){
+	public void MoveCameraToCenter(){
 		// Local Variables
 		float cameraSpeed = 3f;
 		float position = cameraCurrentPosition.x;

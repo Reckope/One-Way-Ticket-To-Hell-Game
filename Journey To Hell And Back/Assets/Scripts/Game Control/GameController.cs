@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
 
     public LevelController levelController;
     public CameraController cameraController;
+    public UIController uiController;
 
     GameObject player;
     GameObject holeLvl1;
@@ -24,10 +25,19 @@ public class GameController : MonoBehaviour {
     GameObject holeLvl4;
     GameObject mainCamera;
     GameObject centerLvl1;
+    GameObject centerLvl2;
+    GameObject centerLvl3;
+    GameObject centerLvl4;
+    GameObject centerLvl5;
+    public GameObject smallerBoundsLvl1;
+    public GameObject smallerBoundsLvl2;
+    public GameObject smallerBoundsLvl3;
+    public GameObject smallerBoundsLvl4;
 
     public Text scoreText;
 
     public static int score;
+    public static bool preventLoop = false;
 
     // Use this for initialization
     void Awake () {
@@ -54,7 +64,58 @@ public class GameController : MonoBehaviour {
         }
 
         // Flow...
-        levelController.UnlockNextLevel();
+        GameFlow();
+    }
+
+    // The entire flow of the game...
+	public void GameFlow(){
+        if(levelController.CompletedLevel1()) {
+			if(!NextLevelTrigger.nextLevelTriggered){
+				levelController.moveToNextLevel = true;
+			}
+            StartCoroutine(MoveHole());
+            if(preventLoop){
+                return;
+            }
+            preventLoop = true;
+            StartCoroutine(uiController.DisplayNextLevelHelpText());
+        }
+        else if (levelController.CompletedLevel2()) {
+			if(!NextLevelTrigger.nextLevelTriggered){
+				levelController.moveToNextLevel = true;
+			}
+            StartCoroutine(MoveHole());
+            if(preventLoop){
+                return;
+            }
+            preventLoop = true;
+            StartCoroutine(uiController.DisplayNextLevelHelpText());
+        }
+        else if (levelController.CompletedLevel3()) {
+			if(!NextLevelTrigger.nextLevelTriggered){
+				levelController.moveToNextLevel = true;
+			}
+            StartCoroutine(MoveHole());
+            if(preventLoop){
+                return;
+            }
+            preventLoop = true;
+            StartCoroutine(uiController.DisplayNextLevelHelpText());
+        }
+        else if (levelController.CompletedLevel4()) {
+			if(!NextLevelTrigger.nextLevelTriggered){
+				levelController.moveToNextLevel = true;
+			}
+            StartCoroutine(MoveHole());
+            if(preventLoop){
+                return;
+            }
+            preventLoop = true;
+            StartCoroutine(uiController.DisplayNextLevelHelpText());
+        }
+        else if (levelController.CompletedLevel5()) {
+            // FLY UP AND END THE GAME
+        }
     }
 
     // Check if the game is over!
@@ -80,54 +141,87 @@ public class GameController : MonoBehaviour {
         holeLvl3 = GameObject.Find("HoleLevel3");
         holeLvl4 = GameObject.Find("HoleLevel4");
 
-        if (LevelController.currentLevel == 1){
+        if (LevelController.currentLevel == 1 && holeLvl1 != null){
             holeLvl1.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl1.transform.position = new Vector2(-35f, 5f);
+            Destroy(holeLvl1);
         }
-        else if(LevelController.currentLevel == 2){
+        else if(LevelController.currentLevel == 2 && holeLvl2 != null){
             holeLvl2.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl2.transform.position = new Vector2(-35f, -105f);
+            Destroy(holeLvl2);
         }
-        else if(LevelController.currentLevel == 3){
+        else if(LevelController.currentLevel == 3 && holeLvl3 != null){
             holeLvl3.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl3.transform.position = new Vector2(-35f, -205f);
+            Destroy(holeLvl3);
         }
-        else if(LevelController.currentLevel == 4){
+        else if(LevelController.currentLevel == 4 && holeLvl4 != null){
             holeLvl4.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
-            holeLvl4.transform.position = new Vector2(-35f, -305f);
+            Destroy(holeLvl4);
         }
         else{
-            Debug.Log("ERROR: Couldn't determine current level to move hole.");
+            Debug.Log("ERROR: Couldn't move hole.");
         }
+    }
+
+    //Activate the smaller bounds once the player has moved near the center and completed level objectives.
+    public void ActivateSmallerBounds(){
+        switch(LevelController.currentLevel){
+			case 4:
+            if(levelController.CompletedLevel4()){
+				smallerBoundsLvl4.SetActive(true);
+            }
+			break;
+			case 3:
+			if(levelController.CompletedLevel3()){
+				smallerBoundsLvl3.SetActive(true);
+            }
+			break;
+			case 2:
+			if(levelController.CompletedLevel2()){
+				smallerBoundsLvl2.SetActive(true);
+            }
+			break;
+			case 1:
+			if(levelController.CompletedLevel1()){
+				smallerBoundsLvl1.SetActive(true);
+            }
+			break;
+			default:
+				smallerBoundsLvl1.SetActive(false);
+                smallerBoundsLvl2.SetActive(false);
+                smallerBoundsLvl3.SetActive(false);
+                smallerBoundsLvl4.SetActive(false);
+			break;
+		}
     }
 
     // Calculate the distance between the player, and the center of the current level.
     public float CalculateDistanceBetweenPlayerAndCenter(){ // [2]
         player = GameObject.Find("Player");
         centerLvl1 = GameObject.Find("Level 1 Center");
-        holeLvl2 = GameObject.Find("HoleLevel2");
-        holeLvl3 = GameObject.Find("HoleLevel3");
-        holeLvl4 = GameObject.Find("HoleLevel4");
+        centerLvl2 = GameObject.Find("Level 2 Center");
+        centerLvl3 = GameObject.Find("Level 3 Center");
+        centerLvl4 = GameObject.Find("Level 4 Center");
+        centerLvl5 = GameObject.Find("Level 5 Center");
 
         float distance;
 
         switch(LevelController.currentLevel){
 			case 5:
-			    //distance = Vector2.Distance(player.transform.position, holeLvl1.transform.position);
+			    //distance = Vector2.Distance(player.transform.position, centerLvl5.transform.position);
                 distance = 0f;
 			break;
 			case 4:
-				distance = Vector2.Distance(player.transform.position, holeLvl4.transform.position);
+				distance = Vector2.Distance(player.transform.position, centerLvl4.transform.position);
 			break;
 			case 3:
-				distance = Vector2.Distance(player.transform.position, holeLvl3.transform.position);
+				distance = Vector2.Distance(player.transform.position, centerLvl3.transform.position);
 			break;
 			case 2:
-				distance = Vector2.Distance(player.transform.position, holeLvl2.transform.position);
+				distance = Vector2.Distance(player.transform.position, centerLvl2.transform.position);
 			break;
 			case 1:
 				distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);

@@ -9,6 +9,9 @@ using UnityEngine;
 
 public class NextLevelTrigger : MonoBehaviour {
 
+    public LevelController levelController;
+    public UIController uiController;
+
     public static bool nextLevelTriggered;
 
     private bool inTrigger;
@@ -19,11 +22,10 @@ public class NextLevelTrigger : MonoBehaviour {
 
     void Update(){
         //Debug.Log("inTrgger = " + inTrigger);
-        //Debug.Log("next trigger = " + nextLevelTriggered);
+        Debug.Log("next trigger = " + nextLevelTriggered);
         if(inTrigger){
             if(gameObject.name == "NextLevelTriggered"){
                 nextLevelTriggered = true;
-                LevelController.moveToNextLevel = false;
             }
         }
     }
