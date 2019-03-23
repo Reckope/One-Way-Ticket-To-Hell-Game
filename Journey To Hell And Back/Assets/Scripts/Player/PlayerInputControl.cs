@@ -16,7 +16,7 @@ public class PlayerInputControl : MonoBehaviour {
 	public float jumpForce;
 	public float groundDist;
 
-	public bool grounded;
+	public static bool grounded;
 	public bool stoppedJumping;
 	public bool goingRight;
 	public bool goingLeft;

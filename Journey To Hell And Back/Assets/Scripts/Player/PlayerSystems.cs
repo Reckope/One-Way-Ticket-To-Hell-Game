@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 22/03/19
+ * Date modified: 23/03/19
  */
 
 using System.Collections;
@@ -10,10 +10,9 @@ using UnityEngine;
 public class PlayerSystems : MonoBehaviour {
 
 	public LevelController levelController;
+	public CinematicBars cinematicBars;
 
 	static Rigidbody2D rb2d;
-	private float transitionDirection = -1f;
-    private float transitionSpeed = 8f;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +24,9 @@ public class PlayerSystems : MonoBehaviour {
 		if(NextLevelTrigger.nextLevelTriggered){
 			PlayerTransitionBetweenLevels();
 		}
+		else if(GameController.instance.finishGame){
+			PlayerFinishGame();
+		}
 	}
 
 	// When the player takes damage...
@@ -34,8 +36,11 @@ public class PlayerSystems : MonoBehaviour {
 		}
 	}
 
-	// When the player has triggered the next level...
+	// When the player has triggered the next level... (player is transitioning)
 	public void PlayerTransitionBetweenLevels(){
+		float transitionDirection = -1f;
+    	float transitionSpeed = 8.5f;
+
 		rb2d.bodyType = RigidbodyType2D.Static;
 		transform.Translate(0, transitionDirection * transitionSpeed * Time.deltaTime * 1, 0);
 
@@ -63,6 +68,18 @@ public class PlayerSystems : MonoBehaviour {
 		}
 		else{
 			//Debug.Log("TRANSITIONING");
+		}
+	}
+
+	public void PlayerFinishGame(){
+		float transitionDirection = 1f;
+    	float transitionSpeed = 18f;
+		if(transform.position.y < 0){
+			rb2d.bodyType = RigidbodyType2D.Static;
+			transform.Translate(0, transitionDirection * transitionSpeed * Time.deltaTime * 1, 0);
+		}
+		if(transform.position.y >= 0){
+			transform.position = new Vector2(transform.position.x, 0);
 		}
 	}
 		

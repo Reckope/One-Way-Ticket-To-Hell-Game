@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 22/03/19
+ * Date modified: 23/03/19
  * [x] = Reference
  */
 
@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
     GameObject centerLvl3;
     GameObject centerLvl4;
     GameObject centerLvl5;
+    public GameObject finishGameTrigger;
     public GameObject smallerBoundsLvl1;
     public GameObject smallerBoundsLvl2;
     public GameObject smallerBoundsLvl3;
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour {
 
     public static int score;
     public static bool preventLoop = false;
+    public bool finishGame;
 
     // Use this for initialization
     void Awake () {
@@ -56,15 +58,15 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Debug.Log("Finished? - " + finishGame);
         scoreText.text = score.ToString();
-
-        if(GameOver()){
+        if(!GameOver()){
+            GameFlow();
+        }
+        else if(GameOver()){
             // Do Game Over Stuff...
 	        Debug.Log ("GAME_OVER");
         }
-
-        // Flow...
-        GameFlow();
     }
 
     // The entire flow of the game...
@@ -78,7 +80,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayNextLevelHelpText());
+            StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel2()) {
 			if(!NextLevelTrigger.nextLevelTriggered){
@@ -89,7 +91,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayNextLevelHelpText());
+            StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel3()) {
 			if(!NextLevelTrigger.nextLevelTriggered){
@@ -100,7 +102,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayNextLevelHelpText());
+            StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel4()) {
 			if(!NextLevelTrigger.nextLevelTriggered){
@@ -111,15 +113,20 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayNextLevelHelpText());
+            StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel5()) {
-            // FLY UP AND END THE GAME
+            if(preventLoop){
+                return;
+            }
+            preventLoop = true;
+            StartCoroutine(uiController.DisplayHelpText());
+            finishGameTrigger.SetActive(true);
         }
     }
 
     // Check if the game is over!
-    bool GameOver(){
+    public bool GameOver(){
         if (PlayerHealth.currentHealth <= 0) {
             return true;
         } 
@@ -162,7 +169,7 @@ public class GameController : MonoBehaviour {
             Destroy(holeLvl4);
         }
         else{
-            Debug.Log("ERROR: Couldn't move hole.");
+            //Debug.Log("ERROR: Couldn't move hole.");
         }
     }
 

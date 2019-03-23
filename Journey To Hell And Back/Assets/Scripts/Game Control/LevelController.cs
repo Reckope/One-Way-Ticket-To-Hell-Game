@@ -1,7 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 22/03/19
- * THIS IS WORKING
+ * Date modified: 23/03/19
  */
 
 using System.Collections;
@@ -31,7 +30,7 @@ public class LevelController : MonoBehaviour {
 
 	void Update(){
 		//Debug.Log("In Level " + levelStaying);
-		Debug.Log("Move: " + moveToNextLevel);
+		//Debug.Log("Move: " + moveToNextLevel);
 	}
 
 	// Find which level the player is currently active.
@@ -63,7 +62,7 @@ public class LevelController : MonoBehaviour {
 	// Level functions. Create conditions of when the player has completed a level.
 	// Temporary. Planning to have a much more complex way of determining when to progress onto the next level.
 	public bool CompletedLevel1(){
-		if(GameController.score >= 3 && currentLevel == 1) {
+		if(GameController.score == 3 && currentLevel == 1) {
             return true;
         }
 		else{
@@ -72,7 +71,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel2(){
-		 if(GameController.score >= 6 && currentLevel == 2) {
+		 if(GameController.score == 6 && currentLevel == 2) {
             return true;
         }
 		else{
@@ -81,7 +80,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel3(){
-		 if(GameController.score >= 9 && currentLevel == 3) {
+		 if(GameController.score == 9 && currentLevel == 3) {
             return true;
         }
 		else{
@@ -90,7 +89,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel4(){
-		 if(GameController.score >= 12 && currentLevel == 4) {
+		 if(GameController.score == 12 && currentLevel == 4) {
             return true;
         }
 		else{
@@ -99,7 +98,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel5(){
-		 if(GameController.score >= 15 && currentLevel == 5) {
+		 if(GameController.score == 15 && currentLevel == 5) {
             return true;
         }
 		else{

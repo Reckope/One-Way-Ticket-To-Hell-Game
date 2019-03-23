@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 22/03/19
+ * Date modified: 23/03/19
  */
 
 using System.Collections;
@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour {
 	
 	// GameObjects & Scripts
 	public LevelController levelControl;
+	public CinematicBars cinematicBars;
+
 	public static Vector2 cameraCurrentPosition;
 	GameObject mainCamera;
 
@@ -33,24 +35,31 @@ public class CameraController : MonoBehaviour {
 	void Update (){
 		//Debug.Log(LevelController.moveToNextLevel);
 		//Debug.Log(GameController.instance.CalculateDistanceBetweenPlayerAndCenter());
-		cameraCurrentPosition = transform.position;
-		if(NextLevelTrigger.nextLevelTriggered){
-				CameraTransitionBetweenLevels();
+		if(!GameController.instance.GameOver()){
+			if(GameController.instance.finishGame){
+				CameraFinishGame();
 			}
+			else if(!GameController.instance.finishGame){
+				cameraCurrentPosition = transform.position;
+				if(NextLevelTrigger.nextLevelTriggered){
+					CameraTransitionBetweenLevels();
+				}
 
-		SetCameraBounds();
+				SetCameraBounds();
 
-		if(transform.position.x >= -14.1f && transform.position.x <= 14.1f && LevelController.currentLevel != 5){
-			if(cameraLeft == true){
-				MoveCameraLeft();
+				if(transform.position.x >= -14.1f && transform.position.x <= 14.1f && LevelController.currentLevel != 5){
+					if(cameraLeft == true){
+						MoveCameraLeft();
+					}
+					else if(cameraRight == true){
+						MoveCameraRight();
+					}
+				}
+				if(levelControl.moveToNextLevel && GameController.instance.CalculateDistanceBetweenPlayerAndCenter() < 10f){
+					MoveCameraToCenter();
+					GameController.instance.ActivateSmallerBounds();
+				}
 			}
-			else if(cameraRight == true){
-				MoveCameraRight();
-			}
-		}
-		if(levelControl.moveToNextLevel && GameController.instance.CalculateDistanceBetweenPlayerAndCenter() < 10f){
-			MoveCameraToCenter();
-			GameController.instance.ActivateSmallerBounds();
 		}
 	}
 
@@ -90,33 +99,33 @@ public class CameraController : MonoBehaviour {
 	// Transition the camera between each level.
 	private void CameraTransitionBetweenLevels(){
 		if(LevelController.currentLevel == 1){
-			if(transform.position.y > -110){
+			if(transform.position.y > LevelController.LEVEL_2_Y_POSITION){
 				MoveCameraDown();
-				if(transform.position.y <= -110){
+				if(transform.position.y <= LevelController.LEVEL_2_Y_POSITION){
 					mainCamera.transform.position = new Vector3(0, LevelController.LEVEL_2_Y_POSITION, CameraController.CAMERA_Z_COORDINATE);
 				}
 			}
 		}
 		else if(LevelController.currentLevel == 2){
-			if(transform.position.y > -220){
+			if(transform.position.y > LevelController.LEVEL_3_Y_POSITION){
 				MoveCameraDown();
-				if(transform.position.y <= -220){
+				if(transform.position.y <= LevelController.LEVEL_3_Y_POSITION){
 					mainCamera.transform.position = new Vector3(0, LevelController.LEVEL_3_Y_POSITION, CameraController.CAMERA_Z_COORDINATE);
 				}
 			}
 		}
 		else if(LevelController.currentLevel == 3){
-			if(transform.position.y > -330){
+			if(transform.position.y > LevelController.LEVEL_4_Y_POSITION){
 				MoveCameraDown();
-				if(transform.position.y <= -330){
+				if(transform.position.y <= LevelController.LEVEL_4_Y_POSITION){
 					mainCamera.transform.position = new Vector3(0, LevelController.LEVEL_4_Y_POSITION, CameraController.CAMERA_Z_COORDINATE);
 				}
 			}
 		}
 		else if(LevelController.currentLevel == 4){
-			if(transform.position.y > -440){
+			if(transform.position.y > LevelController.LEVEL_5_Y_POSITION){
 				MoveCameraDown();
-				if(transform.position.y <= -440){
+				if(transform.position.y <= LevelController.LEVEL_5_Y_POSITION){
 					mainCamera.transform.position = new Vector3(0, LevelController.LEVEL_5_Y_POSITION, CameraController.CAMERA_Z_COORDINATE);
 				}
 			}
@@ -188,6 +197,16 @@ public class CameraController : MonoBehaviour {
 		}
 		else{
 			// NOT COMPLETED ANY LEVELS
+		}
+	}
+
+	// Camera moves up and watches the player fly away! 
+	public void CameraFinishGame(){
+		float direction = 1f;
+		float speed = 6f;
+		float moveYPosition = direction * speed * Time.deltaTime * 1;
+		if(transform.position.y < 0){
+			mainCamera.transform.Translate (0, moveYPosition, 0);
 		}
 	}
 

@@ -1,9 +1,19 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: Hell and Back
+ * Date modified: 23/03/19
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
+
+	GameObject mainCamera;
+
+	// UI Scripts
+	public CinematicBars cinematicBars;
 
 	// Canvas's
 	public GameObject playerStatsUI;
@@ -22,21 +32,50 @@ public class UIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		DisableUIDuringTransition();
+		mainCamera = GameObject.Find("Main Camera");
+		//Debug.Log("Camera Pos: " + mainCamera.transform.position.y);
+		if(!GameController.instance.GameOver()){
+			if(GameController.instance.finishGame){
+				TransitionUI();
+				if(mainCamera.transform.position.y > -2){
+					FinishGameUI();
+				}
+			}
+			else
+			if(NextLevelTrigger.nextLevelTriggered){
+				TransitionUI();
+			}
+			else if(!NextLevelTrigger.nextLevelTriggered){
+				PlayingUI();
+			}
+		}
 	}
 
-	public void DisableUIDuringTransition(){
-		if(NextLevelTrigger.nextLevelTriggered){
-			playerStatsUI.SetActive(false);
-            gameUpdatesUI.SetActive(false);
-		}
-		else if(!NextLevelTrigger.nextLevelTriggered){
+	// Disables the UI during transition
+	public void TransitionUI(){
+		cinematicBars.ShowCinematicBars();
+		playerStatsUI.SetActive(false);
+    	gameUpdatesUI.SetActive(false);
+	}
+
+	// Enables the UI after transition
+	public void PlayingUI(){
+		cinematicBars.HideCinematicBars();
+		if(cinematicBars.topBar.sizeDelta.y <= 15f){
 			playerStatsUI.SetActive(true);
 			gameUpdatesUI.SetActive(true);
 		}
 	}
 
-	public IEnumerator DisplayNextLevelHelpText(){
+	//UI for when the game is finished
+	public void FinishGameUI(){
+		cinematicBars.HideCinematicBars();
+		playerStatsUI.SetActive(false);
+    	gameUpdatesUI.SetActive(false);
+	}
+
+	// Display Help text
+	public IEnumerator DisplayHelpText(){
 		helpTextContainer.SetActive(true);
 		helpText.text = "Level complete! Jump down the hole to progress onto the next level.";
 		yield return new WaitForSeconds(5);

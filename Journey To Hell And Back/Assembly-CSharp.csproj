@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerInputControl.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSword.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSystems.cs" />
+     <Compile Include="Assets\Scripts\UI\CinematicBars.cs" />
      <Compile Include="Assets\Scripts\UI\CircleHealthBar.cs" />
      <Compile Include="Assets\Scripts\UI\TotalTime.cs" />
      <Compile Include="Assets\Scripts\UI\UIController.cs" />
