@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("Finished? - " + finishGame);
+        //Debug.Log("Finished? - " + finishGame);
         scoreText.text = score.ToString();
         if(!GameOver()){
             GameFlow();
@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour {
 
     // The entire flow of the game...
 	public void GameFlow(){
-        if(levelController.CompletedLevel1()) {
+        if(levelController.CompletedLevelOne()) {
 			if(!NextLevelTrigger.nextLevelTriggered){
 				levelController.moveToNextLevel = true;
 			}
@@ -192,7 +192,7 @@ public class GameController : MonoBehaviour {
             }
 			break;
 			case 1:
-			if(levelController.CompletedLevel1()){
+			if(levelController.CompletedLevelOne()){
 				smallerBoundsLvl1.SetActive(true);
             }
 			break;

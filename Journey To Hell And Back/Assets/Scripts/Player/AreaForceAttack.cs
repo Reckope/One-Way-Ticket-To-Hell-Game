@@ -24,47 +24,46 @@ public class AreaForceAttack : MonoBehaviour
     bool fadeOut = false;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start(){
         _collider = GetComponent<Collider2D>();
         transform.localScale = initialSize;
         cooldownBar.value = 100f;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, circleOpacity);
         cooldownBar.value = cooldownValue;
 
-        // if the force attack has been executed, fade the cirlce out.
-        if (fadeOut)
-        {
+        // If the player uses the force attack...
+        if (PlayerInputControl.areaForceAttack) {
+			ExpandCircle ();
+		}
+
+        // Reset the force attack.
+        if (fadeOut){
             circleOpacity -= Time.deltaTime * 1.4f;
             _collider.enabled = false;
         }
 
-        CalculateCoodownValue();
+        ForceAttackCoodownValue();
     }
 
     // Expand the force attack...
     public void ExpandCircle()
     {
-        if (transform.localScale.x <= maxSize)
-        {
+        if (transform.localScale.x <= maxSize){
             areaSize += Time.deltaTime * 300f;
             transform.localScale = initialSize * areaSize;
         }
-        else
-        {
+        else{
             PlayerInputControl.areaForceAttack = false;
             StartCoroutine(ResetForceAttack());
         }
     }
 
     // Resets the force attack circle
-    public IEnumerator ResetForceAttack()
-    {
+    public IEnumerator ResetForceAttack(){
         circleOpacity = 1f;
         fadeOut = true;
         yield return new WaitForSeconds(0.6f);
@@ -75,30 +74,24 @@ public class AreaForceAttack : MonoBehaviour
         transform.localScale = initialSize;
     }
 
-    // Is the cooldown active or not...
-    public static bool ForceAttackCooldownActive()
-    {
-        if (cooldownValue < 100f)
-        {
+    // Is the cooldown active or not?
+    public static bool ForceAttackCooldownActive(){
+        if (cooldownValue < 100f){
             return true;
         }
-        else
-        {
+        else{
             return false;
         }
     }
 
     // Change the cooldown value based on player input.
-    void CalculateCoodownValue()
-    {
+    public void ForceAttackCoodownValue(){
         float cooldownRate = 60f;
 
-        if (PlayerInputControl._areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive())
-        {
+        if (PlayerInputControl._areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
             cooldownValue = 0f;
         }
-        else if (!PlayerInputControl._areaForceAttack && cooldownValue < 100f)
-        {
+        else if (!PlayerInputControl._areaForceAttack && cooldownValue < 100f){
             cooldownValue += Time.deltaTime * cooldownRate;
         }
     }

@@ -7,10 +7,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInputControl : MonoBehaviour {
 
 	public AreaForceAttack forceAttack;
+
+	public Slider horizontalControlSlider;
 
 	public float speed;
 	public float jumpForce;
@@ -44,63 +47,58 @@ public class PlayerInputControl : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
+		horizontalControlSlider.value = 0;
 	}
 
 	void Update(){
-		// This is currently designed for keyboard controls.
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
-			KeyboardControls();
-			rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
+			//KeyboardControls();
+			if(horizontalControlSlider.value < 0){
+				rb2d.velocity = new Vector2 (-1 * speed, rb2d.velocity.y);
+			}
+			else if(horizontalControlSlider.value > 0){
+				rb2d.velocity = new Vector2 (1 * speed, rb2d.velocity.y);
+			}
+			else if(horizontalControlSlider.value == 0){
+				rb2d.velocity = new Vector2 (0 * speed, rb2d.velocity.y);
+			}
 		}
 
 		// Check if the player is grounded.
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround); // [1]
 
-		// If I press down the key...
-		if (jump) {
+		// Necessary Methods.
+		FaceDirection ();
+	}
+
+	public void Jump(){
+		jump = true;
+		if(jump){
 			if (grounded) {
 				rb2d.velocity = Vector2.up * jumpForce;
 				stoppedJumping = false;
 			}
 		}
+		DoubleJump();
+	}
 
-		// 2 bools allow the circle to continue expending without holding down space bar.
+	public void PlayerForceAttack(){
+		_areaForceAttack = true;
 		if(_areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
 			areaForceAttack = true;
 		}
-		if (areaForceAttack) {
-			forceAttack.ExpandCircle ();
-		}
+		forceAttack.ForceAttackCoodownValue();
+		_areaForceAttack = false;
 
-		// Necessary Methods.
-		FaceDirection ();
-		DoubleJump ();
 	}
 
-	void KeyboardControls(){
-		jump = Input.GetKeyDown (KeyCode.W);
-		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
-		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
-	}
-
-	// Player faces the direction they're moving.
-	void FaceDirection(){
-		if (moveLeftAndRight < 0) {
-			goingLeft = true;
-			mySpriteRenderer.flipX = false;
-			goingRight = false;
-		}
-
-		if (moveLeftAndRight > 0) {
-			goingRight = true;
-			goingLeft = false;
-			mySpriteRenderer.flipX = true;
-		}
+	public void ResetSlider(){
+		horizontalControlSlider.value = 0;
 	}
 
 	// Enables Double Jump for the player
 	void DoubleJump(){
-		int extraJumps = 1;
+		int extraJumps = 2;
 
 		if (grounded) {
 			initialExtraJumps = extraJumps;
@@ -113,5 +111,44 @@ public class PlayerInputControl : MonoBehaviour {
 		else if (jump && initialExtraJumps == 0 && grounded){
 			rb2d.velocity = Vector2.up * jumpForce;
 		}
+		jump = false;
+	}
+
+	// Player faces the direction they're moving.
+	void FaceDirection(){
+		if (horizontalControlSlider.value < 0) {
+			goingLeft = true;
+			mySpriteRenderer.flipX = false;
+			goingRight = false;
+		}
+
+		if (horizontalControlSlider.value > 0) {
+			goingRight = true;
+			goingLeft = false;
+			mySpriteRenderer.flipX = true;
+		}
+	}
+
+	// This is for either testing purposes, or PC build.
+	void KeyboardControls(){
+		// *** JUMP CONTROLS ***
+		//jump = Input.GetKeyDown (KeyCode.W);
+		//if(jump){
+		//	if (grounded) {
+		//		rb2d.velocity = Vector2.up * jumpForce;
+		//		stoppedJumping = false;
+		//	}
+		//}
+		//DoubleJump();
+
+		// *** HORIZONTAL CONTROLS ***
+		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
+
+		// *** AREA FORCE ATTACK CONTROLS ***
+		//_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
+		//if(_areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
+		//	areaForceAttack = true;
+		//}
 	}
 }

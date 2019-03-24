@@ -15,8 +15,6 @@ public class HealthItem : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collide){
 		if (collide.gameObject.tag == ("Player")) {
 			PlayerHealth.currentHealth += increaseHealth;
-			// Score +1 is temporary for testing...
-			GameController.score += 1;
 		}
 	}
 

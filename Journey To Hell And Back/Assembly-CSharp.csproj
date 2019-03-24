@@ -60,6 +60,12 @@
      <Compile Include="Assets\Scripts\Game Control\NextLevelTrigger.cs" />
      <Compile Include="Assets\Scripts\Game Control\SpawnEnemiesController.cs" />
      <Compile Include="Assets\Scripts\Items\HealthItem.cs" />
+     <Compile Include="Assets\Scripts\Items\Ticket.cs" />
+     <Compile Include="Assets\Scripts\Levels\LevelFive.cs" />
+     <Compile Include="Assets\Scripts\Levels\LevelFour.cs" />
+     <Compile Include="Assets\Scripts\Levels\LevelOne.cs" />
+     <Compile Include="Assets\Scripts\Levels\LevelThree.cs" />
+     <Compile Include="Assets\Scripts\Levels\LevelTwo.cs" />
      <Compile Include="Assets\Scripts\Player\AreaForceAttack.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerInputControl.cs" />

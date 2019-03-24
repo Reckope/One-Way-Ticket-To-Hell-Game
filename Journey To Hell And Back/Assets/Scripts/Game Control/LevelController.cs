@@ -11,6 +11,11 @@ public class LevelController : MonoBehaviour {
 
 	// Other Scripts
 	public UIController uiController;
+	public LevelOne levelOne;
+	public LevelTwo levelTwo;
+	public LevelThree levelThree;
+	public LevelFour levelFour;
+	public LevelFive levelFive;
 
     // Global Variables
     public const int LEVEL_1_Y_POSITION = 0;
@@ -60,9 +65,10 @@ public class LevelController : MonoBehaviour {
 	 }
 
 	// Level functions. Create conditions of when the player has completed a level.
-	// Temporary. Planning to have a much more complex way of determining when to progress onto the next level.
-	public bool CompletedLevel1(){
-		if(GameController.score == 3 && currentLevel == 1) {
+	// Each level tells the controller when they're completed, so the controller can then
+	// tell other scripts what to do.
+	public bool CompletedLevelOne(){
+		if(levelOne.LevelOneCompleted() && currentLevel == 1) {
             return true;
         }
 		else{
@@ -71,7 +77,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel2(){
-		 if(GameController.score == 6 && currentLevel == 2) {
+		 if(levelTwo.LevelTwoCompleted() && currentLevel == 2) {
             return true;
         }
 		else{
@@ -80,7 +86,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel3(){
-		 if(GameController.score == 9 && currentLevel == 3) {
+		 if(levelThree.LevelThreeCompleted() && currentLevel == 3) {
             return true;
         }
 		else{
@@ -89,7 +95,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel4(){
-		 if(GameController.score == 12 && currentLevel == 4) {
+		 if(levelFour.LevelFourCompleted() && currentLevel == 4) {
             return true;
         }
 		else{
@@ -98,7 +104,7 @@ public class LevelController : MonoBehaviour {
 	}
 
 	public bool CompletedLevel5(){
-		 if(GameController.score == 15 && currentLevel == 5) {
+		 if(levelFive.LevelFiveCompleted() && currentLevel == 5) {
             return true;
         }
 		else{

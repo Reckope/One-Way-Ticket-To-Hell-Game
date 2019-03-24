@@ -180,7 +180,7 @@ public class CameraController : MonoBehaviour {
 			cameraMovedToCenter = true;
 		}
 		// Move the camera based on which hole it detects.
-		if(levelControl.CompletedLevel1()){
+		if(levelControl.CompletedLevelOne()){
 			mainCamera.transform.position = new Vector3(position, LevelController.LEVEL_1_Y_POSITION, CAMERA_Z_COORDINATE);
 		}
 		else if(levelControl.CompletedLevel2()){

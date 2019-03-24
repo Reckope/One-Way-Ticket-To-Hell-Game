@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour {
 	// Canvas's
 	public GameObject playerStatsUI;
 	public GameObject gameUpdatesUI;
+	public GameObject playerControls;
 
 	// UI Objects
 	public GameObject helpTextContainer;
@@ -56,6 +57,7 @@ public class UIController : MonoBehaviour {
 		cinematicBars.ShowCinematicBars();
 		playerStatsUI.SetActive(false);
     	gameUpdatesUI.SetActive(false);
+		playerControls.SetActive(false);
 	}
 
 	// Enables the UI after transition
@@ -64,6 +66,7 @@ public class UIController : MonoBehaviour {
 		if(cinematicBars.topBar.sizeDelta.y <= 15f){
 			playerStatsUI.SetActive(true);
 			gameUpdatesUI.SetActive(true);
+			playerControls.SetActive(true);
 		}
 	}
 
@@ -72,6 +75,7 @@ public class UIController : MonoBehaviour {
 		cinematicBars.HideCinematicBars();
 		playerStatsUI.SetActive(false);
     	gameUpdatesUI.SetActive(false);
+		playerControls.SetActive(false);
 	}
 
 	// Display Help text
