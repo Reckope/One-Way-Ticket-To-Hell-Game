@@ -4,6 +4,7 @@
 * Hardware: 2012 15" Macbook Pro Retina Display.
 * Software: Unity
 * Platform: iOS - iPhone / iPod
+
 --- Please note that the white spacing on Github appears to be different from that on Visual Studio Code, which may result in the code looking slightly messy in some parts.(It's not like that in the code editor) --- 
 
 References:
