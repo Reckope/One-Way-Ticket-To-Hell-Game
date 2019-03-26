@@ -12,8 +12,12 @@ using UnityEngine.UI;
 public class PlayerInputControl : MonoBehaviour {
 
 	public AreaForceAttack forceAttack;
+	public CameraController cameraController;
 
-	public Slider horizontalControlSlider;
+	public Slider controlSlider;
+	public Slider shootSlider;
+
+	public static float playerSpeedValue;
 
 	public float speed;
 	public float jumpForce;
@@ -21,8 +25,12 @@ public class PlayerInputControl : MonoBehaviour {
 
 	public static bool grounded;
 	public bool stoppedJumping;
+
 	public bool goingRight;
 	public bool goingLeft;
+	public bool lookingLeft;
+	public bool lookingRight;
+	public bool shooting;
 
 	public LayerMask whatIsGround;
 
@@ -39,6 +47,7 @@ public class PlayerInputControl : MonoBehaviour {
 
 	private int initialExtraJumps;
 	private float moveLeftAndRight;
+	private float shootLeftAndRight;
 
 	private SpriteRenderer mySpriteRenderer;
 	private BoxCollider2D myBoxCollider;
@@ -47,21 +56,16 @@ public class PlayerInputControl : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
-		horizontalControlSlider.value = 0;
+		controlSlider.value = 0;
 	}
 
 	void Update(){
+		Debug.Log("Shooting " + shooting);
+		Debug.Log("Shoot: " + shootSlider.value);
+		playerSpeedValue = controlSlider.value;
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
 			//KeyboardControls();
-			if(horizontalControlSlider.value < 0){
-				rb2d.velocity = new Vector2 (-1 * speed, rb2d.velocity.y);
-			}
-			else if(horizontalControlSlider.value > 0){
-				rb2d.velocity = new Vector2 (1 * speed, rb2d.velocity.y);
-			}
-			else if(horizontalControlSlider.value == 0){
-				rb2d.velocity = new Vector2 (0 * speed, rb2d.velocity.y);
-			}
+			MovePlayerWithSlider();
 		}
 
 		// Check if the player is grounded.
@@ -92,8 +96,12 @@ public class PlayerInputControl : MonoBehaviour {
 
 	}
 
-	public void ResetSlider(){
-		horizontalControlSlider.value = 0;
+	public void ResetControlSlider(){
+		controlSlider.value = 0;
+	}
+
+	public void ResetShootSlider(){
+		shootSlider.value = 0;
 	}
 
 	// Enables Double Jump for the player
@@ -116,39 +124,65 @@ public class PlayerInputControl : MonoBehaviour {
 
 	// Player faces the direction they're moving.
 	void FaceDirection(){
-		if (horizontalControlSlider.value < 0) {
-			goingLeft = true;
-			mySpriteRenderer.flipX = false;
+		if(controlSlider.value < 0){
 			goingRight = false;
+			goingLeft = true;
 		}
-
-		if (horizontalControlSlider.value > 0) {
+		else if (controlSlider.value > 0) {
 			goingRight = true;
 			goingLeft = false;
+		}
+
+		if (shootSlider.value < 0) {
+			mySpriteRenderer.flipX = false;
+		}
+		else if(shootSlider.value > 0){
 			mySpriteRenderer.flipX = true;
+		}
+	}
+
+	// Move the player with the horizontalMovementSlider.
+	void MovePlayerWithSlider(){
+		moveLeftAndRight = Input.GetAxisRaw ("HorizontalControl");
+		rb2d.velocity = new Vector2 (controlSlider.value * speed, rb2d.velocity.y);
+	}
+
+	void ShootWithSlider(){
+		shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
+		Debug.Log("SHOOTING");
+		if(shootSlider.value < 0){
+			Debug.Log("SHOOTING_LEFT");
+		}
+		else if(shootSlider.value > 0){
+			Debug.Log("SHOOTING_RIGHT");
 		}
 	}
 
 	// This is for either testing purposes, or PC build.
 	void KeyboardControls(){
 		// *** JUMP CONTROLS ***
-		//jump = Input.GetKeyDown (KeyCode.W);
-		//if(jump){
-		//	if (grounded) {
-		//		rb2d.velocity = Vector2.up * jumpForce;
-		//		stoppedJumping = false;
-		//	}
-		//}
-		//DoubleJump();
+		/*
+		jump = Input.GetKeyDown (KeyCode.W);
+		if(jump){
+			if (grounded) {
+				rb2d.velocity = Vector2.up * jumpForce;
+				stoppedJumping = false;
+			}
+		}
+		DoubleJump();
+		*/
 
 		// *** HORIZONTAL CONTROLS ***
-		moveLeftAndRight = Input.GetAxisRaw ("Horizontal");
+		moveLeftAndRight = Input.GetAxisRaw ("HorizontalControl");
+		controlSlider.value = moveLeftAndRight;
 		rb2d.velocity = new Vector2 (moveLeftAndRight * speed, rb2d.velocity.y);
 
 		// *** AREA FORCE ATTACK CONTROLS ***
-		//_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
-		//if(_areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
-		//	areaForceAttack = true;
-		//}
+		/*
+		_areaForceAttack = Input.GetKeyDown (KeyCode.Space);
+		if(_areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
+			areaForceAttack = true;
+		}
+		*/
 	}
 }

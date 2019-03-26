@@ -6,7 +6,7 @@ InputManager:
   serializedVersion: 2
   m_Axes:
   - serializedVersion: 3
-    m_Name: Horizontal
+    m_Name: HorizontalControl
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: left
@@ -150,13 +150,13 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal
+    m_Name: HorizontalShoot
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
+    negativeButton: o
+    positiveButton: p
+    altNegativeButton: k
+    altPositiveButton: l
     gravity: 0
     dead: 0.19
     sensitivity: 1

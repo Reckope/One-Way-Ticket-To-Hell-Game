@@ -11,6 +11,7 @@ public class PlayerSystems : MonoBehaviour {
 
 	public LevelController levelController;
 	public CinematicBars cinematicBars;
+	public PlayerInputControl playerInputControl;
 
 	static Rigidbody2D rb2d;
 
@@ -46,25 +47,30 @@ public class PlayerSystems : MonoBehaviour {
 
 		// This is me cheating, since I'm having problems getting OnTriggerExit2D to trigger while
 		// the player gameObject has a static RigidBody2D type.
+		// When the player has reached the next level area...
 		// Level 1 - 2...
 		if (transform.position.y > -110 && transform.position.y < -100){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
+			playerInputControl.controlSlider.value = 0;
 		}
 		// Level 2 - 3...
 		else if (transform.position.y > -220 && transform.position.y < -210){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
+			playerInputControl.controlSlider.value = 0;
 		}
 		// Level 3 - 4...
 		else if (transform.position.y > -330 && transform.position.y < -320){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
+			playerInputControl.controlSlider.value = 0;
 		}
 		// Level 4 - 5...
 		else if (transform.position.y > -440 && transform.position.y < -430){
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
+			playerInputControl.controlSlider.value = 0;
 		}
 		else{
 			//Debug.Log("TRANSITIONING");

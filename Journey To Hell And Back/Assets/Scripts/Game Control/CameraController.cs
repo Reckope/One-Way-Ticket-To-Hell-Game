@@ -33,8 +33,6 @@ public class CameraController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
-		//Debug.Log(LevelController.moveToNextLevel);
-		//Debug.Log(GameController.instance.CalculateDistanceBetweenPlayerAndCenter());
 		if(!GameController.instance.GameOver()){
 			if(GameController.instance.finishGame){
 				CameraFinishGame();
@@ -145,19 +143,34 @@ public class CameraController : MonoBehaviour {
 	}
 
 	// Move the camera left when the player goes left.
+	// Speed of the camera is based off the speed of the player (prevents jitter).
 	void MoveCameraLeft(){
 		float direction = -1f;
-        float speed = 6f;
+		float speed;
+		if(PlayerInputControl.playerSpeedValue < 0){
+			speed = PlayerInputControl.playerSpeedValue * -7f;
+		}
+		else{
+			speed = 0;
+		}
         float moveXPosition = direction * speed * Time.deltaTime * 1;
 
 		mainCamera.transform.Translate (moveXPosition, 0, 0);
 	}
 
 	// Move the camera right when the player goes right.
+	// Speed of the camera is based off the speed of the player (prevents jitter).
 	void MoveCameraRight(){
 		float direction = 1f;
-        float speed = 6f;
-        float moveXPosition = direction * speed * Time.deltaTime * 1;
+		float speed;
+		if(PlayerInputControl.playerSpeedValue > 0){
+        	speed = PlayerInputControl.playerSpeedValue * 7f;
+		}
+		else{
+			speed = 0;
+		}
+        float moveXPosition = direction * speed * Time.deltaTime * 1f;
+		//float moveXPosition = Mathf.SmoothDamp(transform.position.x, 14.1f, ref xVelocity, 0.3f, 6f);
 
 		mainCamera.transform.Translate (moveXPosition, 0, 0);
 	}
@@ -221,7 +234,7 @@ public class CameraController : MonoBehaviour {
 			cameraLeft = false;
 			cameraRight = true;
 		}
-    }
+	}
 
 	// If the player stays in the triger...
 	void OnTriggerStay2D(Collider2D collide){
@@ -233,7 +246,7 @@ public class CameraController : MonoBehaviour {
 			cameraLeft = false;
 			cameraRight = true;
 		}
-    }
+	}
 
 	// If the player exits the trigger..
 	void OnTriggerExit2D(Collider2D collide){
