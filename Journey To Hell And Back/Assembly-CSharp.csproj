@@ -51,6 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Projectile.cs" />
+     <Compile Include="Assets\ProjectilePool.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyBasicFollow.cs" />
      <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />

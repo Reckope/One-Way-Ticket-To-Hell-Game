@@ -13,11 +13,13 @@ public class PlayerInputControl : MonoBehaviour {
 
 	public AreaForceAttack forceAttack;
 	public CameraController cameraController;
+	public ProjectilePool projectilePool;
 
 	public Slider controlSlider;
 	public Slider shootSlider;
 
 	public static float playerSpeedValue;
+	public static bool shootingLeft, shootingRight;
 
 	public float speed;
 	public float jumpForce;
@@ -31,6 +33,9 @@ public class PlayerInputControl : MonoBehaviour {
 	public bool lookingLeft;
 	public bool lookingRight;
 	public bool shooting;
+
+	private float fireRate = 0.1f;
+	private float nextFire = 0.0f;
 
 	public LayerMask whatIsGround;
 
@@ -60,12 +65,16 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	void Update(){
-		Debug.Log("Shooting " + shooting);
-		Debug.Log("Shoot: " + shootSlider.value);
+		//Debug.Log("Shooting " + shooting);
+		//Debug.Log("Shoot: " + shootSlider.value);
+		//if (Input.GetKeyDown(KeyCode.M)) {
+      	//	Shoot();
+		//}
 		playerSpeedValue = controlSlider.value;
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
-			//KeyboardControls();
-			MovePlayerWithSlider();
+			KeyboardControls();
+			//MovePlayerWithSlider();
+			ShootWithSlider();
 		}
 
 		// Check if the player is grounded.
@@ -149,12 +158,17 @@ public class PlayerInputControl : MonoBehaviour {
 
 	void ShootWithSlider(){
 		shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
-		Debug.Log("SHOOTING");
-		if(shootSlider.value < 0){
-			Debug.Log("SHOOTING_LEFT");
+		if(shootSlider.value == -1 && Time.time > nextFire){
+			nextFire = Time.time + fireRate;
+			shootingLeft = true;
+			shootingRight = false;
+			Shoot();
 		}
-		else if(shootSlider.value > 0){
-			Debug.Log("SHOOTING_RIGHT");
+		else if(shootSlider.value == 1 && Time.time > nextFire){
+			nextFire = Time.time + fireRate;
+			shootingLeft = false;
+			shootingRight = true;
+			Shoot();
 		}
 	}
 
@@ -184,5 +198,21 @@ public class PlayerInputControl : MonoBehaviour {
 			areaForceAttack = true;
 		}
 		*/
+	}
+
+	// Shoot the projectiles
+	void Shoot(){
+		float spawnBallLeft = (this.gameObject.transform.position.x - 1f);
+		float spawnBallRight = (this.gameObject.transform.position.x + 1f);
+		GameObject lightBall = projectilePool.GetPooledProjectile();
+		if (lightBall != null){
+			if(shootingLeft){
+				lightBall.transform.position = new Vector2(spawnBallLeft, this.gameObject.transform.position.y);
+			}
+			else if(shootingRight){
+				lightBall.transform.position = new Vector2(spawnBallRight, this.gameObject.transform.position.y);
+			}
+			lightBall.SetActive(true);
+		}
 	}
 }

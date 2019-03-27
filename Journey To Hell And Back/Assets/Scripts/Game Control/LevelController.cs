@@ -135,6 +135,11 @@ public class LevelController : MonoBehaviour {
          if (collide.gameObject.tag == ("Player")){
              levelStaying = false;
          }
+
+		 if(collide.gameObject.tag == ("Projectile")){
+			 Debug.Log("DESTROY");
+			Destroy(gameObject);
+		}
      }
 	 // ******* END OF TRIGGERS *******
 

@@ -5,3 +5,5 @@ References:
 [2] Answers.Unity, (2013), Most efficient way to check distance between player and scene objects, Available at: "https://answers.unity.com/questions/536557/most-efficient-way-to-check-distance-between-playe.html" [Used in GameController.CalculateDistanceBetweenPlayerAndHole()].
 
 [3] Youtube, (2018), Unity Tutorial - Cinematic bars, Available at: "https://www.youtube.com/watch?v=nNbM40HFyCs" [Used in CinematicBars.cs].
+
+[4] Raywenderlich, (2016), Object Pooling in Unity, Available at: "https://www.raywenderlich.com/847-object-pooling-in-unity" [Used in ProjectilePool.cs]
