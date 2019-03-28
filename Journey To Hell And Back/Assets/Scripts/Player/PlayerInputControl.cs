@@ -11,13 +11,19 @@ using UnityEngine.UI;
 
 public class PlayerInputControl : MonoBehaviour {
 
+	// Scripts and components.
 	public AreaForceAttack forceAttack;
 	public CameraController cameraController;
 	public ProjectilePool projectilePool;
+	private Rigidbody2D rb2d;
+	private SpriteRenderer mySpriteRenderer;
+	//private BoxCollider2D myBoxCollider;
 
+	// GameObjects
 	public Slider controlSlider;
 	public Slider shootSlider;
 
+	// Global variables.
 	public static float playerSpeedValue;
 	public static bool shootingLeft, shootingRight;
 
@@ -34,8 +40,8 @@ public class PlayerInputControl : MonoBehaviour {
 	public bool lookingRight;
 	public bool shooting;
 
-	private float fireRate = 0.1f;
-	private float nextFire = 0.0f;
+	private float fireRate;
+	private float nextFire;
 
 	public LayerMask whatIsGround;
 
@@ -48,32 +54,26 @@ public class PlayerInputControl : MonoBehaviour {
 	public static bool _areaForceAttack = false;
 	public static bool areaForceAttack = false;
 
-	private Rigidbody2D rb2d;
-
 	private int initialExtraJumps;
 	private float moveLeftAndRight;
 	private float shootLeftAndRight;
-
-	private SpriteRenderer mySpriteRenderer;
-	private BoxCollider2D myBoxCollider;
 
 	void Start (){
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		controlSlider.value = 0;
+		fireRate = 0.1f;
+		nextFire = 0.0f;
 	}
 
 	void Update(){
 		//Debug.Log("Shooting " + shooting);
 		//Debug.Log("Shoot: " + shootSlider.value);
-		//if (Input.GetKeyDown(KeyCode.M)) {
-      	//	Shoot();
-		//}
 		playerSpeedValue = controlSlider.value;
-		if(rb2d.bodyType == RigidbodyType2D.Dynamic){
-			KeyboardControls();
-			//MovePlayerWithSlider();
+		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0){
+			//KeyboardControls();
+			MovePlayerWithSlider();
 			ShootWithSlider();
 		}
 
@@ -102,7 +102,6 @@ public class PlayerInputControl : MonoBehaviour {
 		}
 		forceAttack.ForceAttackCoodownValue();
 		_areaForceAttack = false;
-
 	}
 
 	public void ResetControlSlider(){
@@ -156,15 +155,18 @@ public class PlayerInputControl : MonoBehaviour {
 		rb2d.velocity = new Vector2 (controlSlider.value * speed, rb2d.velocity.y);
 	}
 
+	// Shoot projectiles using the shooterSlider.
 	void ShootWithSlider(){
 		shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
-		if(shootSlider.value == -1 && Time.time > nextFire){
+		// Shooting left.
+		if(shootSlider.value <= -0.2 && Time.time > nextFire){
 			nextFire = Time.time + fireRate;
 			shootingLeft = true;
 			shootingRight = false;
 			Shoot();
 		}
-		else if(shootSlider.value == 1 && Time.time > nextFire){
+		// Shooting right.
+		else if(shootSlider.value >= 0.2 && Time.time > nextFire){
 			nextFire = Time.time + fireRate;
 			shootingLeft = false;
 			shootingRight = true;
@@ -200,10 +202,11 @@ public class PlayerInputControl : MonoBehaviour {
 		*/
 	}
 
-	// Shoot the projectiles
+	// Shoot the projectiles left or right.
 	void Shoot(){
 		float spawnBallLeft = (this.gameObject.transform.position.x - 1f);
 		float spawnBallRight = (this.gameObject.transform.position.x + 1f);
+
 		GameObject lightBall = projectilePool.GetPooledProjectile();
 		if (lightBall != null){
 			if(shootingLeft){

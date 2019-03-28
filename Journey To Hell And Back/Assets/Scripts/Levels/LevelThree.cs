@@ -45,9 +45,9 @@ public class LevelThree : MonoBehaviour {
 	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).
 	private void SpawnTickets(){
 		// Spawn Tickets
-		spawnTickets [0] = new Vector2(-5.45f, -220.6f);
-		spawnTickets [1] = new Vector2(5.45f, -220.6f);
-		spawnTickets [2] = new Vector2(15.6f, -222f);
+		spawnTickets [0] = new Vector2(14.67f, -222.62f);
+		spawnTickets [1] = new Vector2(16.1f, -220.5f);
+		spawnTickets [2] = new Vector2(-17.53f, -215.91f);
 
 		for (int x = 0; x < 3; x++) {
 			ticket = (GameObject)Instantiate (ticketPrefab, spawnTickets[x], Quaternion.identity);

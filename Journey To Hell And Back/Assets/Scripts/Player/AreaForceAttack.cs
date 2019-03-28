@@ -1,6 +1,6 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 10/03/19
+ * Date modified: 27/03/19
  */
 
 using System.Collections;
@@ -11,23 +11,29 @@ using UnityEngine.UI;
 public class AreaForceAttack : MonoBehaviour
 {
 
+    // Scripts & Components
     Vector2 initialSize = new Vector2(0.2f, 0.2f);
     Collider2D _collider;
 
+    // GameObjects
     public Slider cooldownBar;
 
+    // Global variables
     public static float cooldownValue = 100f;
-    float maxSize = 20f;
-    float areaSize = 5f;
-    float circleOpacity = 0.3f;
-
-    bool fadeOut = false;
+    private float maxSize;
+    private float areaSize;
+    private float circleOpacity;
+    private bool fadeOut;
 
     // Use this for initialization
     void Start(){
         _collider = GetComponent<Collider2D>();
         transform.localScale = initialSize;
         cooldownBar.value = 100f;
+        maxSize = 25f;
+        areaSize = 5f;
+        circleOpacity = 0.3f;
+        fadeOut = false;
     }
 
     // Update is called once per frame
@@ -39,13 +45,11 @@ public class AreaForceAttack : MonoBehaviour
         if (PlayerInputControl.areaForceAttack) {
 			ExpandCircle ();
 		}
-
         // Reset the force attack.
         if (fadeOut){
             circleOpacity -= Time.deltaTime * 1.4f;
             _collider.enabled = false;
         }
-
         ForceAttackCoodownValue();
     }
 
@@ -53,7 +57,7 @@ public class AreaForceAttack : MonoBehaviour
     public void ExpandCircle()
     {
         if (transform.localScale.x <= maxSize){
-            areaSize += Time.deltaTime * 300f;
+            areaSize += Time.deltaTime * 550f;
             transform.localScale = initialSize * areaSize;
         }
         else{
@@ -63,7 +67,7 @@ public class AreaForceAttack : MonoBehaviour
     }
 
     // Resets the force attack circle
-    public IEnumerator ResetForceAttack(){
+    private IEnumerator ResetForceAttack(){
         circleOpacity = 1f;
         fadeOut = true;
         yield return new WaitForSeconds(0.6f);
@@ -87,7 +91,6 @@ public class AreaForceAttack : MonoBehaviour
     // Change the cooldown value based on player input.
     public void ForceAttackCoodownValue(){
         float cooldownRate = 60f;
-
         if (PlayerInputControl._areaForceAttack && !AreaForceAttack.ForceAttackCooldownActive()){
             cooldownValue = 0f;
         }

@@ -51,8 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Projectile.cs" />
-     <Compile Include="Assets\ProjectilePool.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyBasicFollow.cs" />
      <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />
@@ -73,6 +71,8 @@
      <Compile Include="Assets\Scripts\Player\PlayerInputControl.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSword.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSystems.cs" />
+     <Compile Include="Assets\Scripts\Player\Projectile.cs" />
+     <Compile Include="Assets\Scripts\Player\ProjectilePool.cs" />
      <Compile Include="Assets\Scripts\UI\CinematicBars.cs" />
      <Compile Include="Assets\Scripts\UI\CircleHealthBar.cs" />
      <Compile Include="Assets\Scripts\UI\TotalTime.cs" />
