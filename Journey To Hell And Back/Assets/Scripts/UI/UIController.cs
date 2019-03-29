@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour {
 
 	GameObject mainCamera;
+	GameObject player;
 
 	// UI Scripts
 	public CinematicBars cinematicBars;
@@ -19,30 +20,43 @@ public class UIController : MonoBehaviour {
 	public GameObject playerStatsUI;
 	public GameObject gameUpdatesUI;
 	public GameObject playerControls;
+	public GameObject finishGame;
+	public GameObject gameOver;
 
 	// UI Objects
 	public GameObject helpTextContainer;
+	public Text finalScore;
+	public Text finalTime;
+	public Text finalScoreGameOver;
+	public Text finalTimeGameOver;
+	public Text deathReason;
 
 	// UI Text
 	public Text helpText;
 
 	// Use this for initialization
 	void Start () {
-
+		playerStatsUI.SetActive(true);
+		gameUpdatesUI.SetActive(true);
+		playerControls.SetActive(true);
+		finishGame.SetActive(false);
+		gameOver.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log("game Over " + GameController.instance.finishGame);
 		mainCamera = GameObject.Find("Main Camera");
-		//Debug.Log("Camera Pos: " + mainCamera.transform.position.y);
+		player = GameObject.Find("Player");
 		if(!GameController.instance.GameOver()){
 			if(GameController.instance.finishGame){
 				TransitionUI();
-				if(mainCamera.transform.position.y > -2){
+				if(player.transform.position.y > 1){
 					FinishGameUI();
 				}
 			}
 			else
+
 			if(NextLevelTrigger.nextLevelTriggered){
 				TransitionUI();
 			}
@@ -50,6 +64,8 @@ public class UIController : MonoBehaviour {
 				PlayingUI();
 			}
 		}
+		else
+		GameOverUI();
 	}
 
 	// Disables the UI during transition
@@ -74,11 +90,26 @@ public class UIController : MonoBehaviour {
 	public void FinishGameUI(){
 		cinematicBars.HideCinematicBars();
 		playerStatsUI.SetActive(false);
-    	gameUpdatesUI.SetActive(false);
 		playerControls.SetActive(false);
+		gameUpdatesUI.SetActive(false);
+		finishGame.SetActive(true);
+		finalScore.text = "<color=blue>" + "Score: " + "</color>" + GameController.score;
+		finalTime.text = "<color=red>" + "Time: " + "</color>" + TotalTime.niceTime;
 	}
 
-	// Display Help text
+	// Displays the Game Over UI.
+	public void GameOverUI(){
+		gameOver.SetActive(true);
+		deathReason.text = GameController.deathReasonString;
+		finalScoreGameOver.text = "<color=cyan>" + "Score: " + "</color>" + GameController.score;
+		finalTimeGameOver.text = "<color=red>" + "Time: " + "</color>" + TotalTime.niceTime;
+		playerStatsUI.SetActive(false);
+		playerControls.SetActive(false);
+		gameUpdatesUI.SetActive(false);
+		finishGame.SetActive(false);
+	}
+
+	// Displays Help text
 	public IEnumerator DisplayHelpText(){
 		helpTextContainer.SetActive(true);
 		helpText.text = "Level complete! Jump down the hole to progress onto the next level.";

@@ -30,7 +30,7 @@ public class NextLevelTrigger : MonoBehaviour {
     // If the player hits the trigger...
     void OnTriggerEnter2D(Collider2D collide){
         if (collide.gameObject.tag == ("Player")){
-			inTrigger = true;
+            inTrigger = true;
             if(gameObject.name == "FinishGameTrigger"){
                 GameController.instance.finishGame = true;
             }
@@ -38,12 +38,12 @@ public class NextLevelTrigger : MonoBehaviour {
     }
 
     // If the player exits the trigger...
-	void OnTriggerExit2D(Collider2D collide){
-         if (collide.gameObject.tag == ("Player")){
-             inTrigger = false;
-         }
-         if(GameController.instance.finishGame){
-             GameController.instance.finishGame = true;
-         }
-     }
+    void OnTriggerExit2D(Collider2D collide){
+        if (collide.gameObject.tag == ("Player")){
+            inTrigger = false;
+        }
+        if(GameController.instance.finishGame){
+            GameController.instance.finishGame = true;
+        }
+    }
 }

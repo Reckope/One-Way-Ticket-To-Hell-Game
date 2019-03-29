@@ -7,13 +7,13 @@ public class LevelOne : MonoBehaviour {
 	// Other Scripts
 	public LevelController levelController;
 
-	// Level objects arrays
+	// Level object arrays
 	private Vector2[] spawnTickets = new Vector2[3];
-	private Vector2[] spawnEnemies;
+	private Vector2[] spawnDemons = new Vector2[1];
 
 	// Prefabs
 	public GameObject ticketPrefab;
-	public GameObject enemyPrefab;
+	public GameObject demonPrefab;
 
 	// Game Objects
 	private GameObject demon;
@@ -24,22 +24,18 @@ public class LevelOne : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//SpawnEnemies();
 		SpawnTickets();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
+		SpawnEnemies();
 	}
 
 	// Spawns the enemies in at the start.
 	private void SpawnEnemies(){
 		// Spawn points
-		spawnEnemies [0] = new Vector2();
-		spawnEnemies [1] = new Vector2();
-		spawnEnemies [2] = new Vector2();
-		spawnEnemies [3] = new Vector2();
+		spawnDemons [0] = new Vector2(-4.15f, -2.90f);
+		//spawnEnemies [1] = new Vector2();
+		//spawnEnemies [2] = new Vector2();
+		//spawnEnemies [3] = new Vector2();
+		demon = (GameObject)Instantiate (demonPrefab, spawnDemons[0], Quaternion.identity);
 	}
 
 	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).
@@ -57,8 +53,8 @@ public class LevelOne : MonoBehaviour {
 
 	public bool LevelOneCompleted(){
 		if(lvl1TicketQuantity == 0) {
-            return true;
-        }
+			return true;
+		}
 		else{
 			return false;
 		}

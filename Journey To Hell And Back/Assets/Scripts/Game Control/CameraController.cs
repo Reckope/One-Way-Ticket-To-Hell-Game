@@ -136,8 +136,8 @@ public class CameraController : MonoBehaviour {
 		// Smoothly move the camera downwards. 
 	public void MoveCameraDown(){
 		float direction = -1f;
-        float speed = 3.5f;
-        float moveYPosition = direction * speed * Time.deltaTime * 1;
+		float speed = 3.5f;
+		float moveYPosition = direction * speed * Time.deltaTime * 1;
 
 		mainCamera.transform.Translate (0, moveYPosition, 0);
 	}
@@ -147,13 +147,14 @@ public class CameraController : MonoBehaviour {
 	void MoveCameraLeft(){
 		float direction = -1f;
 		float speed;
+
 		if(PlayerInputControl.playerSpeedValue < 0){
 			speed = PlayerInputControl.playerSpeedValue * -7f;
 		}
 		else{
 			speed = 0;
 		}
-        float moveXPosition = direction * speed * Time.deltaTime * 1;
+		float moveXPosition = direction * speed * Time.deltaTime * 1;
 
 		mainCamera.transform.Translate (moveXPosition, 0, 0);
 	}
@@ -164,12 +165,12 @@ public class CameraController : MonoBehaviour {
 		float direction = 1f;
 		float speed;
 		if(PlayerInputControl.playerSpeedValue > 0){
-        	speed = PlayerInputControl.playerSpeedValue * 7f;
+			speed = PlayerInputControl.playerSpeedValue * 7f;
 		}
 		else{
 			speed = 0;
 		}
-        float moveXPosition = direction * speed * Time.deltaTime * 1f;
+		float moveXPosition = direction * speed * Time.deltaTime * 1f;
 		//float moveXPosition = Mathf.SmoothDamp(transform.position.x, 14.1f, ref xVelocity, 0.3f, 6f);
 
 		mainCamera.transform.Translate (moveXPosition, 0, 0);
@@ -225,11 +226,11 @@ public class CameraController : MonoBehaviour {
 
 	// ******* TRIGGERS *******
 	// If the player hits the trigger...
-    void OnTriggerEnter2D(Collider2D collide){
-        if (collide.gameObject.tag == ("Player") && gameObject.name == "CameraLeftTrigger"){
+	void OnTriggerEnter2D(Collider2D collide){
+		if (collide.gameObject.tag == ("Player") && gameObject.name == "CameraLeftTrigger"){
 			cameraLeft = true;
 			cameraRight = false;
-        }
+		}
 		else if(collide.gameObject.tag == ("Player") && gameObject.name == "CameraRightTrigger"){
 			cameraLeft = false;
 			cameraRight = true;
@@ -238,10 +239,10 @@ public class CameraController : MonoBehaviour {
 
 	// If the player stays in the triger...
 	void OnTriggerStay2D(Collider2D collide){
-        if (collide.gameObject.tag == ("Player") && gameObject.name == "CameraLeftTrigger"){
+		if (collide.gameObject.tag == ("Player") && gameObject.name == "CameraLeftTrigger"){
 			cameraLeft = true;
 			cameraRight = false;
-        }
+		}
 		else if(collide.gameObject.tag == ("Player") && gameObject.name == "CameraRightTrigger"){
 			cameraLeft = false;
 			cameraRight = true;
@@ -252,6 +253,6 @@ public class CameraController : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D collide){
 		cameraLeft = false;
 		cameraRight = false;
-    }
+	}
 	// ******* END OF TRIGGERS *******
 }

@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour {
 
     public static int score;
     public static bool preventLoop = false;
+    public static string deathReasonString;
     public bool finishGame;
 
     // Use this for initialization
@@ -52,29 +53,24 @@ public class GameController : MonoBehaviour {
         else if (instance != this){
             Destroy(gameObject);
         }
-
         score = 0;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         //Debug.Log("Finished? - " + finishGame);
         scoreText.text = score.ToString();
         if(!GameOver()){
             GameFlow();
         }
-        else if(GameOver()){
-            // Do Game Over Stuff...
-	        Debug.Log ("GAME_OVER");
-        }
     }
 
     // The entire flow of the game...
-	public void GameFlow(){
+    public void GameFlow(){
         if(levelController.CompletedLevelOne()) {
-			if(!NextLevelTrigger.nextLevelTriggered){
-				levelController.moveToNextLevel = true;
-			}
+            if(!NextLevelTrigger.nextLevelTriggered){
+                levelController.moveToNextLevel = true;
+            }
             StartCoroutine(MoveHole());
             if(preventLoop){
                 return;
@@ -83,9 +79,9 @@ public class GameController : MonoBehaviour {
             StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel2()) {
-			if(!NextLevelTrigger.nextLevelTriggered){
-				levelController.moveToNextLevel = true;
-			}
+            if(!NextLevelTrigger.nextLevelTriggered){
+                levelController.moveToNextLevel = true;
+            }
             StartCoroutine(MoveHole());
             if(preventLoop){
                 return;
@@ -94,9 +90,9 @@ public class GameController : MonoBehaviour {
             StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel3()) {
-			if(!NextLevelTrigger.nextLevelTriggered){
-				levelController.moveToNextLevel = true;
-			}
+            if(!NextLevelTrigger.nextLevelTriggered){
+                levelController.moveToNextLevel = true;
+            }
             StartCoroutine(MoveHole());
             if(preventLoop){
                 return;
@@ -105,9 +101,9 @@ public class GameController : MonoBehaviour {
             StartCoroutine(uiController.DisplayHelpText());
         }
         else if (levelController.CompletedLevel4()) {
-			if(!NextLevelTrigger.nextLevelTriggered){
-				levelController.moveToNextLevel = true;
-			}
+            if(!NextLevelTrigger.nextLevelTriggered){
+                levelController.moveToNextLevel = true;
+            }
             StartCoroutine(MoveHole());
             if(preventLoop){
                 return;
@@ -127,7 +123,7 @@ public class GameController : MonoBehaviour {
 
     // Check if the game is over!
     public bool GameOver(){
-        if (PlayerHealth.currentHealth <= 0) {
+        if (PlayerSystems.playerIsDead) {
             return true;
         } 
         else {
@@ -176,33 +172,33 @@ public class GameController : MonoBehaviour {
     //Activate the smaller bounds once the player has moved near the center and completed level objectives.
     public void ActivateSmallerBounds(){
         switch(LevelController.currentLevel){
-			case 4:
+            case 4:
             if(levelController.CompletedLevel4()){
-				smallerBoundsLvl4.SetActive(true);
+                smallerBoundsLvl4.SetActive(true);
             }
-			break;
-			case 3:
-			if(levelController.CompletedLevel3()){
-				smallerBoundsLvl3.SetActive(true);
+            break;
+            case 3:
+            if(levelController.CompletedLevel3()){
+                smallerBoundsLvl3.SetActive(true);
             }
-			break;
-			case 2:
-			if(levelController.CompletedLevel2()){
-				smallerBoundsLvl2.SetActive(true);
+            break;
+            case 2:
+            if(levelController.CompletedLevel2()){
+                smallerBoundsLvl2.SetActive(true);
             }
-			break;
-			case 1:
-			if(levelController.CompletedLevelOne()){
-				smallerBoundsLvl1.SetActive(true);
+            break;
+            case 1:
+            if(levelController.CompletedLevelOne()){
+                smallerBoundsLvl1.SetActive(true);
             }
-			break;
-			default:
-				smallerBoundsLvl1.SetActive(false);
+            break;
+            default:
+                smallerBoundsLvl1.SetActive(false);
                 smallerBoundsLvl2.SetActive(false);
                 smallerBoundsLvl3.SetActive(false);
                 smallerBoundsLvl4.SetActive(false);
-			break;
-		}
+            break;
+        }
     }
 
     // Calculate the distance between the player, and the center of the current level.
@@ -217,27 +213,44 @@ public class GameController : MonoBehaviour {
         float distance;
 
         switch(LevelController.currentLevel){
-			case 5:
-			    //distance = Vector2.Distance(player.transform.position, centerLvl5.transform.position);
+            case 5:
+                //distance = Vector2.Distance(player.transform.position, centerLvl5.transform.position);
                 distance = 0f;
-			break;
-			case 4:
-				distance = Vector2.Distance(player.transform.position, centerLvl4.transform.position);
-			break;
-			case 3:
-				distance = Vector2.Distance(player.transform.position, centerLvl3.transform.position);
-			break;
-			case 2:
-				distance = Vector2.Distance(player.transform.position, centerLvl2.transform.position);
-			break;
-			case 1:
-				distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
-			break;
-			default:
-				distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
-			break;
-		}
+            break;
+            case 4:
+                distance = Vector2.Distance(player.transform.position, centerLvl4.transform.position);
+            break;
+            case 3:
+                distance = Vector2.Distance(player.transform.position, centerLvl3.transform.position);
+            break;
+            case 2:
+                distance = Vector2.Distance(player.transform.position, centerLvl2.transform.position);
+            break;
+            case 1:
+                distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
+            break;
+            default:
+                distance = Vector2.Distance(player.transform.position, centerLvl1.transform.position);
+            break;
+        }
         return distance;
+    }
+
+    public void SelectDeathReason(int deathReason){
+        switch(deathReason){
+            case 3:
+                deathReasonString = "You were slayed by Satan himself!";
+            break;
+            case 2:
+                deathReasonString = "You were sliced by a Reaper!";
+            break;
+            case 1:
+                deathReasonString = "You were stabbed by a Demon!";
+            break;
+            default:
+                deathReasonString = "You died!";
+            break;
+        }
     }
 
 }

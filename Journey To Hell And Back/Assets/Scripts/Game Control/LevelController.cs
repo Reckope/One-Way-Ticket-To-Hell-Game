@@ -17,19 +17,19 @@ public class LevelController : MonoBehaviour {
 	public LevelFour levelFour;
 	public LevelFive levelFive;
 
-    // Global Variables
-    public const int LEVEL_1_Y_POSITION = 0;
+	// Global Variables
+	public const int LEVEL_1_Y_POSITION = 0;
 	public const int LEVEL_2_Y_POSITION = -110;
 	public const int LEVEL_3_Y_POSITION = -220;
 	public const int LEVEL_4_Y_POSITION = -330;
 	public const int LEVEL_5_Y_POSITION = -440;
 
-    public static int currentLevel;
+	public static int currentLevel;
 	public static bool levelStaying;
 	public bool levelEntered;
 	public bool moveToNextLevel;
 
-    void Start(){
+	void Start(){
 		moveToNextLevel = false;
 	}
 
@@ -39,8 +39,8 @@ public class LevelController : MonoBehaviour {
 	}
 
 	// Find which level the player is currently active.
-	 private void DetectWhichLevel(){
-	 	if(gameObject.name == "Level1"){
+	private void DetectWhichLevel(){
+		if(gameObject.name == "Level1"){
 			currentLevel = 1;
 		}
 		else if(gameObject.name == "Level2"){
@@ -60,53 +60,53 @@ public class LevelController : MonoBehaviour {
 			currentLevel = 5;
 		}
 		else{
-			Debug.Log("ERROR: Couldn't find Level GameObject.");
+			Debug.Log("ERROR: Not detected in any level.");
 		}
-	 }
+	}
 
 	// Level functions. Create conditions of when the player has completed a level.
 	// Each level tells the controller when they're completed, so the controller can then
 	// tell other scripts what to do.
 	public bool CompletedLevelOne(){
 		if(levelOne.LevelOneCompleted() && currentLevel == 1) {
-            return true;
-        }
+			return true;
+		}
 		else{
 			return false;
 		}
 	}
 
 	public bool CompletedLevel2(){
-		 if(levelTwo.LevelTwoCompleted() && currentLevel == 2) {
-            return true;
-        }
+		if(levelTwo.LevelTwoCompleted() && currentLevel == 2) {
+			return true;
+		}
 		else{
 			return false;
 		}
 	}
 
 	public bool CompletedLevel3(){
-		 if(levelThree.LevelThreeCompleted() && currentLevel == 3) {
-            return true;
-        }
+		if(levelThree.LevelThreeCompleted() && currentLevel == 3) {
+			return true;
+		}
 		else{
 			return false;
 		}
 	}
 
 	public bool CompletedLevel4(){
-		 if(levelFour.LevelFourCompleted() && currentLevel == 4) {
-            return true;
-        }
+		if(levelFour.LevelFourCompleted() && currentLevel == 4) {
+			return true;
+		}
 		else{
 			return false;
 		}
 	}
 
 	public bool CompletedLevel5(){
-		 if(levelFive.LevelFiveCompleted() && currentLevel == 5) {
-            return true;
-        }
+		if(levelFive.LevelFiveCompleted() && currentLevel == 5) {
+			return true;
+		}
 		else{
 			return false;
 		}
@@ -116,31 +116,31 @@ public class LevelController : MonoBehaviour {
 	// Each level background image has a BoxCollider (trigger). This method detects what zone
 	// the player enters.
 	private void OnTriggerEnter2D(Collider2D collide)
-    {
-        if (collide.gameObject.tag == ("Player")){
+	{
+		if (collide.gameObject.tag == ("Player")){
 			DetectWhichLevel();
-        }
-    }
+		}
+	}
 
 	// If the player is in the level...
 	private void OnTriggerStay2D(Collider2D collide){
 		if (collide.gameObject.tag == ("Player")){
 			levelStaying = true;
-        }
+		}
 	}
 
 	// If the player exits the level...
 	private void OnTriggerExit2D(Collider2D collide)
-     {
-         if (collide.gameObject.tag == ("Player")){
-             levelStaying = false;
-         }
+	{
+		if (collide.gameObject.tag == ("Player")){
+			levelStaying = false;
+		}
 
-		 if(collide.gameObject.tag == ("Projectile")){
-			 Debug.Log("DESTROY");
+		if(collide.gameObject.tag == ("Projectile")){
+			Debug.Log("DESTROY");
 			Destroy(gameObject);
 		}
-     }
-	 // ******* END OF TRIGGERS *******
+		}
+	// ******* END OF TRIGGERS *******
 
 }

@@ -8,40 +8,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
-	// Using Other Scripts:
-	SpawnEnemiesController spawnEnemy;
 
 	private Vector2 enemy;
-	GameObject player;
 
-	public static bool enemyIsDead;
-	Collider2D _collider;
+	private bool enemyIsDead;
+	Collider2D collider;
 
 	Rigidbody2D rb2d;
 
 	// Use this for initialization
 	void Start () {
-		// Using other scripts:
-		spawnEnemy = FindObjectOfType(typeof(SpawnEnemiesController)) as SpawnEnemiesController;
-
-		player = GameObject.FindWithTag ("Player");
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-		_collider = GetComponent<Collider2D>();
+		collider = GetComponent<Collider2D>();
 		enemyIsDead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!enemyIsDead) {
-			FollowPlayer ();
+
 		}
 	}
 
 	// If the enemy touches the Player...
 	void OnCollisionEnter2D(Collision2D collision){
-		if (collision.gameObject.layer == LayerMask.NameToLayer ("player")) {
-			DealDamageToPlayer ();
+		if (collision.gameObject.tag == ("Player")) {
+			KillPlayer ();
 		}
 	}
 
@@ -49,36 +42,29 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collide){
 		// If the enemy touches the Area Force Attack...
 		if (collide.gameObject.layer == LayerMask.NameToLayer ("playerAttack")) {
-			EnemyDie ();
+			StartCoroutine(EnemyDie());
 		}
 	}
 
-	void DealDamageToPlayer(){
-		float dealDamage = 25f;
-
-		PlayerHealth.currentHealth -= dealDamage;
-		PlayerSystems.TakeDamage ();
+	void KillPlayer(){
+		PlayerSystems.playerIsDead = true;
 	}
 
-	public void EnemyDie(){
+	private IEnumerator EnemyDie(){
 		enemyIsDead = true;
-		_collider.enabled = false;
+		collider.enabled = false;
 		rb2d.velocity = (new Vector2 (0, 4f));
 		GameController.score += 1;
-		StartCoroutine (RespawnEnemy ());
+		yield return new WaitForSeconds(2);
+		Destroy(gameObject);
 	}
 
-	void FollowPlayer(){
-		float moveSpeed = 2f;
-
-		transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
-	}
-
+	/*
 	private IEnumerator RespawnEnemy(){
 		yield return new WaitForSeconds (1.7f);
 		_collider.enabled = true;
 		enemyIsDead = false;
-        Destroy(gameObject);
+		Destroy(gameObject);
 		spawnEnemy.RespawnEnemyWhichLevel();
-	}
+	}*/
 }

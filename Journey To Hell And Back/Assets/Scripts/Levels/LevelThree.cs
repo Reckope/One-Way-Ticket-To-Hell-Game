@@ -57,8 +57,8 @@ public class LevelThree : MonoBehaviour {
 
 	public bool LevelThreeCompleted(){
 		if(lvl3TicketQuantity == 0) {
-            return true;
-        }
+			return true;
+		}
 		else{
 			return false;
 		}

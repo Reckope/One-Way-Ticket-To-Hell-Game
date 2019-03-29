@@ -8,6 +8,9 @@ TagManager:
   - Bounds
   - Projectile
   - Wall
+  - Demon
+  - Reaper
+  - Satan
   layers:
   - Default
   - TransparentFX

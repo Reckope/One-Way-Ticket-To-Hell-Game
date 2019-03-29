@@ -63,6 +63,7 @@ public class PlayerInputControl : MonoBehaviour {
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		controlSlider.value = 0;
+		shootSlider.value = 0;
 		fireRate = 0.1f;
 		nextFire = 0.0f;
 	}
@@ -72,8 +73,8 @@ public class PlayerInputControl : MonoBehaviour {
 		//Debug.Log("Shoot: " + shootSlider.value);
 		playerSpeedValue = controlSlider.value;
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0){
-			//KeyboardControls();
-			MovePlayerWithSlider();
+			KeyboardControls();
+			//MovePlayerWithSlider();
 			ShootWithSlider();
 		}
 
@@ -104,11 +105,29 @@ public class PlayerInputControl : MonoBehaviour {
 		_areaForceAttack = false;
 	}
 
+	// Keep moving if the player has dragged the slider to the far left / right.
+	// Reset the Movement control slider once it's released.
 	public void ResetControlSlider(){
+		if(controlSlider.value == 1){
+			controlSlider.value = 1;
+		}
+		else if(controlSlider.value == -1){
+			controlSlider.value = -1;
+		}
+		else
 		controlSlider.value = 0;
 	}
 
+	// Keep shooting if the player has dragged the slider to the far left / right.
+	// Otherwise, reset it once it's released.
 	public void ResetShootSlider(){
+		if(shootSlider.value == 1){
+			shootSlider.value = 1;
+		}
+		else if(shootSlider.value == -1){
+			shootSlider.value = -1;
+		}
+		else
 		shootSlider.value = 0;
 	}
 
@@ -157,7 +176,7 @@ public class PlayerInputControl : MonoBehaviour {
 
 	// Shoot projectiles using the shooterSlider.
 	void ShootWithSlider(){
-		shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
+		//shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
 		// Shooting left.
 		if(shootSlider.value <= -0.2 && Time.time > nextFire){
 			nextFire = Time.time + fireRate;

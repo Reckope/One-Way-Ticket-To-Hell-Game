@@ -31,7 +31,7 @@ public class CinematicBars : MonoBehaviour {
 	// Update is called once per frame
 	private void Update () {
 		//Debug.Log("TopBar Size: " + topBar.sizeDelta.y);
-		if(isActive){
+		if(isActive && !GameController.instance.GameOver()){
 			Vector2 sizeDelta = topBar.sizeDelta;
 			sizeDelta.y += changeSizeAmount * Time.deltaTime;
 			if(changeSizeAmount > 0){
@@ -53,7 +53,7 @@ public class CinematicBars : MonoBehaviour {
 
 	// Display the cinematic bars
 	public void ShowCinematicBars(){
-		float targetSize = 350f;
+		float targetSize = 300f;
 		this.targetSize = targetSize;
 		changeSizeAmount = (targetSize - topBar.sizeDelta.y) / barSpeed;
 		isActive = true;

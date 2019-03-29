@@ -57,8 +57,8 @@ public class LevelTwo : MonoBehaviour {
 
 	public bool LevelTwoCompleted(){
 		if(lvl2TicketQuantity == 0) {
-            return true;
-        }
+			return true;
+		}
 		else{
 			return false;
 		}

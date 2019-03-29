@@ -14,14 +14,22 @@ public class PlayerSystems : MonoBehaviour {
 	public PlayerInputControl playerInputControl;
 
 	static Rigidbody2D rb2d;
+	Collider2D collider;
+
+	public static bool playerIsDead;
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
+		collider = GetComponent<Collider2D>();
+		playerIsDead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(playerIsDead){
+			//PlayerDie();
+		}
 		if(NextLevelTrigger.nextLevelTriggered){
 			PlayerTransitionBetweenLevels();
 		}
@@ -30,17 +38,17 @@ public class PlayerSystems : MonoBehaviour {
 		}
 	}
 
-	// When the player takes damage...
-	public static void TakeDamage(){
-		if(rb2d.bodyType != RigidbodyType2D.Static){
-			rb2d.velocity = (new Vector2 (0, 10f));
-		}
+	// When the player dies...
+	private void PlayerDie(){
+		collider.enabled = false;
+		rb2d.constraints = RigidbodyConstraints2D.FreezePositionX;
+		rb2d.velocity = (new Vector2 (0, 11f));
 	}
 
 	// When the player has triggered the next level... (player is transitioning)
 	public void PlayerTransitionBetweenLevels(){
 		float transitionDirection = -1f;
-    	float transitionSpeed = 8.5f;
+		float transitionSpeed = 8.5f;
 
 		rb2d.bodyType = RigidbodyType2D.Static;
 		transform.Translate(0, transitionDirection * transitionSpeed * Time.deltaTime * 1, 0);
@@ -83,14 +91,30 @@ public class PlayerSystems : MonoBehaviour {
 
 	public void PlayerFinishGame(){
 		float transitionDirection = 1f;
-    	float transitionSpeed = 18f;
-		if(transform.position.y < 0){
+		float transitionSpeed = 18f;
+
+		if(transform.position.y < 1.2){
 			rb2d.bodyType = RigidbodyType2D.Static;
 			transform.Translate(0, transitionDirection * transitionSpeed * Time.deltaTime * 1, 0);
 		}
-		if(transform.position.y >= 0){
-			transform.position = new Vector2(transform.position.x, 0);
+		if(transform.position.y >= 1.2){
+			transform.position = new Vector2(transform.position.x, 1.2f);
 		}
 	}
-		
+
+	// If the player touches the Enemy... (This is for selecting a death reason)
+	void OnCollisionEnter2D(Collision2D collision){
+		if (collision.gameObject.tag == ("Demon")) {
+			GameController.instance.SelectDeathReason(1);
+			PlayerDie();
+		}
+		else if (collision.gameObject.tag == ("Reaper")) {
+			GameController.instance.SelectDeathReason(2);
+			PlayerDie();
+		}
+		else if (collision.gameObject.tag == ("Satan")) {
+			GameController.instance.SelectDeathReason(3);
+			PlayerDie();
+		}
+	}
 }

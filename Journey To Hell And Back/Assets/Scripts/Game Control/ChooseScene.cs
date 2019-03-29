@@ -9,26 +9,20 @@ public class ChooseScene : MonoBehaviour {
 	string rulesScene = "Rules";
 	string creditsScene = "Credits";
 	string mainMenuScene = "Main Menu";
-
-	// Use this for initialization
-	void Start () {
-		 
-		
-	}
 	
-	public void startGameScene(){
+	public void StartGameScene(){
 		SceneManager.LoadScene(this.gameScene);
 	}
 
-	public void startRulesScene(){
+	public void StartRulesScene(){
 		SceneManager.LoadScene(this.rulesScene);
 	}
 
-	public void startCreditsScene(){
+	public void StartCreditsScene(){
 		SceneManager.LoadScene(this.creditsScene);
 	}
 
-	public void startMainMenuScene(){
+	public void StartMainMenuScene(){
 		SceneManager.LoadScene(this.mainMenuScene);
 	}
 
