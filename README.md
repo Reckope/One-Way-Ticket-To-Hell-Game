@@ -1,4 +1,4 @@
-# Hell And Back Game
+# One Way Ticket to Hell Game
 * Author: Joe Davis
 * Project: Hell and Back
 * Hardware: 2012 15" Macbook Pro Retina Display.
