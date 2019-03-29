@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
     public Text scoreText;
 
     public static int score;
-    public static bool preventLoop = false;
+    public static bool preventLoop;
     public static string deathReasonString;
     public bool finishGame;
 
@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour {
             Destroy(gameObject);
         }
         score = 0;
+        preventLoop = false;
     }
 
     // Update is called once per frame

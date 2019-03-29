@@ -7,8 +7,8 @@ public class Projectile : MonoBehaviour {
 	GameObject player;
 
 	private float direction;
-    private float speed;
-    private float moveXPosition;
+	private float speed;
+	private float moveXPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -30,11 +30,11 @@ public class Projectile : MonoBehaviour {
 			gameObject.SetActive(false);
 		}
 	}
-/* 
-	void OnTriggerExit2D(Collider2D other) {
-	  if (other.gameObject.tag == "Bounds") {
-	  	Destroy(gameObject);
-	  }
-  	}
-	  */
+
+	// If the projectile hits either an enemy, wall or the ground...
+	private void OnTriggerEnter2D(Collider2D Collider2D){
+		if (Collider2D.gameObject.layer == LayerMask.NameToLayer ("enemy") || Collider2D.gameObject.layer == LayerMask.NameToLayer ("ground")){
+			gameObject.SetActive(false);
+		}
+	}
 }

@@ -10,24 +10,52 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	private Vector2 enemy;
-
-	private bool enemyIsDead;
 	Collider2D collider;
-
+	SpriteRenderer sprite;
 	Rigidbody2D rb2d;
+
+	private bool preventLoop;
+	private bool enemyIsDead;
+	private float enemyCurrentHealth;
+	private float maxHealth;
+	private float minHealth = 0f;
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		collider = GetComponent<Collider2D>();
+		sprite = GetComponent<SpriteRenderer>();
 		enemyIsDead = false;
+		preventLoop = false;
+
+		if(gameObject.tag == ("Demon")){
+			maxHealth = 100f;
+			enemyCurrentHealth = maxHealth;
+		}
+		if(gameObject.tag == ("Reaper")){
+			maxHealth = 200f;
+			enemyCurrentHealth = maxHealth;
+		}
+		if(gameObject.tag == ("Satan")){
+			maxHealth = 500f;
+			enemyCurrentHealth = maxHealth;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!enemyIsDead) {
-
+			if (enemyCurrentHealth <= minHealth) {
+				enemyIsDead = true;
+			}
+		}
+		else if(enemyIsDead){
+			if(preventLoop){
+				return;
+			}
+			preventLoop = true;
+			StartCoroutine(EnemyDie());
 		}
 	}
 
@@ -44,10 +72,20 @@ public class Enemy : MonoBehaviour {
 		if (collide.gameObject.layer == LayerMask.NameToLayer ("playerAttack")) {
 			StartCoroutine(EnemyDie());
 		}
+		if(collide.gameObject.layer == LayerMask.NameToLayer("Projectile")){
+			StartCoroutine(TakeDamage());
+		}
 	}
 
 	void KillPlayer(){
 		PlayerSystems.playerIsDead = true;
+	}
+
+	private IEnumerator TakeDamage(){
+		enemyCurrentHealth -= 10f;
+		sprite.color = new Color(1f, 1f, 1f, 0.5f);
+		yield return new WaitForSeconds(0.05f);
+		sprite.color = new Color(1f, 1f, 1f, 1f);
 	}
 
 	private IEnumerator EnemyDie(){
@@ -58,13 +96,4 @@ public class Enemy : MonoBehaviour {
 		yield return new WaitForSeconds(2);
 		Destroy(gameObject);
 	}
-
-	/*
-	private IEnumerator RespawnEnemy(){
-		yield return new WaitForSeconds (1.7f);
-		_collider.enabled = true;
-		enemyIsDead = false;
-		Destroy(gameObject);
-		spawnEnemy.RespawnEnemyWhichLevel();
-	}*/
 }

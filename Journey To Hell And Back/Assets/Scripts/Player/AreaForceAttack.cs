@@ -29,6 +29,7 @@ public class AreaForceAttack : MonoBehaviour
     void Start(){
         collider = GetComponent<Collider2D>();
         transform.localScale = initialSize;
+        cooldownValue = 0f;
         cooldownBar.value = 0f;
         maxSize = 25f;
         areaSize = 5f;

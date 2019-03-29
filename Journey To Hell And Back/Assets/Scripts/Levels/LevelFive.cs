@@ -24,6 +24,7 @@ public class LevelFive : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		lvl5TicketQuantity = 0;
 		//SpawnEnemies();
 		SpawnTickets();
 	}

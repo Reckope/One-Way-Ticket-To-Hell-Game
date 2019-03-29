@@ -9,14 +9,17 @@ public class LevelFour : MonoBehaviour {
 
 	// Level objects arrays
 	private Vector2[] spawnTickets = new Vector2[3];
-	private Vector2[] spawnEnemies;
+	private Vector2[] spawnDemons = new Vector2[4];
+	private Vector2[] spawnReapers = new Vector2[3];
 
 	// Prefabs
 	public GameObject ticketPrefab;
-	public GameObject enemyPrefab;
+	public GameObject demonPrefab;
+	public GameObject reaperPrefab;
 
 	// Game Objects
 	private GameObject demon;
+	private GameObject blackReaper;
 	private GameObject ticket;
 
 	// Global Variables
@@ -24,7 +27,9 @@ public class LevelFour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//SpawnEnemies();
+		lvl4TicketQuantity = 0;
+		SpawnDemons();
+		SpawnReapers();
 		SpawnTickets();
 	}
 	
@@ -34,12 +39,27 @@ public class LevelFour : MonoBehaviour {
 	}
 
 	// Spawns the enemies in at the start.
-	private void SpawnEnemies(){
+	private void SpawnDemons(){
 		// Spawn points
-		spawnEnemies [0] = new Vector2();
-		spawnEnemies [1] = new Vector2();
-		spawnEnemies [2] = new Vector2();
-		spawnEnemies [3] = new Vector2();
+		spawnDemons [0] = new Vector2(-11f, -330.9f);
+		spawnDemons [1] = new Vector2(-14.8f, -329.3f);
+		spawnDemons [2] = new Vector2(5.7f, -328.5f);
+		spawnDemons [3] = new Vector2(21.3f, -330.2f);
+
+		for(int x = 0; x < 4; x++){
+			demon = (GameObject)Instantiate (demonPrefab, spawnDemons[x], Quaternion.identity);
+		}
+	}
+
+	private void SpawnReapers(){
+		// Spawn points
+		spawnReapers [0] = new Vector2(-17.7f, -327.3f);
+		spawnReapers [1] = new Vector2(-7f, -332.2f);
+		spawnReapers [2] = new Vector2(7f, -222.27f);
+
+		for(int x = 0; x < 3; x++){
+			blackReaper = (GameObject)Instantiate (reaperPrefab, spawnReapers[x], Quaternion.identity);
+		}
 	}
 
 	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).

@@ -64,7 +64,7 @@ public class PlayerInputControl : MonoBehaviour {
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		controlSlider.value = 0;
 		shootSlider.value = 0;
-		fireRate = 0.1f;
+		fireRate = 0.12f;
 		nextFire = 0.0f;
 	}
 
@@ -73,8 +73,8 @@ public class PlayerInputControl : MonoBehaviour {
 		//Debug.Log("Shoot: " + shootSlider.value);
 		playerSpeedValue = controlSlider.value;
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0){
-			KeyboardControls();
-			//MovePlayerWithSlider();
+			//KeyboardControls();
+			MovePlayerWithSlider();
 			ShootWithSlider();
 		}
 
