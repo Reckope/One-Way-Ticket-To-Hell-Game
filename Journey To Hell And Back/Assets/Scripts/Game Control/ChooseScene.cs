@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: One Way Ticket to Hell
+ * Date modified: 30/03/19
+ * Code QA sweep: DONE.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,5 +31,4 @@ public class ChooseScene : MonoBehaviour {
 	public void StartMainMenuScene(){
 		SceneManager.LoadScene(this.mainMenuScene);
 	}
-
 }

@@ -25,9 +25,6 @@ public class Ticket : MonoBehaviour {
 
 	private void DecrementTicketFromLevel(){
 		switch (LevelController.currentLevel){
-			case 5:
-				LevelFive.lvl5TicketQuantity--;
-			break;
 			case 4:
 				LevelFour.lvl4TicketQuantity--;
 			break;

@@ -10,7 +10,7 @@ public class LevelThree : MonoBehaviour {
 	// Level objects arrays
 	private Vector2[] spawnTickets = new Vector2[3];
 	private Vector2[] spawnDemons = new Vector2[4];
-	private Vector2[] spawnReapers = new Vector2[3];
+	private Vector2[] spawnReapers = new Vector2[2];
 
 	// Prefabs
 	public GameObject ticketPrefab;
@@ -27,6 +27,15 @@ public class LevelThree : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(demon != null){
+			Destroy(demon);
+		}
+		if(ticket != null){
+			Destroy(ticket);
+		}
+		if(blackReaper != null){
+			Destroy(blackReaper);
+		}
 		lvl3TicketQuantity = 0;
 		SpawnDemons();
 		SpawnReapers();
@@ -53,11 +62,10 @@ public class LevelThree : MonoBehaviour {
 
 	private void SpawnReapers(){
 		// Spawn points
-		spawnReapers [0] = new Vector2(-18.55f, -222.27f);
-		spawnReapers [1] = new Vector2(-9.13f, -222.27f);
-		spawnReapers [2] = new Vector2(16.97f, -222.27f);
+		spawnReapers [0] = new Vector2(-9.13f, -222.27f);
+		spawnReapers [1] = new Vector2(16.97f, -222.27f);
 
-		for(int x = 0; x < 3; x++){
+		for(int x = 0; x < 2; x++){
 			blackReaper = (GameObject)Instantiate (reaperPrefab, spawnReapers[x], Quaternion.identity);
 		}
 	}

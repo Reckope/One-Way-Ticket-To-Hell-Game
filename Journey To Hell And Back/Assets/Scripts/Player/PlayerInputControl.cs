@@ -72,7 +72,7 @@ public class PlayerInputControl : MonoBehaviour {
 		//Debug.Log("Shooting " + shooting);
 		//Debug.Log("Shoot: " + shootSlider.value);
 		playerSpeedValue = controlSlider.value;
-		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0){
+		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0 && !GameController.instance.GameOver()){
 			//KeyboardControls();
 			MovePlayerWithSlider();
 			ShootWithSlider();
@@ -105,16 +105,8 @@ public class PlayerInputControl : MonoBehaviour {
 		_areaForceAttack = false;
 	}
 
-	// Keep moving if the player has dragged the slider to the far left / right.
 	// Reset the Movement control slider once it's released.
 	public void ResetControlSlider(){
-		if(controlSlider.value == 1){
-			controlSlider.value = 1;
-		}
-		else if(controlSlider.value == -1){
-			controlSlider.value = -1;
-		}
-		else
 		controlSlider.value = 0;
 	}
 

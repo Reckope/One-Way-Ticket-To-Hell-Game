@@ -27,6 +27,15 @@ public class LevelTwo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(demon != null){
+			Destroy(demon);
+		}
+		if(ticket != null){
+			Destroy(ticket);
+		}
+		if(blackReaper != null){
+			Destroy(blackReaper);
+		}
 		lvl2TicketQuantity = 0;
 		SpawnDemons();
 		SpawnReapers();
@@ -53,7 +62,7 @@ public class LevelTwo : MonoBehaviour {
 
 	private void SpawnReapers(){
 		// Spawn points
-		spawnReapers [0] = new Vector2(-20.53f, -112.5f);
+		spawnReapers [0] = new Vector2(20.53f, -112.5f);
 		spawnReapers [1] = new Vector2(10f, -112.5f);
 
 		for(int x = 0; x < 2; x++){

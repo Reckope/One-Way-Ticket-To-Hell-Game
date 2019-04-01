@@ -1,10 +1,9 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
- * Date modified: 19/03/19
+ * Date modified: 17/03/19
  * Notes:
- * Need to experiment with different object pooling techniques. This is a mess just now.
- * Going to find out how to give each prefab a unique ID / Variable so they spawn in spcific areas.
- * .. or I could do some some of threading so they 2 enemies dont spawn in 1 location.. (nope).
+ * ***** This script is not currently being used ***** 
+ * Decided to spawn enemies in each levels' script, due to the amount of spawn points there are.  
  */
 
 using System.Collections;
@@ -13,8 +12,8 @@ using UnityEngine;
 
 public class SpawnEnemiesController : MonoBehaviour {
 
-	// Using Other Scripts:
-    Enemy enemyScript;
+	//Other Scripts:
+	Enemy enemyScript;
 	LevelController levelControl;
 
 	public GameObject enemyPrefab;
@@ -78,8 +77,8 @@ public class SpawnEnemiesController : MonoBehaviour {
 		spawnPositionsLevelOne [0] = new Vector2 (-5f, 10f);
 		spawnPositionsLevelOne [1] = new Vector2 (-12f, 2f);
 		spawnPositionsLevelOne [2] = new Vector2 (12f, 2f);
-        spawnPositionsLevelOne [3] = new Vector2(-12f, 6f);
-        spawnPositionsLevelOne [4] = new Vector2(12f, 6f);
+		spawnPositionsLevelOne [3] = new Vector2(-12f, 6f);
+		spawnPositionsLevelOne [4] = new Vector2(12f, 6f);
 
 		spawnPoint = 0;
 		spawnPoint = Random.Range (0, 4);
@@ -93,8 +92,8 @@ public class SpawnEnemiesController : MonoBehaviour {
 		spawnPositionsLevelTwo [0] = new Vector2 (-12f, -110f);
 		spawnPositionsLevelTwo [1] = new Vector2 (12f, -110f);
 		spawnPositionsLevelTwo [2] = new Vector2 (-1f, -103f);
-        spawnPositionsLevelTwo [3] = new Vector2(1f, -103f);
-        //spawnPositionsLevelTwo [4] = new Vector2(12f, 6f);
+		spawnPositionsLevelTwo [3] = new Vector2(1f, -103f);
+		//spawnPositionsLevelTwo [4] = new Vector2(12f, 6f);
 
 		spawnPoint = 0;
 		spawnPoint = Random.Range (0, 3);

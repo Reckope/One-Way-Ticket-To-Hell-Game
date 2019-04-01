@@ -48,10 +48,9 @@ public class AreaForceAttack : MonoBehaviour
             collider.enabled = true;
 			ExpandCircle ();
 		}
-        // Reset the force attack.
+        // Fade the circle out as it resets.
         if (fadeOut){
             circleOpacity -= Time.deltaTime * 1.2f;
-            collider.enabled = false;
         }
         //ForceAttackCoodownValue();
     }
@@ -71,10 +70,10 @@ public class AreaForceAttack : MonoBehaviour
 
     // Resets the force attack circle
     private IEnumerator ResetForceAttack(){
+        collider.enabled = false;
         circleOpacity = 1f;
         fadeOut = true;
         yield return new WaitForSeconds(1.6f);
-        collider.enabled = false;
         fadeOut = false;
         circleOpacity = .4f;
         areaSize = 5f;

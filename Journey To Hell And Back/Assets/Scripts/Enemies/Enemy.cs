@@ -9,16 +9,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+	// Components.
 	private Vector2 enemy;
 	Collider2D collider;
 	SpriteRenderer sprite;
 	Rigidbody2D rb2d;
 
+	// Global Variables.
 	private bool preventLoop;
 	private bool enemyIsDead;
 	private float enemyCurrentHealth;
 	private float maxHealth;
-	private float minHealth = 0f;
+	private float minHealth;
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +30,9 @@ public class Enemy : MonoBehaviour {
 		sprite = GetComponent<SpriteRenderer>();
 		enemyIsDead = false;
 		preventLoop = false;
+		minHealth = 0f;
 
+		// Set the health for each type of enemy.
 		if(gameObject.tag == ("Demon")){
 			maxHealth = 100f;
 			enemyCurrentHealth = maxHealth;
@@ -45,11 +49,13 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// If the enemy isn't dead.
 		if (!enemyIsDead) {
 			if (enemyCurrentHealth <= minHealth) {
 				enemyIsDead = true;
 			}
 		}
+		// If the enemy dies.
 		else if(enemyIsDead){
 			if(preventLoop){
 				return;
@@ -69,26 +75,31 @@ public class Enemy : MonoBehaviour {
 	// If the enemy touches a trigger box...
 	void OnTriggerEnter2D (Collider2D collide){
 		// If the enemy touches the Area Force Attack...
-		if (collide.gameObject.layer == LayerMask.NameToLayer ("playerAttack")) {
+		if (collide.gameObject.layer == LayerMask.NameToLayer ("ForceAttack")) {
 			StartCoroutine(EnemyDie());
 		}
+		// If the enemy gets hit by a projectile...
 		if(collide.gameObject.layer == LayerMask.NameToLayer("Projectile")){
 			StartCoroutine(TakeDamage());
 		}
 	}
 
+	// Kill the player.
 	void KillPlayer(){
 		PlayerSystems.playerIsDead = true;
 	}
 
+	// When the enemy takes damage from a projectile.
 	private IEnumerator TakeDamage(){
-		enemyCurrentHealth -= 10f;
+		enemyCurrentHealth -= 12f;
 		sprite.color = new Color(1f, 1f, 1f, 0.5f);
 		yield return new WaitForSeconds(0.05f);
 		sprite.color = new Color(1f, 1f, 1f, 1f);
 	}
 
+	// When the enemy dies. 
 	private IEnumerator EnemyDie(){
+		rb2d.bodyType = RigidbodyType2D.Dynamic;
 		enemyIsDead = true;
 		collider.enabled = false;
 		rb2d.velocity = (new Vector2 (0, 4f));

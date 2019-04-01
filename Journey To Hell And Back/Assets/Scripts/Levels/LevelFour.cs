@@ -27,6 +27,15 @@ public class LevelFour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(demon != null){
+			Destroy(demon);
+		}
+		if(ticket != null){
+			Destroy(ticket);
+		}
+		if(blackReaper != null){
+			Destroy(blackReaper);
+		}
 		lvl4TicketQuantity = 0;
 		SpawnDemons();
 		SpawnReapers();

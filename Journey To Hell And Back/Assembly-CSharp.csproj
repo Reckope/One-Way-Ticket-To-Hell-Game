@@ -51,13 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Debug&amp;Design\EditorPathScript.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyBasicFollow.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemyMoveOnPath.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Fire.cs" />
      <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />
      <Compile Include="Assets\Scripts\Game Control\ChooseScene.cs" />
      <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
      <Compile Include="Assets\Scripts\Game Control\LevelController.cs" />
      <Compile Include="Assets\Scripts\Game Control\NextLevelTrigger.cs" />
+     <Compile Include="Assets\Scripts\Game Control\RulesController.cs" />
      <Compile Include="Assets\Scripts\Game Control\SpawnEnemiesController.cs" />
      <Compile Include="Assets\Scripts\Items\ForceAttackItem.cs" />
      <Compile Include="Assets\Scripts\Items\Ticket.cs" />
@@ -77,6 +81,7 @@
      <Compile Include="Assets\Scripts\UI\CircleHealthBar.cs" />
      <Compile Include="Assets\Scripts\UI\TotalTime.cs" />
      <Compile Include="Assets\Scripts\UI\UIController.cs" />
+     <None Include="Assets\TextFiles\HelpText.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

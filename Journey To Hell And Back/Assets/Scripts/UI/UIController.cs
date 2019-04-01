@@ -110,9 +110,20 @@ public class UIController : MonoBehaviour {
 	}
 
 	// Displays Help text
-	public IEnumerator DisplayHelpText(){
+	public IEnumerator DisplayHelpText(int helpTextInt){
+		switch(helpTextInt){
+			case 2:
+				GameController.helpTextMessage = "Level complete! Jump down the hole to progress onto the next level.";
+			break;
+			case 1:
+				GameController.helpTextMessage = "Satan is defeated! Collect the wings to fly out of hell.";
+			break;
+			default:
+				GameController.helpTextMessage = "HELP_TEXT_MISSING";
+			break;
+		}
 		helpTextContainer.SetActive(true);
-		helpText.text = "Level complete! Jump down the hole to progress onto the next level.";
+		helpText.text = GameController.helpTextMessage;
 		yield return new WaitForSeconds(5);
 		helpTextContainer.SetActive(false);
 	}

@@ -10,6 +10,7 @@ public class LevelOne : MonoBehaviour {
 	// Level object arrays
 	private Vector2[] spawnTickets = new Vector2[3];
 	private Vector2[] spawnDemons = new Vector2[5];
+	private Transform[] levelOneWaypoints;
 
 	// Prefabs
 	public GameObject ticketPrefab;
@@ -24,6 +25,12 @@ public class LevelOne : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(demon != null){
+			Destroy(demon);
+		}
+		if(ticket != null){
+			Destroy(ticket);
+		}
 		lvl1TicketQuantity = 0;
 		SpawnTickets();
 		SpawnDemons();
@@ -34,8 +41,8 @@ public class LevelOne : MonoBehaviour {
 		// Spawn points
 		spawnDemons [0] = new Vector2(-22.21f, -2.70f);
 		spawnDemons [1] = new Vector2(-20f, -2.70f);
-		spawnDemons [2] = new Vector2(-9.80f, -2.70f);
-		spawnDemons [3] = new Vector2(9.80f, -2.70f);
+		spawnDemons [2] = new Vector2(-11.80f, -2.70f);
+		spawnDemons [3] = new Vector2(11.80f, -2.70f);
 		spawnDemons [4] = new Vector2(19.71f, -0.23f);
 
 		for(int x = 0; x < 5; x++){

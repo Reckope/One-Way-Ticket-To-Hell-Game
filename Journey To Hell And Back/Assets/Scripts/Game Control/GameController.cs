@@ -1,7 +1,11 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 30/03/19
  * [x] = Reference
+ * Notes:
+ * Instead of everything flowing through the game controller, each script performs 
+ * relevent actions after detecting them themselves, instead of the Game controller telling everyone what to do. (This the correct way?) 
+ * Code QA Sweep: DONE
  */
 
 using System.Collections;
@@ -14,10 +18,12 @@ public class GameController : MonoBehaviour {
     //Static instance of GameController which allows it to be accessed by any other script.
     public static GameController instance;
 
+    // Other scripts.
     public LevelController levelController;
     public CameraController cameraController;
     public UIController uiController;
 
+    // Game Objects (Could this be reduced / managed easier?)
     GameObject player;
     GameObject holeLvl1;
     GameObject holeLvl2;
@@ -35,17 +41,19 @@ public class GameController : MonoBehaviour {
     public GameObject smallerBoundsLvl3;
     public GameObject smallerBoundsLvl4;
 
+    // Components.
     public Text scoreText;
 
+    // Global variables.
     public static int score;
     public static bool preventLoop;
     public static string deathReasonString;
+    public static string helpTextMessage;
     public bool finishGame;
 
     // Use this for initialization
     void Awake () {
         Application.targetFrameRate = 600;
-
         // Singleton Pattern: There can only ever be one instance of a GameController.
         if (instance == null){
             instance = this;
@@ -59,16 +67,17 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        //Debug.Log("Finished? - " + finishGame);
         scoreText.text = score.ToString();
         if(!GameOver()){
             GameFlow();
         }
     }
 
-    // The entire flow of the game...
+    // The flow of the game...
     public void GameFlow(){
+        // Once a level has been completed. 
         if(levelController.CompletedLevelOne()) {
+            // If the next level has been triggered. 
             if(!NextLevelTrigger.nextLevelTriggered){
                 levelController.moveToNextLevel = true;
             }
@@ -77,7 +86,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText());
+            StartCoroutine(uiController.DisplayHelpText(2));
         }
         else if (levelController.CompletedLevel2()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -88,7 +97,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText());
+            StartCoroutine(uiController.DisplayHelpText(2));
         }
         else if (levelController.CompletedLevel3()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -99,7 +108,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText());
+            StartCoroutine(uiController.DisplayHelpText(2));
         }
         else if (levelController.CompletedLevel4()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -110,14 +119,14 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText());
+            StartCoroutine(uiController.DisplayHelpText(2));
         }
         else if (levelController.CompletedLevel5()) {
             if(preventLoop){
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText());
+            StartCoroutine(uiController.DisplayHelpText(1));
             finishGameTrigger.SetActive(true);
         }
     }
@@ -129,12 +138,11 @@ public class GameController : MonoBehaviour {
         } 
         else {
             return false;
-        }       
+        }
     }
 
     // Moves the hole to allow the player to jump to the next level. 
     public IEnumerator MoveHole() {
-        // Local Variables
         float direction = -1f;
         float speed = 4f;
         float moveYPosition = direction * speed * Time.deltaTime * 1;
@@ -145,6 +153,7 @@ public class GameController : MonoBehaviour {
         holeLvl3 = GameObject.Find("HoleLevel3");
         holeLvl4 = GameObject.Find("HoleLevel4");
 
+        // Move the hole based on the current level, then destroy it.
         if (LevelController.currentLevel == 1 && holeLvl1 != null){
             holeLvl1.transform.Translate(0, moveYPosition, 0);
             yield return new WaitForSeconds(1);
@@ -170,11 +179,14 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    //Activate the smaller bounds once the player has moved near the center and completed level objectives.
+    // Activate the smaller bounds once the player has moved near the center and completed level objectives.
     public void ActivateSmallerBounds(){
+        // Detect what the current level is.
         switch(LevelController.currentLevel){
             case 4:
+            // If it's completed...
             if(levelController.CompletedLevel4()){
+                // Activate the smaller bounds.
                 smallerBoundsLvl4.SetActive(true);
             }
             break;
@@ -202,8 +214,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    // Calculate the distance between the player, and the center of the current level.
-    public float CalculateDistanceBetweenPlayerAndCenter(){ // [2]
+    // Calculate the distance between the player and the center of the current level.
+    public float CalculateDistanceBetweenPlayerAndCenter(){
+        float distance;
+
+        // Find the center of each level.
         player = GameObject.Find("Player");
         centerLvl1 = GameObject.Find("Level 1 Center");
         centerLvl2 = GameObject.Find("Level 2 Center");
@@ -211,15 +226,14 @@ public class GameController : MonoBehaviour {
         centerLvl4 = GameObject.Find("Level 4 Center");
         centerLvl5 = GameObject.Find("Level 5 Center");
 
-        float distance;
-
+        // Detect the current level.
         switch(LevelController.currentLevel){
             case 5:
-                //distance = Vector2.Distance(player.transform.position, centerLvl5.transform.position);
                 distance = 0f;
             break;
             case 4:
-                distance = Vector2.Distance(player.transform.position, centerLvl4.transform.position);
+                // Calculate the distance between the player and the center of the current level. 
+                distance = Vector2.Distance(player.transform.position, centerLvl4.transform.position); // [2]
             break;
             case 3:
                 distance = Vector2.Distance(player.transform.position, centerLvl3.transform.position);
@@ -237,8 +251,12 @@ public class GameController : MonoBehaviour {
         return distance;
     }
 
+    // Sets the Death Reason String based on how the player died. 
     public void SelectDeathReason(int deathReason){
         switch(deathReason){
+            case 4:
+                deathReasonString = "You were burnt by satans fire!";
+            break;
             case 3:
                 deathReasonString = "You were slayed by Satan himself!";
             break;
@@ -253,5 +271,4 @@ public class GameController : MonoBehaviour {
             break;
         }
     }
-
 }

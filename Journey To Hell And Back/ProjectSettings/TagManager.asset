@@ -24,7 +24,7 @@ TagManager:
   - enemy
   - player
   - healthPickup
-  - playerAttack
+  - ForceAttack
   - respawn
   - Projectile
   - 
