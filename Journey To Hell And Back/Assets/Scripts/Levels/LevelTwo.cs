@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used for level 2. I have given each level it's own script for spawn points,
+ * objectives (easier to expand on in the future) and to return when it's completed. 
+ * Code QA Sweep: DONE
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,13 +51,8 @@ public class LevelTwo : MonoBehaviour {
 		SpawnReapers();
 		SpawnTickets();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
-
-	// Spawns the enemies in at the start.
+	// Spawn the Demons in at the start.
 	private void SpawnDemons(){
 		// Spawn points
 		spawnDemons [0] = new Vector2(-18.21f, -110.16f);
@@ -62,6 +65,7 @@ public class LevelTwo : MonoBehaviour {
 		}
 	}
 
+	// Spawn the Reapers in at the start.
 	private void SpawnReapers(){
 		// Spawn points
 		spawnReapers [0] = new Vector2(20.53f, -112.5f);
@@ -72,7 +76,7 @@ public class LevelTwo : MonoBehaviour {
 		}
 	}
 
-	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).
+	// Spawns the tickets in at the start.
 	private void SpawnTickets(){
 		// Spawn Tickets
 		spawnTickets [0] = new Vector2(-15.31f, -110.4f);
@@ -85,6 +89,7 @@ public class LevelTwo : MonoBehaviour {
 		}
 	}
 
+	// Returns when the level is completed. 
 	public bool LevelTwoCompleted(){
 		if(lvl2TicketQuantity == 0) {
 			return true;

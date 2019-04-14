@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used for level 1. I have given each level it's own script for spawn points,
+ * objectives (easier to expand on in the future) and to return when it's completed. 
+ * Code QA Sweep: DONE
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,7 +59,7 @@ public class LevelOne : MonoBehaviour {
 		}
 	}
 
-	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).
+	// Spawns the tickets in at the start.
 	private void SpawnTickets(){
 		// Spawn Tickets
 		spawnTickets [0] = new Vector2(-16.8f, -2.55f);
@@ -64,6 +72,7 @@ public class LevelOne : MonoBehaviour {
 		}
 	}
 
+	// Returns when the level is completed.
 	public bool LevelOneCompleted(){
 		if(lvl1TicketQuantity == 0) {
 			return true;

@@ -1,9 +1,9 @@
 ﻿/* Author: Joe Davis
  * Project: Hell and Back
  * Date modified: 17/03/19
- * Notes:
  * ***** This script is not currently being used ***** 
- * Decided to spawn enemies in each levels' script, due to the amount of spawn points there are.  
+ * Decided to spawn enemies in each levels' script, due to the amount of spawn points there are. This
+ * script can be ignored, but keeping it here in case I need it in the future. 
  */
 
 using System.Collections;

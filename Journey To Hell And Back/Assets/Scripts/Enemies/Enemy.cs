@@ -1,6 +1,9 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 19/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is the main enemy script. It controls when the enemy dies. Would be beneficial to
+ * merge "EnemyMovement.cs" into this script since it's not that big??
+ * Code QA sweep: DONE
  */
 
 using System.Collections;
@@ -9,16 +12,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	// Components.
+	// Components
 	private Vector2 enemy;
-	Collider2D collider;
+	Collider2D collide;
 	CapsuleCollider2D CapsuleCollider2D;
 	SpriteRenderer sprite;
 	Rigidbody2D rb2d;
 
-	// Global Variables.
-	public bool enemyIsDead;
+	// GameObjects
+	public AudioSource enemyDieAudio;
 
+	// Global Variables
+	public bool enemyIsDead;
 	private bool preventLoop;
 	private float enemyCurrentHealth;
 	private float maxHealth;
@@ -28,7 +33,7 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-		collider = GetComponent<Collider2D>();
+		collide = GetComponent<Collider2D>();
 		CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
 		sprite = GetComponent<SpriteRenderer>();
 		enemyIsDead = false;
@@ -45,11 +50,11 @@ public class Enemy : MonoBehaviour {
 			enemyCurrentHealth = maxHealth;
 		}
 		if(gameObject.tag == ("Satan")){
-			maxHealth = 500f;
+			maxHealth = 800f;
 			enemyCurrentHealth = maxHealth;
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		// If the enemy isn't dead.
@@ -68,9 +73,8 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	// If the enemy touches a trigger box...
 	void OnTriggerEnter2D (Collider2D collide){
-		// If the enemy touches the Area Force Attack...
+	// If the enemy touches the Area Force Attack...
 		if (collide.gameObject.layer == LayerMask.NameToLayer ("ForceAttack")) {
 			StartCoroutine(EnemyDie());
 		}
@@ -88,12 +92,13 @@ public class Enemy : MonoBehaviour {
 		sprite.color = new Color(1f, 1f, 1f, 1f);
 	}
 
-	// When the enemy dies. 
+	// When the enemy dies.
 	private IEnumerator EnemyDie(){
-		collider.enabled = false;
+		enemyDieAudio.Stop();
+		enemyDieAudio.Play();
+		collide.enabled = false;
 		CapsuleCollider2D.enabled = false;
 		rb2d.bodyType = RigidbodyType2D.Dynamic;
-		enemyIsDead = true;
 		rb2d.velocity = (new Vector2 (0, 4f));
 		GameController.score += 1;
 		yield return new WaitForSeconds(2);

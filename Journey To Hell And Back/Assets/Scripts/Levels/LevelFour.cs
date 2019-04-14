@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Author: Joe Davis
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used for level 4. I have given each level it's own script for spawn points,
+ * objectives (easier to expand on in the future) and to return when it's completed. 
+ * Code QA Sweep: DONE
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,25 +51,21 @@ public class LevelFour : MonoBehaviour {
 		SpawnReapers();
 		SpawnTickets();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
-
-	// Spawns the enemies in at the start.
+	// Spawns the demons in at the start.
 	private void SpawnDemons(){
 		// Spawn points
 		spawnDemons [0] = new Vector2(-11f, -330.9f);
 		spawnDemons [1] = new Vector2(-14.8f, -329.3f);
 		spawnDemons [2] = new Vector2(5.7f, -328.5f);
-		spawnDemons [3] = new Vector2(18.3f, -333.2f);
+		spawnDemons [3] = new Vector2(19.3f, -332.2f);
 
 		for(int x = 0; x < 4; x++){
 			demon = (GameObject)Instantiate (demonPrefab, spawnDemons[x], Quaternion.identity);
 		}
 	}
 
+	// Spawn the Reapers in at the start.
 	private void SpawnReapers(){
 		// Spawn points
 		spawnReapers [0] = new Vector2(-17.7f, -327.3f);
@@ -73,7 +77,7 @@ public class LevelFour : MonoBehaviour {
 		}
 	}
 
-	// Spawns the tickets in at the start (ONLY CALL IN THE START METHOD).
+	// Spawns the tickets in at the start.
 	private void SpawnTickets(){
 		// Spawn Tickets
 		spawnTickets [0] = new Vector2(8.08f, -326.54f);
@@ -86,6 +90,7 @@ public class LevelFour : MonoBehaviour {
 		}
 	}
 
+	// Returns when the level is completed.
 	public bool LevelFourCompleted(){
 		if(lvl4TicketQuantity == 0) {
 			return true;

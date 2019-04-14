@@ -13,8 +13,9 @@ public class UIController : MonoBehaviour {
 	GameObject mainCamera;
 	GameObject player;
 
-	// UI Scripts
+	// Other Scripts
 	public CinematicBars cinematicBars;
+	public LevelController LevelController;
 
 	// Canvas's
 	public GameObject playerStatsUI;
@@ -30,9 +31,14 @@ public class UIController : MonoBehaviour {
 	public Text finalScoreGameOver;
 	public Text finalTimeGameOver;
 	public Text deathReason;
+	public Text currentLevel;
+	public Text ticketsRemaining;
 
 	// UI Text
 	public Text helpText;
+
+	// Global Variables
+	public static string deathReasonString;
 
 	// Use this for initialization
 	void Start () {
@@ -45,10 +51,13 @@ public class UIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("game Over " + GameController.instance.finishGame);
+		//Debug.Log("game Over " + GameController.instance.finishGame);
 		mainCamera = GameObject.Find("Main Camera");
 		player = GameObject.Find("Player");
+		GameController.instance.scoreText.text = GameController.score.ToString();
 		if(!GameController.instance.GameOver()){
+			currentLevel.text = "Current Level: " + LevelController.currentLevel;
+			ticketsRemaining.text = "Tickets Remaining: " + LevelController.CurrentLevelTicketQuantity();
 			if(GameController.instance.finishGame){
 				TransitionUI();
 				if(player.transform.position.y > 1){
@@ -100,7 +109,7 @@ public class UIController : MonoBehaviour {
 	// Displays the Game Over UI.
 	public void GameOverUI(){
 		gameOver.SetActive(true);
-		deathReason.text = GameController.deathReasonString;
+		deathReason.text = deathReasonString;
 		finalScoreGameOver.text = "<color=cyan>" + "Score: " + "</color>" + GameController.score;
 		finalTimeGameOver.text = "<color=red>" + "Time: " + "</color>" + TotalTime.niceTime;
 		playerStatsUI.SetActive(false);
@@ -110,12 +119,12 @@ public class UIController : MonoBehaviour {
 	}
 
 	// Displays Help text
-	public IEnumerator DisplayHelpText(int helpTextInt){
-		switch(helpTextInt){
-			case 2:
+	public IEnumerator DisplayHelpText(string helpTextChoice){
+		switch(helpTextChoice){
+			case "Jump_Down_Hole":
 				GameController.helpTextMessage = "Level complete! Jump down the hole to progress onto the next level.";
 			break;
-			case 1:
+			case "Killed_Satan":
 				GameController.helpTextMessage = "Satan is defeated! Collect the wings to fly out of hell.";
 			break;
 			default:
@@ -126,5 +135,26 @@ public class UIController : MonoBehaviour {
 		helpText.text = GameController.helpTextMessage;
 		yield return new WaitForSeconds(5);
 		helpTextContainer.SetActive(false);
+	}
+
+	// Sets the Death Reason String based on how the player died. 
+	public void SelectDeathReason(string deathReason){
+		switch(deathReason){
+			case "Killed_By_Fire":
+				deathReasonString = "You were burnt by satans fire!";
+			break;
+			case "Killed_By_Satan":
+				deathReasonString = "You were slayed by Satan himself!";
+			break;
+			case "Killed_By_Reaper":
+				deathReasonString = "You were sliced by a Reaper!";
+			break;
+			case "Killed_By_Demon":
+				deathReasonString = "You were stabbed by a Demon!";
+			break;
+			default:
+				deathReasonString = "You died!";
+			break;
+		}
 	}
 }

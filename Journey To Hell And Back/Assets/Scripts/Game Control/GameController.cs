@@ -1,10 +1,10 @@
 ﻿/* Author: Joe Davis
  * Project: One Way Ticket to Hell
- * Date modified: 30/03/19
+ * Date modified: 14/04/19
  * [x] = Reference
- * Notes:
- * Instead of everything flowing through the game controller, each script performs 
- * relevent actions after detecting them themselves, instead of the Game controller telling everyone what to do. (This the correct way?) 
+ * Instead of everything flowing entirely through the game controller, each script performs 
+ * relevent actions after detecting them themselves, instead of the Game controller telling 
+ * everyone what to do. (This the most efficient / future proof way?) 
  * Code QA Sweep: DONE
  */
 
@@ -41,25 +41,25 @@ public class GameController : MonoBehaviour {
     public GameObject smallerBoundsLvl2;
     public GameObject smallerBoundsLvl3;
     public GameObject smallerBoundsLvl4;
+
+    // Components.
+    public Text scoreText;
     public AudioSource level1and2Audio;
-	public AudioSource level3and4Audio;
-	public AudioSource level5Audio;
+    public AudioSource level3and4Audio;
+    public AudioSource level5Audio;
     public AudioSource drumsAudio;
     public AudioSource victoryAudio;
     public AudioSource gameOverAudio;
 
-    // Components.
-    public Text scoreText;
-
     // Global variables.
     public static int score;
     public static bool preventLoop;
-    public static string deathReasonString;
     public static string helpTextMessage;
     public bool finishGame;
 
     // Use this for initialization
     void Awake () {
+        // Target frame rate is 60 fps
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 600;
         // Singleton Pattern: There can only ever be one instance of a GameController.
@@ -76,7 +76,6 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        scoreText.text = score.ToString();
         if(!GameOver()){
             GameFlow();
         }
@@ -90,12 +89,14 @@ public class GameController : MonoBehaviour {
             if(!NextLevelTrigger.nextLevelTriggered){
                 levelController.moveToNextLevel = true;
             }
+            // Move the hole and grant access to the next level.
             StartCoroutine(MoveHole());
+            // Prevent the help text firing every frame (better way to solve this issue?).
             if(preventLoop){
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText(2));
+            StartCoroutine(uiController.DisplayHelpText("Jump_Down_Hole"));
         }
         else if (levelController.CompletedLevel2()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -106,7 +107,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText(2));
+            StartCoroutine(uiController.DisplayHelpText("Jump_Down_Hole"));
         }
         else if (levelController.CompletedLevel3()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -117,7 +118,7 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText(2));
+            StartCoroutine(uiController.DisplayHelpText("Jump_Down_Hole"));
         }
         else if (levelController.CompletedLevel4()) {
             if(!NextLevelTrigger.nextLevelTriggered){
@@ -128,15 +129,16 @@ public class GameController : MonoBehaviour {
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText(2));
+            StartCoroutine(uiController.DisplayHelpText("Jump_Down_Hole"));
         }
         else if (levelController.CompletedLevel5()) {
             if(preventLoop){
                 return;
             }
             preventLoop = true;
-            StartCoroutine(uiController.DisplayHelpText(1));
+            StartCoroutine(uiController.DisplayHelpText("Killed_Satan"));
             finishGameTrigger.SetActive(true);
+            level5Audio.Stop();
         }
     }
 
@@ -228,7 +230,7 @@ public class GameController : MonoBehaviour {
     }
 
     // Calculate the distance between the player and the center of the current level.
-    public float CalculateDistanceBetweenPlayerAndCenter(){
+    public float DistanceBetweenPlayerAndCenter(){
         float distance;
 
         // Find the center of each level.
@@ -262,26 +264,5 @@ public class GameController : MonoBehaviour {
             break;
         }
         return distance;
-    }
-
-    // Sets the Death Reason String based on how the player died. 
-    public void SelectDeathReason(int deathReason){
-        switch(deathReason){
-            case 4:
-                deathReasonString = "You were burnt by satans fire!";
-            break;
-            case 3:
-                deathReasonString = "You were slayed by Satan himself!";
-            break;
-            case 2:
-                deathReasonString = "You were sliced by a Reaper!";
-            break;
-            case 1:
-                deathReasonString = "You were stabbed by a Demon!";
-            break;
-            default:
-                deathReasonString = "You died!";
-            break;
-        }
     }
 }

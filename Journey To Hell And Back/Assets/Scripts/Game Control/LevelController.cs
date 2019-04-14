@@ -1,6 +1,9 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used to control the levels within the game; what level the player is currently in, 
+ * if a level is completed and some of the contents within each level.
+ * Code QA Sweep: DONE
  */
 
 using System.Collections;
@@ -23,16 +26,17 @@ public class LevelController : MonoBehaviour {
 	public const int LEVEL_3_Y_POSITION = -220;
 	public const int LEVEL_4_Y_POSITION = -330;
 	public const int LEVEL_5_Y_POSITION = -440;
-
 	public static int currentLevel;
 	public static bool levelStaying;
 	public bool levelEntered;
 	public bool moveToNextLevel;
 
+	// Use this for initialization
 	void Start(){
 		moveToNextLevel = false;
 	}
 
+	// Update is called once per frame
 	void Update(){
 		//Debug.Log("In Level " + levelStaying);
 		//Debug.Log("Move: " + moveToNextLevel);
@@ -66,7 +70,7 @@ public class LevelController : MonoBehaviour {
 
 	// Level functions. Create conditions of when the player has completed a level.
 	// Each level tells the controller when they're completed, so the controller can then
-	// tell other scripts what to do.
+	// tell other scripts what to do. Can improve on this in the future? (more objectives etc).
 	public bool CompletedLevelOne(){
 		if(levelOne.LevelOneCompleted() && currentLevel == 1) {
 			return true;
@@ -112,7 +116,32 @@ public class LevelController : MonoBehaviour {
 		}
 	}
 
-	// ******* TRIGGERS *******
+	// Return the number of tickets remaining within each level.
+	public int CurrentLevelTicketQuantity(){
+		int ticketRemaining;
+
+		switch(currentLevel){
+			case 4:
+				ticketRemaining = LevelFour.lvl4TicketQuantity;
+			break;
+			case 3:
+				ticketRemaining = LevelThree.lvl3TicketQuantity;
+			break;
+			case 2:
+				ticketRemaining = LevelTwo.lvl2TicketQuantity;
+			break;
+			case 1:
+				ticketRemaining = LevelOne.lvl1TicketQuantity;
+			break;
+			default:
+				ticketRemaining = 0;
+			break;
+		}
+
+		return ticketRemaining;
+	}
+
+	// ***** TRIGGERS *****
 	// Each level background image has a BoxCollider (trigger). This method detects what zone
 	// the player enters.
 	private void OnTriggerEnter2D(Collider2D collide)
@@ -135,12 +164,10 @@ public class LevelController : MonoBehaviour {
 		if (collide.gameObject.tag == ("Player")){
 			levelStaying = false;
 		}
-
 		if(collide.gameObject.tag == ("Projectile")){
 			Debug.Log("DESTROY");
 			Destroy(gameObject);
 		}
 		}
-	// ******* END OF TRIGGERS *******
-
+	// ***** END OF TRIGGERS *****
 }

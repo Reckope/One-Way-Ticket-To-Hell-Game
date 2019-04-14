@@ -12,6 +12,7 @@ public class PlayerSystems : MonoBehaviour {
 	public LevelController levelController;
 	public CinematicBars cinematicBars;
 	public PlayerInputControl playerInputControl;
+	public UIController UIController;
 
 	static Rigidbody2D rb2d;
 	Collider2D collider;
@@ -115,15 +116,19 @@ public class PlayerSystems : MonoBehaviour {
 	// If the player touches the Enemy... (This is for selecting a death reason)
 	void OnCollisionEnter2D(Collision2D collision){
 		if (collision.gameObject.tag == ("Demon")) {
-			GameController.instance.SelectDeathReason(1);
+			UIController.SelectDeathReason("Killed_By_Demon");
 			PlayerDie();
 		}
 		else if (collision.gameObject.tag == ("Reaper")) {
-			GameController.instance.SelectDeathReason(2);
+			UIController.SelectDeathReason("Killed_By_Reaper");
 			PlayerDie();
 		}
 		else if (collision.gameObject.tag == ("Satan")) {
-			GameController.instance.SelectDeathReason(3);
+			UIController.SelectDeathReason("Killed_By_Satan");
+			PlayerDie();
+		}
+		else if (collision.gameObject.tag == ("Fire")) {
+			UIController.SelectDeathReason("Killed_By_Fire");
 			PlayerDie();
 		}
 	}

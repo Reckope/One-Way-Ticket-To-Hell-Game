@@ -22,6 +22,8 @@ public class PlayerInputControl : MonoBehaviour {
 	// GameObjects
 	public Slider controlSlider;
 	public Slider shootSlider;
+	public AudioSource jumpAudio;
+	public AudioSource shootAudio;
 
 	// Global variables.
 	public static float playerSpeedValue;
@@ -56,6 +58,7 @@ public class PlayerInputControl : MonoBehaviour {
 	private int initialExtraJumps;
 	private float moveLeftAndRight;
 	private float shootLeftAndRight;
+	private bool preventLoop;
 
 	void Start (){
 		rb2d = GetComponent<Rigidbody2D>();
@@ -63,7 +66,7 @@ public class PlayerInputControl : MonoBehaviour {
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
 		controlSlider.value = 0;
 		shootSlider.value = 0;
-		fireRate = 0.12f;
+		fireRate = 0.15f;
 		nextFire = 0.0f;
 	}
 
@@ -88,6 +91,8 @@ public class PlayerInputControl : MonoBehaviour {
 		jump = true;
 		if(jump){
 			if (grounded) {
+				jumpAudio.Stop();
+				jumpAudio.Play();
 				rb2d.velocity = Vector2.up * jumpForce;
 				stoppedJumping = false;
 			}
@@ -131,6 +136,8 @@ public class PlayerInputControl : MonoBehaviour {
 		}
 
 		if (jump && initialExtraJumps > 0) {
+			jumpAudio.Stop();
+			jumpAudio.Play();
 			rb2d.velocity = Vector2.up * jumpForce;
 			initialExtraJumps--;
 		}
@@ -167,7 +174,6 @@ public class PlayerInputControl : MonoBehaviour {
 
 	// Shoot projectiles using the shooterSlider.
 	void ShootWithSlider(){
-		//shootLeftAndRight = Input.GetAxisRaw("HorizontalShoot");
 		// Shooting left.
 		if(shootSlider.value <= -0.2 && Time.time > nextFire){
 			nextFire = Time.time + fireRate;

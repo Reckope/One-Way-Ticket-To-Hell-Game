@@ -17,6 +17,7 @@ public class AreaForceAttack : MonoBehaviour
 
     // GameObjects
     public Slider cooldownBar;
+    public AudioSource forceAttackAudio;
 
     // Global variables
     public static float cooldownValue;
@@ -45,6 +46,7 @@ public class AreaForceAttack : MonoBehaviour
 
         // If the player uses the force attack...
         if (PlayerInputControl.areaForceAttack) {
+            forceAttackAudio.Play();
             collider.enabled = true;
 			ExpandCircle ();
 		}

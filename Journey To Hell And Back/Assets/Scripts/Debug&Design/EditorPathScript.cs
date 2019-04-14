@@ -1,7 +1,9 @@
 ﻿/* Author: Joe Davis
  * Project: One Way Ticket to Hell
- * Date modified: 30/03/19
+ * Date modified: 14/04/19
  * Reference: [5]
+ * This script is used to display / edit a path within the scene. The enemy then follows this path.
+ * Code QA Sweep: DONE
  */
 
 using System.Collections;
@@ -10,6 +12,7 @@ using UnityEngine;
 
 public class EditorPathScript : MonoBehaviour {
 
+	// GameObjects & Components
 	public Color rayColor = Color.white;
 	public List<Transform> pathObjs = new List<Transform>();
 	Transform[] objectChildren;
@@ -26,7 +29,7 @@ public class EditorPathScript : MonoBehaviour {
 				pathObjs.Add (pathObj);
 			}
 		}
-
+		// Draw the path.
 		for(int x = 0; x < pathObjs.Count; x++){
 			Vector2 position = pathObjs[x].position;
 			if(x > 0){
@@ -35,6 +38,5 @@ public class EditorPathScript : MonoBehaviour {
 				Gizmos.DrawWireSphere(position, 0.2f);
 			}
 		}
-
 	}
 }

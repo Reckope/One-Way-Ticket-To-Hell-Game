@@ -1,6 +1,8 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used to detect when the player has triggered the next level. 
+ * Code QA Sweep: DONE
  */
 
 using System.Collections;
@@ -9,14 +11,16 @@ using UnityEngine;
 
 public class NextLevelTrigger : MonoBehaviour {
 
+    // Global Variables
     public static bool nextLevelTriggered;
-
     private bool inTrigger;
 
+    // Use this for initialization
     void Start(){
         nextLevelTriggered = false;
     }
 
+    // Update is called once per frame
     void Update(){
         //Debug.Log("inTrgger = " + inTrigger);
         //Debug.Log("next trigger = " + nextLevelTriggered);

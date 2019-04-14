@@ -1,7 +1,9 @@
 ﻿/* Author: Joe Davis
  * Project: One Way Ticket to Hell
- * Date modified: 30/03/19
- * Code QA sweep: DONE.
+ * Date modified: 14/04/19
+ * This is used to control all of the camera movements. It uses the GameController and
+ * LevelController to detect what state the game is in, and moves the camera accordingly. 
+ * Code QA sweep: DONE
  */
 
 using System.Collections;
@@ -40,12 +42,12 @@ public class CameraController : MonoBehaviour {
 			}
 			else if(!GameController.instance.finishGame){
 				cameraCurrentPosition = transform.position;
+				// Create camera bounds. 
+				SetCameraBounds();
 				// If the player triggers the next level.
 				if(NextLevelTrigger.nextLevelTriggered){
 					CameraTransitionBetweenLevels();
 				}
-				// Create camera bounds. 
-				SetCameraBounds();
 				// If the camera is within bounds, move with player. 
 				if(transform.position.x >= -14.1f && transform.position.x <= 14.1f && LevelController.currentLevel != 5){
 					if(cameraLeft == true){
@@ -56,7 +58,7 @@ public class CameraController : MonoBehaviour {
 					}
 				}
 				// Move the camera to the center when the level has been completed. 
-				if(levelControl.moveToNextLevel && GameController.instance.CalculateDistanceBetweenPlayerAndCenter() < 10f){
+				if(levelControl.moveToNextLevel && GameController.instance.DistanceBetweenPlayerAndCenter() < 10f){
 					MoveCameraToCenter();
 					GameController.instance.ActivateSmallerBounds();
 				}
@@ -99,7 +101,7 @@ public class CameraController : MonoBehaviour {
 		}
 	}
 
-	// Transition the camera between each level.
+	// Move the camera between each level.
 	private void CameraTransitionBetweenLevels(){
 		// Detect the current level.
 		if(LevelController.currentLevel == 1){
@@ -236,7 +238,7 @@ public class CameraController : MonoBehaviour {
 		}
 	}
 
-	// ******* TRIGGERS *******
+	// ***** TRIGGERS *****
 	// Detect when the player hits the left or right trigger...
 	void OnTriggerEnter2D(Collider2D collide){
 		if (collide.gameObject.tag == ("Player") && gameObject.name == "CameraLeftTrigger"){
@@ -266,5 +268,5 @@ public class CameraController : MonoBehaviour {
 		cameraLeft = false;
 		cameraRight = false;
 	}
-	// ******* END OF TRIGGERS *******
+	// ***** END OF TRIGGERS *****
 }
