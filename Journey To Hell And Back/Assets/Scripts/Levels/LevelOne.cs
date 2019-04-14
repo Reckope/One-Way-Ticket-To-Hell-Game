@@ -17,6 +17,7 @@ public class LevelOne : MonoBehaviour {
 	public GameObject demonPrefab;
 
 	// Game Objects
+	[SerializeField]
 	private GameObject demon;
 	private GameObject ticket;
 

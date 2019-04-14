@@ -14,6 +14,7 @@ using UnityEngine;
 public class EnemyMoveOnPath : MonoBehaviour {
 
 	public EditorPathScript pathToFollow;
+	public Enemy enemy;
 	
 	private int currentWaypointID;
 	private int speed;
@@ -34,19 +35,21 @@ public class EnemyMoveOnPath : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if((LevelController.currentLevel == 2 || LevelController.currentLevel == 3) && gameObject != null){
-			// Move the enemy to the path starting point.
-			float distance = Vector2.Distance(pathToFollow.pathObjs[currentWaypointID].position, transform.position);
-			transform.position = Vector3.MoveTowards(transform.position, pathToFollow.pathObjs[currentWaypointID].position, speed * Time.deltaTime);
-			// Move along each waypoint. 
-			if(distance <= reachDistance){
-				currentWaypointID++;
-			}
+		if(!enemy.enemyIsDead){
+			if((LevelController.currentLevel == 2 || LevelController.currentLevel == 3) && gameObject != null){
+				// Move the enemy to the path starting point.
+				float distance = Vector2.Distance(pathToFollow.pathObjs[currentWaypointID].position, transform.position);
+				transform.position = Vector3.MoveTowards(transform.position, pathToFollow.pathObjs[currentWaypointID].position, speed * Time.deltaTime);
+				// Move along each waypoint. 
+				if(distance <= reachDistance){
+					currentWaypointID++;
+				}
 
-			// If we reach the end of the path.
-			if(currentWaypointID >= pathToFollow.pathObjs.Count){
-				currentWaypointID = 0;
-			}
+				// If we reach the end of the path.
+				if(currentWaypointID >= pathToFollow.pathObjs.Count){
+					currentWaypointID = 0;
+				}
+			}	
 		}
 	}
 }

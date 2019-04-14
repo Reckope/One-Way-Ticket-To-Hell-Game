@@ -29,9 +29,8 @@ public class PlayerInputControl : MonoBehaviour {
 
 	public float speed;
 	public float jumpForce;
-	public float groundDist;
 
-	public static bool grounded;
+	private bool grounded;
 	public bool stoppedJumping;
 
 	public bool goingRight;
@@ -69,7 +68,7 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	void Update(){
-		//Debug.Log("Shooting " + shooting);
+		//Debug.Log("PlayerGround " + grounded);
 		//Debug.Log("Shoot: " + shootSlider.value);
 		playerSpeedValue = controlSlider.value;
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0 && !GameController.instance.GameOver()){

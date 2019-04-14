@@ -53,7 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Debug&amp;Design\EditorPathScript.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-     <Compile Include="Assets\Scripts\Enemies\EnemyBasicFollow.cs" />
+     <Compile Include="Assets\Scripts\Enemies\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\Enemies\EnemyMoveOnPath.cs" />
      <Compile Include="Assets\Scripts\Enemies\Fire.cs" />
      <Compile Include="Assets\Scripts\Game Control\CameraController.cs" />

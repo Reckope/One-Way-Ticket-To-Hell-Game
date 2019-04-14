@@ -33,6 +33,14 @@ public class NextLevelTrigger : MonoBehaviour {
             inTrigger = true;
             if(gameObject.name == "FinishGameTrigger"){
                 GameController.instance.finishGame = true;
+                GameController.instance.level5Audio.Stop();
+                GameController.instance.drumsAudio.Stop();
+                GameController.instance.victoryAudio.Play();
+            }
+            else if(!GameController.instance.finishGame){
+                GameController.instance.level1and2Audio.Stop();
+                GameController.instance.level3and4Audio.Stop();
+                GameController.instance.drumsAudio.Play();
             }
         }
     }

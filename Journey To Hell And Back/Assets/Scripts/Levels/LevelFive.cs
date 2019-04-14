@@ -15,7 +15,6 @@ public class LevelFive : MonoBehaviour {
 
 	// Game Objects
 	private GameObject satan;
-	private GameObject ticket;
 
 	// Use this for initialization
 	void Start () {

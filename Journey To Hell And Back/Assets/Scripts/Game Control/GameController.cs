@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameController : MonoBehaviour {
 
     //Static instance of GameController which allows it to be accessed by any other script.
@@ -40,6 +41,12 @@ public class GameController : MonoBehaviour {
     public GameObject smallerBoundsLvl2;
     public GameObject smallerBoundsLvl3;
     public GameObject smallerBoundsLvl4;
+    public AudioSource level1and2Audio;
+	public AudioSource level3and4Audio;
+	public AudioSource level5Audio;
+    public AudioSource drumsAudio;
+    public AudioSource victoryAudio;
+    public AudioSource gameOverAudio;
 
     // Components.
     public Text scoreText;
@@ -53,6 +60,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 600;
         // Singleton Pattern: There can only ever be one instance of a GameController.
         if (instance == null){
@@ -63,6 +71,7 @@ public class GameController : MonoBehaviour {
         }
         score = 0;
         preventLoop = false;
+        level1and2Audio.Play();
     }
 
     // Update is called once per frame
@@ -134,6 +143,10 @@ public class GameController : MonoBehaviour {
     // Check if the game is over!
     public bool GameOver(){
         if (PlayerSystems.playerIsDead) {
+            level1and2Audio.Stop();
+            level3and4Audio.Stop();
+            level5Audio.Stop();
+            drumsAudio.Stop();
             return true;
         } 
         else {

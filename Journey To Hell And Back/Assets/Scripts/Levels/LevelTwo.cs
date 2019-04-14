@@ -18,7 +18,9 @@ public class LevelTwo : MonoBehaviour {
 	public GameObject reaperPrefab;
 
 	// Game Objects
+	[SerializeField]
 	private GameObject demon;
+	[SerializeField]
 	private GameObject blackReaper;
 	private GameObject ticket;
 

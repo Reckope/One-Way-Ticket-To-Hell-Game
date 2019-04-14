@@ -12,12 +12,14 @@ public class Enemy : MonoBehaviour {
 	// Components.
 	private Vector2 enemy;
 	Collider2D collider;
+	CapsuleCollider2D CapsuleCollider2D;
 	SpriteRenderer sprite;
 	Rigidbody2D rb2d;
 
 	// Global Variables.
+	public bool enemyIsDead;
+
 	private bool preventLoop;
-	private bool enemyIsDead;
 	private float enemyCurrentHealth;
 	private float maxHealth;
 	private float minHealth;
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		collider = GetComponent<Collider2D>();
+		CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
 		sprite = GetComponent<SpriteRenderer>();
 		enemyIsDead = false;
 		preventLoop = false;
@@ -65,13 +68,6 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	// If the enemy touches the Player...
-	void OnCollisionEnter2D(Collision2D collision){
-		if (collision.gameObject.tag == ("Player")) {
-			KillPlayer ();
-		}
-	}
-
 	// If the enemy touches a trigger box...
 	void OnTriggerEnter2D (Collider2D collide){
 		// If the enemy touches the Area Force Attack...
@@ -84,11 +80,6 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	// Kill the player.
-	void KillPlayer(){
-		PlayerSystems.playerIsDead = true;
-	}
-
 	// When the enemy takes damage from a projectile.
 	private IEnumerator TakeDamage(){
 		enemyCurrentHealth -= 12f;
@@ -99,9 +90,10 @@ public class Enemy : MonoBehaviour {
 
 	// When the enemy dies. 
 	private IEnumerator EnemyDie(){
+		collider.enabled = false;
+		CapsuleCollider2D.enabled = false;
 		rb2d.bodyType = RigidbodyType2D.Dynamic;
 		enemyIsDead = true;
-		collider.enabled = false;
 		rb2d.velocity = (new Vector2 (0, 4f));
 		GameController.score += 1;
 		yield return new WaitForSeconds(2);

@@ -40,6 +40,8 @@ public class PlayerSystems : MonoBehaviour {
 
 	// When the player dies...
 	private void PlayerDie(){
+		GameController.instance.gameOverAudio.Play();
+		PlayerSystems.playerIsDead = true;
 		collider.enabled = false;
 		rb2d.constraints = RigidbodyConstraints2D.FreezePositionX;
 		rb2d.velocity = (new Vector2 (0, 11f));
@@ -62,6 +64,8 @@ public class PlayerSystems : MonoBehaviour {
 			NextLevelTrigger.nextLevelTriggered = false;
 			playerInputControl.controlSlider.value = 0;
 			playerInputControl.shootSlider.value = 0;
+			GameController.instance.level1and2Audio.Play();
+			GameController.instance.drumsAudio.Stop();
 		}
 		// Level 2 - 3...
 		else if (transform.position.y > -220 && transform.position.y < -210){
@@ -69,6 +73,8 @@ public class PlayerSystems : MonoBehaviour {
 			NextLevelTrigger.nextLevelTriggered = false;
 			playerInputControl.controlSlider.value = 0;
 			playerInputControl.shootSlider.value = 0;
+			GameController.instance.level3and4Audio.Play();
+			GameController.instance.drumsAudio.Stop();
 		}
 		// Level 3 - 4...
 		else if (transform.position.y > -330 && transform.position.y < -320){
@@ -76,6 +82,8 @@ public class PlayerSystems : MonoBehaviour {
 			NextLevelTrigger.nextLevelTriggered = false;
 			playerInputControl.controlSlider.value = 0;
 			playerInputControl.shootSlider.value = 0;
+			GameController.instance.level3and4Audio.Play();
+			GameController.instance.drumsAudio.Stop();
 		}
 		// Level 4 - 5...
 		else if (transform.position.y > -440 && transform.position.y < -430){
@@ -83,6 +91,8 @@ public class PlayerSystems : MonoBehaviour {
 			NextLevelTrigger.nextLevelTriggered = false;
 			playerInputControl.controlSlider.value = 0;
 			playerInputControl.shootSlider.value = 0;
+			GameController.instance.level5Audio.Play();
+			GameController.instance.drumsAudio.Stop();
 		}
 		else{
 			//Debug.Log("TRANSITIONING");
