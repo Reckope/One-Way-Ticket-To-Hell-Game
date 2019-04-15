@@ -1,9 +1,10 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date Modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
  * Reference: [3]
- * Black vars are created via this script instead of using game objects. This
- * can be useful for future projects :)
+ * Black bars are created via this script instead of using game objects. This
+ * can be useful for future projects :) All you need to do is call ShowCinematicBars or HideCinematicBars (High Cohesion!).
+ * Code QA Sweep: DONE.
  */
 
 using System.Collections;
@@ -19,9 +20,6 @@ public class CinematicBars : MonoBehaviour {
 	private float barSpeed;
 	public bool isActive;
 
-	//public bool debugShowBars;
-	//public bool debugHideBars;
-
 	// Use this for initialization
 	void Start () {
 		CreateBars();
@@ -30,7 +28,6 @@ public class CinematicBars : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-		//Debug.Log("TopBar Size: " + topBar.sizeDelta.y);
 		if(isActive && !GameController.instance.GameOver()){
 			Vector2 sizeDelta = topBar.sizeDelta;
 			sizeDelta.y += changeSizeAmount * Time.deltaTime;

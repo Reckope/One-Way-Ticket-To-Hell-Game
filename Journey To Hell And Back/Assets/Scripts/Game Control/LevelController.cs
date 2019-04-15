@@ -1,7 +1,7 @@
 ﻿/* Author: Joe Davis
  * Project: One Way Ticket to Hell
  * Date modified: 14/04/19
- * This is used to control the levels within the game; what level the player is currently in, 
+ * This is an intermediary script used to control the levels within the game; what level the player is currently in, 
  * if a level is completed and some of the contents within each level.
  * Code QA Sweep: DONE
  */

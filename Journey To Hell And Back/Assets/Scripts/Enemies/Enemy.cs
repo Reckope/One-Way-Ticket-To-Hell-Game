@@ -1,7 +1,7 @@
 ﻿/* Author: Joe Davis
  * Project: One Way Ticket to Hell
  * Date modified: 14/04/19
- * This is the main enemy script. It controls when the enemy dies. Would be beneficial to
+ * This is the intermediary enemy script. It controls when the enemy dies. Would be beneficial to
  * merge "EnemyMovement.cs" into this script since it's not that big??
  * Code QA sweep: DONE
  */
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collide){
 	// If the enemy touches the Area Force Attack...
 		if (collide.gameObject.layer == LayerMask.NameToLayer ("ForceAttack")) {
-			StartCoroutine(EnemyDie());
+			enemyIsDead = true;
 		}
 		// If the enemy gets hit by a projectile...
 		if(collide.gameObject.layer == LayerMask.NameToLayer("Projectile")){

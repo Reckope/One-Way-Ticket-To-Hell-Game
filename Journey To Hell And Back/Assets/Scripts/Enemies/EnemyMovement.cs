@@ -44,6 +44,7 @@ public class EnemyMovement : MonoBehaviour {
 	void FixedUpdate () {
 		// If the player is within a set distance from the enemy, move them.
 		if(!enemy.enemyIsDead && DistanceBetweenPlayerAndEnemy() < 50f && !GameController.instance.GameOver()){
+			rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 			rb2d.velocity = new Vector2 (direction * speed, 0);
 			// Check if the enemy hits a wall.
 			collidedLeft = Physics2D.OverlapCircle (leftCheck.position, checkRadius, whatIsWall);
@@ -57,6 +58,9 @@ public class EnemyMovement : MonoBehaviour {
 				direction = -1;
 				mySpriteRenderer.flipX = false;
 			}
+		}
+		else if (DistanceBetweenPlayerAndEnemy() > 50f || GameController.instance.GameOver()){
+			rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 	}
 

@@ -3,6 +3,7 @@
  * Date modified: 14/04/19
  * This is used to control all of the camera movements. It uses the GameController and
  * LevelController to detect what state the game is in, and moves the camera accordingly. 
+ * Would've been better to make this an intermediary script for loose coupling.
  * Code QA sweep: DONE
  */
 
@@ -15,6 +16,7 @@ public class CameraController : MonoBehaviour {
 	// Scripts
 	public LevelController levelControl;
 	public CinematicBars cinematicBars;
+	public PlayerSystems PlayerSystems;
 
 	// GameObjects & Components.
 	public static Vector2 cameraCurrentPosition;
@@ -160,8 +162,8 @@ public class CameraController : MonoBehaviour {
 		float moveXPosition;
 
 		// If the player is moving left...
-		if(PlayerInputControl.playerSpeedValue < 0){
-			speed = PlayerInputControl.playerSpeedValue * -7f;
+		if(PlayerSystems.playerSpeedValue < 0){
+			speed = PlayerSystems.playerSpeedValue * -7f;
 		}
 		else{
 			speed = 0;
@@ -178,8 +180,8 @@ public class CameraController : MonoBehaviour {
 		float moveXPosition;
 
 		// If the player is moving right...
-		if(PlayerInputControl.playerSpeedValue > 0){
-			speed = PlayerInputControl.playerSpeedValue * 7f;
+		if(PlayerSystems.playerSpeedValue > 0){
+			speed = PlayerSystems.playerSpeedValue * 7f;
 		}
 		else{
 			speed = 0;

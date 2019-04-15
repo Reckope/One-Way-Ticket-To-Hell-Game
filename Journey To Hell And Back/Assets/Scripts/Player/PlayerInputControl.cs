@@ -1,7 +1,9 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 12/03/19
- * "[x]" = Reference
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is a custom player script used to control the movements, and perform 
+ * cool actions (force attack, double jump, shoot projectiles).
+ * Code QA sweep: DONE
  */
 
 using System.Collections;
@@ -13,67 +15,52 @@ public class PlayerInputControl : MonoBehaviour {
 
 	// Scripts and components.
 	public AreaForceAttack forceAttack;
-	public CameraController cameraController;
 	public ProjectilePool projectilePool;
 	private Rigidbody2D rb2d;
 	private SpriteRenderer mySpriteRenderer;
-	//private BoxCollider2D myBoxCollider;
 
 	// GameObjects
 	public Slider controlSlider;
 	public Slider shootSlider;
 	public AudioSource jumpAudio;
 	public AudioSource shootAudio;
+	public LayerMask whatIsGround;
+	public Transform groundCheck;
 
-	// Global variables.
-	public static float playerSpeedValue;
+	// Global variables
 	public static bool shootingLeft, shootingRight;
-
-	public float speed;
-	public float jumpForce;
-
-	private bool grounded;
-	public bool stoppedJumping;
-
-	public bool goingRight;
-	public bool goingLeft;
-	public bool lookingLeft;
-	public bool lookingRight;
-	public bool shooting;
-
+	public bool _areaForceAttack;
+	public bool areaForceAttack;
 	private float fireRate;
 	private float nextFire;
-
-	public LayerMask whatIsGround;
-
-	public Transform groundCheck;
-	public float groundCheckRadius;
-
-	public bool jump;
-	public bool left;
-	public bool right;
-	public static bool _areaForceAttack = false;
-	public static bool areaForceAttack = false;
-
+	private bool grounded;
+	private float speed;
+	private float jumpForce;
+	private float groundCheckRadius;
+	private bool jump;
 	private int initialExtraJumps;
 	private float moveLeftAndRight;
-	private float shootLeftAndRight;
 	private bool preventLoop;
 
+	// Use this for initialization
 	void Start (){
 		rb2d = GetComponent<Rigidbody2D>();
 		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 		mySpriteRenderer = GetComponent<SpriteRenderer>();
+		_areaForceAttack = false;
+		areaForceAttack = false;
 		controlSlider.value = 0;
 		shootSlider.value = 0;
 		fireRate = 0.15f;
 		nextFire = 0.0f;
+		speed = 7f;
+		jumpForce = 14f;
+		groundCheckRadius = 0.7f;
 	}
 
+	// Update is called once per frame
 	void Update(){
-		//Debug.Log("PlayerGround " + grounded);
-		//Debug.Log("Shoot: " + shootSlider.value);
-		playerSpeedValue = controlSlider.value;
+		// Control the player.
 		if(rb2d.bodyType == RigidbodyType2D.Dynamic && LevelController.currentLevel > 0 && !GameController.instance.GameOver()){
 			//KeyboardControls();
 			MovePlayerWithSlider();
@@ -87,14 +74,14 @@ public class PlayerInputControl : MonoBehaviour {
 		FaceDirection ();
 	}
 
-	public void Jump(){
+	// Jump!
+	private void Jump(){
 		jump = true;
 		if(jump){
 			if (grounded) {
 				jumpAudio.Stop();
 				jumpAudio.Play();
 				rb2d.velocity = Vector2.up * jumpForce;
-				stoppedJumping = false;
 			}
 		}
 		DoubleJump();
@@ -128,7 +115,7 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	// Enables Double Jump for the player
-	void DoubleJump(){
+	private void DoubleJump(){
 		int extraJumps = 2;
 
 		if (grounded) {
@@ -148,16 +135,7 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	// Player faces the direction they're moving.
-	void FaceDirection(){
-		if(controlSlider.value < 0){
-			goingRight = false;
-			goingLeft = true;
-		}
-		else if (controlSlider.value > 0) {
-			goingRight = true;
-			goingLeft = false;
-		}
-
+	private void FaceDirection(){
 		if (shootSlider.value < 0) {
 			mySpriteRenderer.flipX = false;
 		}
@@ -167,13 +145,13 @@ public class PlayerInputControl : MonoBehaviour {
 	}
 
 	// Move the player with the horizontalMovementSlider.
-	void MovePlayerWithSlider(){
+	private void MovePlayerWithSlider(){
 		moveLeftAndRight = Input.GetAxisRaw ("HorizontalControl");
 		rb2d.velocity = new Vector2 (controlSlider.value * speed, rb2d.velocity.y);
 	}
 
 	// Shoot projectiles using the shooterSlider.
-	void ShootWithSlider(){
+	private void ShootWithSlider(){
 		// Shooting left.
 		if(shootSlider.value <= -0.2 && Time.time > nextFire){
 			nextFire = Time.time + fireRate;

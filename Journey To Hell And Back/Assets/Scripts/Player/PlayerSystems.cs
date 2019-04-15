@@ -1,6 +1,8 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is used to alter the players' state and behaviour.
+ * Code QA sweep: DONE
  */
 
 using System.Collections;
@@ -9,25 +11,30 @@ using UnityEngine;
 
 public class PlayerSystems : MonoBehaviour {
 
-	public LevelController levelController;
-	public CinematicBars cinematicBars;
+	// Other scripts
 	public PlayerInputControl playerInputControl;
 	public UIController UIController;
 
+	// Components
 	static Rigidbody2D rb2d;
-	Collider2D collider;
+	Collider2D collide;
 
+	// Global Variables
 	public static bool playerIsDead;
+	public float playerSpeedValue;
+	public float playerShootValue;
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D>();
-		collider = GetComponent<Collider2D>();
+		collide = GetComponent<Collider2D>();
 		playerIsDead = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		playerSpeedValue = playerInputControl.controlSlider.value;
+		playerShootValue = playerInputControl.shootSlider.value;
 		if(playerIsDead){
 			//PlayerDie();
 		}
@@ -42,8 +49,8 @@ public class PlayerSystems : MonoBehaviour {
 	// When the player dies...
 	private void PlayerDie(){
 		GameController.instance.gameOverAudio.Play();
-		PlayerSystems.playerIsDead = true;
-		collider.enabled = false;
+		playerIsDead = true;
+		collide.enabled = false;
 		rb2d.constraints = RigidbodyConstraints2D.FreezePositionX;
 		rb2d.velocity = (new Vector2 (0, 11f));
 	}
@@ -64,7 +71,7 @@ public class PlayerSystems : MonoBehaviour {
 			rb2d.bodyType = RigidbodyType2D.Dynamic;
 			NextLevelTrigger.nextLevelTriggered = false;
 			playerInputControl.controlSlider.value = 0;
-			playerInputControl.shootSlider.value = 0;
+			playerShootValue = 0;
 			GameController.instance.level1and2Audio.Play();
 			GameController.instance.drumsAudio.Stop();
 		}
@@ -100,6 +107,7 @@ public class PlayerSystems : MonoBehaviour {
 		}
 	}
 
+	// When the player finishes the game.
 	public void PlayerFinishGame(){
 		float transitionDirection = 1f;
 		float transitionSpeed = 18f;

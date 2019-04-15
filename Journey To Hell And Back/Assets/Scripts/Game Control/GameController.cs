@@ -2,6 +2,7 @@
  * Project: One Way Ticket to Hell
  * Date modified: 14/04/19
  * [x] = Reference
+ * This is an intermediary script.
  * Instead of everything flowing entirely through the game controller, each script performs 
  * relevent actions after detecting them themselves, instead of the Game controller telling 
  * everyone what to do. (This the most efficient / future proof way?) 

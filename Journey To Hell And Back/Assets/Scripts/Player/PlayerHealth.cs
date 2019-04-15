@@ -1,6 +1,9 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 08/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * *** This is currently not being used ***
+ * But keeping this in case I want to add player health. 
+ * Code QA sweep: DONE
  */
 
 using System.Collections;

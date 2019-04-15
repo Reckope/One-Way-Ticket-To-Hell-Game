@@ -2,12 +2,27 @@
 * Author: Joe Davis
 * Project: One Way Ticket to Hell
 * Hardware: 2012 15" Macbook Pro Retina Display.
-* Software: Unity
-* Platform: iOS - iPhone / iPod
+* Software: Unity, XCode.
+* Platform: iOS - iPhone / iPod touch.
 
---- Please note that the white spacing on Github appears to be different from that on Visual Studio Code, which may result in the code looking slightly messy in some parts.(It's not like that in the code editor) --- 
+If you're reviewing the project to provide feedback, please navigate to the following directories / links:
+Source Code: "Assets\Scripts"
+Planning / Design: "Concept and Code Structure"
+Gameplay Video: "https://youtu.be/xpExF593yHg"
 
-One Way Ticket to Hell is a 2D action game build for iOS. You, the player, controls a badass angel who's mission is to venture to hell and kill Satan. 
+Summary:
+'One Way Ticket to Hell' is a 2D action game built for iOS. You, the player, control an angel sent from heaven who's mission is to venture to hell and kill Satan. The objective of this game is to collect 3 tickets within each level, while avoiding / killing demons along the way. There are 5 levels overall, each with their own environment. The higher the score and the faster the time, the better. 
+
+Purpose of this project:
+To express my skill set combining technical excellence with a passion for making games, to improve my Game Design / programming capabilities and to create the games I would want to play myself.
+
+Problems experienced / Future improvements:
+I didn't fully plan out what the best coding structure would be. For the next project, it would be benefical to spend more time drawing out a structure based on the game objects' states and behaviours. 
+Perhaps some of the scripts within this project could've been maerged into one big script, rather than having several  smaller scripts (enemy & player). 
+Experiment with different design patterns beyond Singleton and Object Pooling. 
+
+Known serious bugs:
+None :) .. so far.
 
 References:
 

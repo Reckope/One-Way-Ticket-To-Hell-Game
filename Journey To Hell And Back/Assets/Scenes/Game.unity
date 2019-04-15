@@ -9983,6 +9983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelControl: {fileID: 1772037666}
   cinematicBars: {fileID: 0}
+  PlayerSystems: {fileID: 1089580016}
 --- !u!1 &761965344
 GameObject:
   m_ObjectHideFlags: 0
@@ -13150,6 +13151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelControl: {fileID: 1772037666}
   cinematicBars: {fileID: 0}
+  PlayerSystems: {fileID: 1089580016}
 --- !u!1 &980807312
 GameObject:
   m_ObjectHideFlags: 0
@@ -14518,28 +14520,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceAttack: {fileID: 1740154698}
-  cameraController: {fileID: 1945411136}
   projectilePool: {fileID: 1379207479}
   controlSlider: {fileID: 1810245001}
   shootSlider: {fileID: 877909000}
   jumpAudio: {fileID: 1089580013}
   shootAudio: {fileID: 1790890653}
-  speed: 7
-  jumpForce: 14
-  stoppedJumping: 1
-  goingRight: 0
-  goingLeft: 0
-  lookingLeft: 0
-  lookingRight: 0
-  shooting: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   groundCheck: {fileID: 31204243}
-  groundCheckRadius: 0.7
-  jump: 0
-  left: 0
-  right: 0
+  _areaForceAttack: 0
+  areaForceAttack: 0
 --- !u!114 &1089580015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14564,10 +14555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1766db6e272a7466ab740f5ef14535c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelController: {fileID: 1772037666}
-  cinematicBars: {fileID: 230595607}
   playerInputControl: {fileID: 1089580014}
   UIController: {fileID: 1449395278}
+  playerSpeedValue: 0
+  playerShootValue: 0
 --- !u!70 &1089580017
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -22928,6 +22919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21ddcc2a90a74369a73cd4bf5defe23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerInputControl: {fileID: 1089580014}
   cooldownBar: {fileID: 1016884941}
   forceAttackAudio: {fileID: 1740154701}
 --- !u!212 &1740154699
@@ -26079,6 +26071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelControl: {fileID: 1772037666}
   cinematicBars: {fileID: 230595607}
+  PlayerSystems: {fileID: 1089580016}
 --- !u!61 &1945411137
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -73,7 +73,6 @@
      <Compile Include="Assets\Scripts\Player\AreaForceAttack.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerInputControl.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerSword.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerSystems.cs" />
      <Compile Include="Assets\Scripts\Player\Projectile.cs" />
      <Compile Include="Assets\Scripts\Player\ProjectilePool.cs" />

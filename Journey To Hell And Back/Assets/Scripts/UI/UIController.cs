@@ -1,6 +1,9 @@
 ﻿/* Author: Joe Davis
- * Project: Hell and Back
- * Date modified: 23/03/19
+ * Project: One Way Ticket to Hell
+ * Date modified: 14/04/19
+ * This is an intermediary script used to control the UI within the game.
+ * UI objects should flow through here. 
+ * Code QA Sweep: DONE.
  */
 
 using System.Collections;
