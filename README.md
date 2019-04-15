@@ -6,9 +6,9 @@
 * Platform: iOS - iPhone / iPod touch.
 
 If you're reviewing the project to provide feedback, please navigate to the following directories / links:
-Source Code: "Assets\Scripts"
-Planning / Design: "Concept and Code Structure"
-Gameplay Video: "https://youtu.be/xpExF593yHg"
+Source Code - "Assets\Scripts"
+Planning / Design - "Concept and Code Structure"
+Gameplay Video - "https://youtu.be/xpExF593yHg"
 
 Summary:
 'One Way Ticket to Hell' is a 2D action game built for iOS. You, the player, control an angel sent from heaven who's mission is to venture to hell and kill Satan. The objective of this game is to collect 3 tickets within each level, while avoiding / killing demons along the way. There are 5 levels overall, each with their own environment. The higher the score and the faster the time, the better. 
